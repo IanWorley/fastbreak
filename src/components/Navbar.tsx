@@ -14,7 +14,7 @@ async function Navbar({ className }: NavbarProps) {
     <div
       className={
         className +
-        "   top-0 w-full h-17 border-b-2  z-4 items-center  flex justify-end bg-background  "
+        "   top-0 w-full h-17 border-b-2   items-center  flex justify-end bg-background  "
       }
     >
       {user ? (
