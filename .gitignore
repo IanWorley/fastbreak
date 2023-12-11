@@ -6,6 +6,8 @@
 .pnp.js
 .yarn/install-state.gz
 
+.env
+
 # testing
 /coverage
 
@@ -13,6 +15,8 @@
 /.next/
 /out/
 
+*.db
+./prisma/migrations
 # production
 /build
 
