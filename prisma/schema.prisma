@@ -16,7 +16,7 @@ model team {
   shots    shot[]
   games    game[]
   players  player[]
-  users_id String   @unique
+  users_id String
 
   @@index([users_id], name: "users_id")
 }
