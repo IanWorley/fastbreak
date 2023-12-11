@@ -28,12 +28,21 @@ async function page() {
             <Button> Create Team </Button>
           </Link>
         </div>
-        <div className="grid grid-cols-2 ">
+        <div className="grid grid-cols-2  ">
           {teams.map((team) => (
-            <div className="flex justify-center items-center" key={team.id}>
-              <Link href={`/team/${team.id}`}>
-                <Button> {team.name} </Button>
-              </Link>
+            <div
+              className=" border bg-primary-foreground items-center flex-col flex justify-center m-5 p-5"
+              key={team.id}
+            >
+              <p> {team.name}</p>
+              <div className="flex justify-evenly">
+                <Link href={`/team/${team.id}`}>
+                  <Button>View</Button>
+                </Link>
+                <Link href={`/team/${team.id}/edit`}>
+                  <Button>Edit</Button>
+                </Link>
+              </div>
             </div>
           ))}
         </div>

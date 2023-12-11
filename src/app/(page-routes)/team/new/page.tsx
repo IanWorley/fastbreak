@@ -34,13 +34,20 @@ function page() {
     <div className="flex flex-col h-screen">
       <Navbar className="h-14" />
       <div className="flex-grow flex items-center justify-center">
-        <Card className="sm:w-auto w-max">
+        <Card className="sm:w-auto  p-4">
           <CardHeader>
-            <CardTitle> Create a Team </CardTitle>
+            <CardTitle className="text-4xl font-extrabold">
+              Create a Team
+            </CardTitle>
           </CardHeader>
           <form action={CreateTeam} className="">
             <CardContent>
-              <Input type="text" name="teamName" placeholder="Team Name" />
+              <Input
+                type="text"
+                minLength={3}
+                name="teamName"
+                placeholder="Team Name"
+              />
             </CardContent>
             <CardFooter className="flex justify-end">
               <Button className="" type="submit">
