@@ -27,7 +27,7 @@ export default async function Home() {
             </Link>
           ) : (
             <SignInButton redirectUrl="http://localhost:3000/dashboard">
-              <Button color="">Sign In</Button>
+              <Button variant={"default"}>Sign In</Button>
             </SignInButton>
           )}
         </div>
