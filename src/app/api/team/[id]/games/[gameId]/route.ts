@@ -1,19 +1,17 @@
 import prisma from "@/src/lib/PrismaClient";
 import { currentUser } from "@clerk/nextjs";
-import { NextRequest } from "next/server";
 import { z } from "zod";
 
-// TODO: Grab list names by team id and check if user can view games :)
-
-export async function GET(
+export async function DELETE(
   request: Request,
-  { params }: { params: { id: number } }
+  { params }: { params: { id: number; gameId: number } }
 ) {
   const user = await currentUser();
-  // zod turn string to number
 
   try {
     const id = z.coerce.number().parse(params.id);
+    const gameId = z.coerce.number().parse(params.gameId);
+
     const team = await prisma.team.findUniqueOrThrow({
       where: {
         id: id,
@@ -36,16 +34,14 @@ export async function GET(
       );
     }
 
-    const games = await prisma.game.findMany({
+    await prisma.game.delete({
       where: {
-        team: {
-          id: id,
-        },
+        id: gameId,
       },
     });
 
-    return new Response(JSON.stringify(games), {
-      status: 200,
+    return new Response(JSON.stringify(null), {
+      status: 201,
       headers: {
         "content-type": "application/json",
       },

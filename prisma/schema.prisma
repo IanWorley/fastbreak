@@ -14,9 +14,9 @@ model team {
   id       Int      @id @default(autoincrement())
   name     String
   shots    shot[]
-  games    game[]
   players  player[]
   users_id String
+  game     game[]
 
   @@index([users_id], name: "users_id")
 }
@@ -24,9 +24,9 @@ model team {
 model game {
   id     Int    @id @default(autoincrement())
   name   String
-  team   team   @relation(fields: [teamId], references: [id])
   teamId Int
-  shots  shot[]
+  shot   shot[]
+  team   team   @relation(fields: [teamId], references: [id])
 }
 
 model player {

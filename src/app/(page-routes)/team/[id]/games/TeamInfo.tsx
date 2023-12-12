@@ -1,21 +1,45 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import {
+  QueryClient,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { redirect, useParams } from "next/navigation";
 import { useEffect } from "react";
-import type { game } from "@prisma/client";
 import axios from "axios";
 import { Button } from "@/src/components/ui/button";
 import Link from "next/link";
 
+interface game {
+  id: number;
+  name: string;
+}
+
 function TeamInfo() {
   const { id } = useParams();
+  const queryClient = useQueryClient();
   const { isLoading, isError, data } = useQuery({
-    queryKey: ["team"],
+    queryKey: [`${id}/games`],
     queryFn: async () => {
-      const res = await axios.get(`/api/team/${id}`);
-      console.log(res.data);
+      const res = await axios.get(`/api/team/${id}/games`);
       return res.data;
+    },
+  });
+
+  const { mutateAsync, mutate } = useMutation({
+    mutationKey: ["gamesRemove"],
+    mutationFn: async (gameId: number) => {
+      const res = await axios.delete(`/api/team/${id}/games/${gameId}`);
+      return res.data;
+    },
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: [`${id}/games`] });
+    },
+    onError: (error) => {
+      console.log(error);
     },
   });
 
@@ -34,6 +58,20 @@ function TeamInfo() {
           data.map((game: game) => (
             <div className="bg-primary-foreground p-4 mx-32 " key={game.id}>
               <h3 className="text-2xl p-4 text-center"> {game.name}</h3>
+
+              <div className="flex justify-center gap-4">
+                <Button className="">
+                  <Link href={`/team/${id}/games/${game.id}`}>View</Link>
+                </Button>
+                <Button
+                  variant={"destructive"}
+                  onClick={() => {
+                    mutateAsync(game.id);
+                  }}
+                >
+                  Delete
+                </Button>
+              </div>
             </div>
           ))}
       </div>

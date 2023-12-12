@@ -1,7 +1,9 @@
 import Navbar from "@/src/components/Navbar";
 import TeamInfo from "@/src/app/(page-routes)/team/[id]/games/TeamInfo";
-import { useParams } from "next/navigation";
-import { number } from "zod";
+import prisma from "@/src/lib/PrismaClient";
+import { z } from "zod";
+import { currentUser } from "@clerk/nextjs";
+import { revalidatePath } from "next/cache";
 
 function Page() {
   return (
