@@ -34,13 +34,13 @@ async function page() {
     <main className="overflow-y-scroll pt-20">
       <Navbar className="fixed" />
       <div className="">
-        <div className="flex p-10 justify-evenly items-center ">
-          <p className="text-3xl font-bold">Your Teams </p>
+        <div className="flex sm:flex-row  flex-col   p-10 justify-evenly items-center ">
+          <p className="text-3xl font-bold  ">Your Teams </p>
           <Link href="/team/new">
             <Button> Create Team </Button>
           </Link>
         </div>
-        <div className="grid grid-cols-2  ">
+        <div className="md:grid flex flex-col  grid-cols-2  ">
           {teams.map((team) => (
             <Team team={team} key={team.id} onDelete={delete_Team} />
           ))}

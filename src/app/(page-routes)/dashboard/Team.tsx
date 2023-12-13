@@ -15,7 +15,7 @@ type ITeamProps = {
 function Team({ team, onDelete }: ITeamProps) {
   return (
     <div
-      className=" border bg-primary-foreground space-x-5 items-center flex-col flex justify-center mx-36 my-3 p-5"
+      className=" border bg-primary-foreground space-x-5 items-center flex-col flex justify-center mx-10  md:mx-36 my-3 p-5 "
       key={team.id}
     >
       <h3 className="text-2xl p-4"> {team.name}</h3>

@@ -73,10 +73,13 @@ async function Page(props: Props) {
       <Navbar className="fixed" />
       <h1 className="text-5xl font-extrabold text-center block p-7"> Games </h1>
       <div className=" ">
-        <div className="grid grid-cols-2">
+        <div className="md:grid flex flex-col  grid-cols-2">
           {data.length >= 0 &&
             data.map((game: game) => (
-              <div className="bg-primary-foreground p-4 mx-32 " key={game.id}>
+              <div
+                className="bg-primary-foreground p-4   md:mx-32  mx-8  my-4"
+                key={game.id}
+              >
                 <h3 className="text-2xl p-4 text-center"> {game.name}</h3>
 
                 <div className="flex justify-center gap-4">
