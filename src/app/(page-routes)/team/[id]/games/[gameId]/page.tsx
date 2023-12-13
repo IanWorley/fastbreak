@@ -3,9 +3,9 @@ import React from "react";
 
 function page() {
   return (
-    <div>
+    <main className="">
       <Navbar />
-    </div>
+    </main>
   );
 }
 
