@@ -8,7 +8,14 @@ interface Shot {
   made: boolean;
 }
 
-const BasketballCourt: React.FC = () => {
+interface BasketballCourtProps {
+  toggle: () => void;
+}
+
+const BasketballCourt: React.FC<BasketballCourtProps> = (
+  props: BasketballCourtProps
+) => {
+  const { toggle } = props;
   const [shots, setShots] = useState<Shot[]>([]);
   const [cursor, setCursor] = useState<{ x: number; y: number }>({
     x: 0,
@@ -59,6 +66,8 @@ const BasketballCourt: React.FC = () => {
 
     const newShot: Shot = { x, y, made };
     setShots([...shots, newShot]);
+    toggle();
+    console.log("w");
   };
 
   const updateCursor = (event: MouseEvent<HTMLCanvasElement>) => {
@@ -79,7 +88,9 @@ const BasketballCourt: React.FC = () => {
           ref={canvasRef}
           width={500}
           height={300}
-          onClick={() => recordShot(true)} // Record made shot on click
+          onClick={() => {
+            recordShot(true);
+          }} // Record made shot on click
           onMouseMove={updateCursor}
         />
       </div>
