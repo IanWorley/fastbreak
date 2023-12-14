@@ -1,10 +1,19 @@
-import { PrismaClient } from "@prisma/client";
+// lib/prisma.ts
 
-// Prevent multiple instances of Prisma Client in development
-declare const global: Global & { prisma?: PrismaClient };
+import { PrismaClient } from "@prisma/client/edge";
 
-const prisma = global.prisma || new PrismaClient();
+import { withAccelerate } from "@prisma/extension-accelerate";
 
-if (process.env.NODE_ENV === "development") global.prisma = prisma;
+const prismaClientSingleton = () => {
+  return new PrismaClient().$extends(withAccelerate());
+};
+
+declare global {
+  var prisma: undefined | ReturnType<typeof prismaClientSingleton>;
+}
+
+const prisma = globalThis.prisma ?? prismaClientSingleton();
 
 export default prisma;
+
+if (process.env.NODE_ENV !== "production") globalThis.prisma = prisma;

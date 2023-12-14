@@ -1,7 +1,7 @@
+"use client";
 import { Button } from "@/src/components/ui/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -11,6 +11,15 @@ import {
 } from "@/src/components/ui/dialog";
 import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
+import { Form } from "@/src/components/ui/form";
+import {
+  Select,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectValue,
+} from "@/src/components/ui/select";
+import { SelectContent, SelectTrigger } from "@radix-ui/react-select";
 
 interface DialogDemoProps {
   open: boolean;
@@ -23,23 +32,36 @@ function Model(props: DialogDemoProps) {
     <Dialog open={open} onOpenChange={toggle}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
-          <DialogDescription>
-            Make changes to your profile here. Click save when you're done.
-          </DialogDescription>
+          <DialogTitle>Register Shot</DialogTitle>
+          <DialogDescription>Mark the shot as made or missed</DialogDescription>
         </DialogHeader>
+
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="text-right">
-              Name
+              Player
             </Label>
             <Input id="name" value="Pedro Duarte" className="col-span-3" />
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
+          <div className="flex ">
             <Label htmlFor="username" className="text-right">
-              Username
+              Select
             </Label>
-            <Input id="username" value="@peduarte" className="col-span-3" />
+            <Select>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Select a fruit" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup className="bg-primary-foreground">
+                  <SelectLabel>Fruits</SelectLabel>
+                  <SelectItem value="apple">Apple</SelectItem>
+                  <SelectItem value="banana">Banana</SelectItem>
+                  <SelectItem value="blueberry">Blueberry</SelectItem>
+                  <SelectItem value="grapes">Grapes</SelectItem>
+                  <SelectItem value="pineapple">Pineapple</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </div>
         </div>
         <DialogFooter>

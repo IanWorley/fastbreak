@@ -9,7 +9,6 @@ import GameClient from "./GameClient";
 
 async function findGame(id: string) {
   "use server";
-  console.log(id);
 
   // covnert to number
   const gameId = z.coerce.number().parse(id);
@@ -27,11 +26,8 @@ async function findGame(id: string) {
       },
     });
 
-    const user = await currentUser();
+    return game;
 
-    if (user!.id === team?.users_id) {
-      return game;
-    }
     throw new Error("You do not have permission to view this page");
   } catch (error) {
     console.error(error);
