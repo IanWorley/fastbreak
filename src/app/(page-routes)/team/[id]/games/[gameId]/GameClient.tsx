@@ -38,16 +38,18 @@ function GameClient() {
   return (
     <div className="">
       <BasketballCourt toggle={toggle} />
-      <div className="grid grid-cols-2">
-        {data.map((player: player) => (
-          <div key={player.id} className="bg-primary-foreground p-4 mx-80 ">
-            <p> {player.name} </p>
-            <div className="flex  ">
-              <Button className=""> Made </Button>
-              <Button className=""> Missed </Button>
+      <div className="flex justify-center">
+        <div className="grid grid-cols-2 gap-7">
+          {data.map((player: player) => (
+            <div key={player.id} className="bg-primary-foreground p-10 ">
+              <p className="text-3xl p-4"> {player.name} </p>
+              <div className="flex space-x-4  ">
+                <Button className="w-full bg-green-500"> Made </Button>
+                <Button className="w-full bg-red-500"> Missed </Button>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
       <Modal open={isOpen} toggle={toggle} />

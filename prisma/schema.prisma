@@ -31,12 +31,13 @@ model game {
 }
 
 model player {
-  id     Int    @id @default(autoincrement())
-  name   String
-  jersey Int
-  team   team   @relation(fields: [teamId], references: [id])
-  teamId Int
-  shots  shot[]
+  id          Int    @id @default(autoincrement())
+  name        String
+  jersey      Int
+  team        team   @relation(fields: [teamId], references: [id])
+  teamId      Int
+  shots       shot[]
+  totalPoints Int    @default(0)
 }
 
 model shot {

@@ -82,7 +82,6 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <h2>Basketball Court</h2>
       <div>
         <canvas
           ref={canvasRef}
