@@ -42,6 +42,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import type { player } from "@prisma/client";
+import AddPlayerModel from "./AddPlayerModel";
 
 export type Payment = {
   id: string;
@@ -123,7 +124,13 @@ export function DataTableDemo() {
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
+  const [openModel, setOpenModel] = React.useState(false);
+
   const { id: teamId } = useParams<{ id: string }>();
+
+  const setStateForModel = () => {
+    setOpenModel(!openModel);
+  };
 
   const { isLoading, isError, data } = useQuery({
     queryKey: ["players"],
@@ -175,7 +182,15 @@ export function DataTableDemo() {
         />
 
         <div className="">
-          <Button className="mx-4"> Add player </Button>
+          <Button
+            className="mx-4"
+            onClick={() => {
+              setStateForModel();
+            }}
+          >
+            {" "}
+            Add player{" "}
+          </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="ml-auto">
@@ -278,6 +293,7 @@ export function DataTableDemo() {
           </Button>
         </div>
       </div>
+      <AddPlayerModel open={openModel} onOpenChange={setStateForModel} />
     </div>
   );
 }
