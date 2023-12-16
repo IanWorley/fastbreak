@@ -7,23 +7,7 @@ export async function POST(
   { params }: { params: { id: number } }
 ) {
   try {
-    const teamId = z.coerce.number().safeParse(params.id);
-
-    console.log(teamId);
-
-    if (!teamId.success) {
-      return new Response(
-        JSON.stringify({
-          message: "Team not found",
-        }),
-        {
-          status: 400,
-          headers: {
-            "content-type": "application/json",
-          },
-        }
-      );
-    }
+    const teamId = z.coerce.number().parse(params.id);
 
     if (!Req.body) {
       return new Response(
@@ -69,19 +53,29 @@ export async function POST(
       );
     }
 
-    const team = await prisma.team.findUniqueOrThrow({
-      where: {
-        id: teamId.data,
-      },
-    });
+    const jersey = z.coerce.number().safeParse(data.jersey);
+
+    if (!jersey.success) {
+      return new Response(
+        JSON.stringify({
+          message: "Jersey must be a number",
+        }),
+        {
+          status: 400,
+          headers: {
+            "content-type": "application/json",
+          },
+        }
+      );
+    }
 
     const player = await prisma.player.create({
       data: {
         name: data.name,
-        jersey: data.jersey,
+        jersey: jersey.data,
         team: {
           connect: {
-            id: teamId.data,
+            id: teamId,
           },
         },
       },
@@ -96,7 +90,7 @@ export async function POST(
   } catch (error) {
     return new Response(
       JSON.stringify({
-        message: "Team not found",
+        message: error.message,
       }),
       {
         status: 404,

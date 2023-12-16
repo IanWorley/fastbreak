@@ -113,6 +113,37 @@ export const columns: ColumnDef<player>[] = [
       <div className="lowercase ">{row.getValue("totalPoints")}</div>
     ),
   },
+  {
+    id: "actions",
+    enableHiding: false,
+    cell: ({ row }) => {
+      const { id, teamId } = row.original;
+
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-8 w-8 p-0">
+              <span className="sr-only">Open menu</span>
+              <DotsHorizontalIcon className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuItem
+              onClick={() => navigator.clipboard.writeText(id.toString())}
+            >
+              Delete
+            </DropdownMenuItem>
+            {
+              //   <DropdownMenuSeparator />
+              //  <DropdownMenuItem>Delete</DropdownMenuItem>
+              //<DropdownMenuItem>View payment details</DropdownMenuItem>
+            }
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
+    },
+  },
 ];
 
 export function DataTableDemo() {

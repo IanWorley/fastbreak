@@ -3,12 +3,13 @@ import { Button } from "@/src/components/ui/button";
 import { CardContent, CardFooter } from "@/src/components/ui/card";
 import { Input } from "@/src/components/ui/input";
 import { useMutation } from "@tanstack/react-query";
-import { useParams } from "next/navigation";
+import { redirect, useParams, useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 function FormNewPlayer() {
   const { id } = useParams();
   const { register, handleSubmit } = useForm();
+  const router = useRouter();
   const { mutateAsync } = useMutation({
     mutationKey: ["playerMutation"],
     mutationFn: async (data) => {
@@ -18,8 +19,8 @@ function FormNewPlayer() {
       });
       return data;
     },
-    onSuccess: () => {
-      alert("success");
+    onSuccess: async () => {
+      router.push(`/team/${id}/players`);
     },
     onError: () => {
       alert("error");
@@ -41,7 +42,7 @@ function FormNewPlayer() {
           <Input
             type="number"
             min={0}
-            {...(register("jersey"), { required: true })}
+            {...register("jersey", { required: true })}
           />
         </CardContent>
         <CardFooter className="flex justify-end">
