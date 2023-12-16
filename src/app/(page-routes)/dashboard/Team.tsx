@@ -15,15 +15,16 @@ type ITeamProps = {
 function Team({ team, onDelete }: ITeamProps) {
   return (
     <div
-      className=" border bg-primary-foreground space-x-5 items-center flex-col flex justify-center mx-10  md:mx-36 my-3 p-5 "
+      className=" flex flex-col border bg-primary-foreground mx-10  md:mx-36 my-3  "
       key={team.id}
     >
       <h3 className="text-2xl p-4"> {team.name}</h3>
-      <div className="flex justify-evenly gap-3 ">
-        <Link href={`/team/${team.id}/games`}>
-          <Button>View</Button>
+      <div className=" flex gap-3 w-full h-full ">
+        <Link className="  h-full  w-full" href={`/team/${team.id}/games`}>
+          <Button className="w-full h-full">View</Button>
         </Link>
         <Button
+          className="w-full h-full"
           variant={"destructive"}
           onClick={() => {
             onDelete(team.id);

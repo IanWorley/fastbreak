@@ -73,22 +73,32 @@ async function Page(props: Props) {
       <Navbar className="fixed" />
       <h1 className="text-5xl font-extrabold text-center block p-7"> Games </h1>
       <div className=" ">
-        <div className="md:grid flex flex-col  grid-cols-2">
+        <div className="md:grid grid-cols-2">
           {data.length >= 0 &&
             data.map((game: game) => (
               <div
-                className="bg-primary-foreground p-4   md:mx-32  mx-8  my-4"
+                className="bg-primary-foreground   md:mx-32  mx-8  my-4"
                 key={game.id}
               >
-                <h3 className="text-2xl p-4 text-center"> {game.name}</h3>
+                <h3 className="text-4xl font-semibold p-4 text-center">
+                  {" "}
+                  {game.name}
+                </h3>
 
-                <div className="flex justify-center gap-4">
-                  <Link href={`/team/${id}/games/${game.id}`}>
-                    <Button className="">View</Button>
+                <div className="flex flex-row  gap-3">
+                  <Link
+                    className="w-full h-full block"
+                    href={`/team/${id}/games/${game.id}`}
+                  >
+                    <Button className="w-full h-full">View</Button>
                   </Link>
-                  <form action={deleteGame}>
+                  <form className="w-full h-full" action={deleteGame}>
                     <input type="hidden" name="id" value={game.id} />
-                    <Button variant={"destructive"} type="submit">
+                    <Button
+                      variant={"destructive"}
+                      type="submit"
+                      className="w-full h-full"
+                    >
                       Delete
                     </Button>
                   </form>

@@ -42,7 +42,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import type { player } from "@prisma/client";
-import AddPlayerModel from "./AddPlayerModel";
+import Link from "next/link";
 
 export type Payment = {
   id: string;
@@ -123,14 +123,7 @@ export function DataTableDemo() {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
-
-  const [openModel, setOpenModel] = React.useState(false);
-
   const { id: teamId } = useParams<{ id: string }>();
-
-  const setStateForModel = () => {
-    setOpenModel(!openModel);
-  };
 
   const { isLoading, isError, data } = useQuery({
     queryKey: ["players"],
@@ -170,7 +163,7 @@ export function DataTableDemo() {
   }
 
   return (
-    <div className="w-full ">
+    <div className="min-w-screen min-h-screen ">
       <div className="flex justify-between items-center py-4">
         <Input
           placeholder="Filter by name"
@@ -182,15 +175,9 @@ export function DataTableDemo() {
         />
 
         <div className="">
-          <Button
-            className="mx-4"
-            onClick={() => {
-              setStateForModel();
-            }}
-          >
-            {" "}
-            Add player{" "}
-          </Button>
+          <Link href={`/team/${teamId}/players/new`}>
+            <Button className="mx-4"> Add player </Button>
+          </Link>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="ml-auto">
@@ -293,7 +280,6 @@ export function DataTableDemo() {
           </Button>
         </div>
       </div>
-      <AddPlayerModel open={openModel} onOpenChange={setStateForModel} />
     </div>
   );
 }
