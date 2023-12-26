@@ -20,6 +20,7 @@ import {
   SelectValue,
 } from "@/src/components/ui/select";
 import { SelectContent, SelectTrigger } from "@radix-ui/react-select";
+import { usePlayerForApp } from "@/src/state/PlayerForApp";
 
 interface DialogDemoProps {
   open: boolean;
@@ -28,6 +29,7 @@ interface DialogDemoProps {
 
 function Model(props: DialogDemoProps) {
   const { open, toggle } = props;
+  const { players } = usePlayerForApp((state) => state);
   return (
     <Dialog open={open} onOpenChange={toggle}>
       <DialogContent className="sm:max-w-[425px]">
@@ -54,11 +56,13 @@ function Model(props: DialogDemoProps) {
               <SelectContent>
                 <SelectGroup className="bg-primary-foreground">
                   <SelectLabel>Fruits</SelectLabel>
-                  <SelectItem value="apple">Apple</SelectItem>
-                  <SelectItem value="banana">Banana</SelectItem>
-                  <SelectItem value="blueberry">Blueberry</SelectItem>
-                  <SelectItem value="grapes">Grapes</SelectItem>
-                  <SelectItem value="pineapple">Pineapple</SelectItem>
+                  {players
+                    .filter((player) => player.isPlaying === true)
+                    .map((player) => (
+                      <SelectItem key={player.id} value={player.name}>
+                        {player.name}
+                      </SelectItem>
+                    ))}
                 </SelectGroup>
               </SelectContent>
             </Select>

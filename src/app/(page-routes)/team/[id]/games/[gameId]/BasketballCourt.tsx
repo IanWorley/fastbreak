@@ -6,6 +6,8 @@ interface Shot {
   x: number;
   y: number;
   made: boolean;
+  playerid: number;
+  gameid: number;
 }
 
 interface BasketballCourtProps {
@@ -64,10 +66,9 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
     const x = cursor.x;
     const y = cursor.y;
 
-    const newShot: Shot = { x, y, made };
-    setShots([...shots, newShot]);
+    // const newShot: Shot = { x, y, made };
+    // setShots([...shots, newShot]);
     toggle();
-    console.log("w");
   };
 
   const updateCursor = (event: MouseEvent<HTMLCanvasElement>) => {

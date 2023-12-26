@@ -39,17 +39,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/src/components/ui/table";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import type { player } from "@prisma/client";
 import Link from "next/link";
-
-export type Payment = {
-  id: string;
-  amount: number;
-  status: "pending" | "processing" | "success" | "failed";
-  email: string;
-};
 
 export const columns: ColumnDef<player>[] = [
   {
@@ -118,7 +111,6 @@ export const columns: ColumnDef<player>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       const { id, teamId } = row.original;
-
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -129,11 +121,7 @@ export const columns: ColumnDef<player>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(id.toString())}
-            >
-              Delete
-            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => {}}>Delete</DropdownMenuItem>
             {
               //   <DropdownMenuSeparator />
               //  <DropdownMenuItem>Delete</DropdownMenuItem>
@@ -316,3 +304,14 @@ export function DataTableDemo() {
 }
 
 export default DataTableDemo;
+
+interface props {
+  mutation: any;
+  children: React.ReactNode;
+}
+
+export const TableMutation = (props: props) => {
+  const { mutation, children } = props;
+  const MutationContext = React.createContext(mutation);
+  return <> {children} </>;
+};
