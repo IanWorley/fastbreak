@@ -1,14 +1,11 @@
 "use client";
-import React, { ReactNode, use, useState } from "react";
+import React, { useState } from "react";
 import BasketballCourt from "./BasketballCourt";
 import { useQuery } from "@tanstack/react-query";
 import Modal from "./Model";
 import { useParams } from "next/navigation";
 import { z } from "zod";
-import type { player } from "@prisma/client";
-import { Button } from "@/src/components/ui/button";
-import PlayerCard from "./PlayerCard";
-import { usePlayerForApp } from "@/src/state/PlayerForApp";
+import { usePlayerForApp } from "@/src/store/PlayerForApp";
 import PlayerList from "./PlayerList";
 
 function GameClient() {
@@ -51,7 +48,6 @@ function GameClient() {
           <PlayerList />
         </div>
       </div>
-
       <Modal open={isOpen} toggle={toggle} />
     </div>
   );

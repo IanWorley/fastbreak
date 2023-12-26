@@ -20,7 +20,7 @@ import {
   SelectValue,
 } from "@/src/components/ui/select";
 import { SelectContent, SelectTrigger } from "@radix-ui/react-select";
-import { usePlayerForApp } from "@/src/state/PlayerForApp";
+import { usePlayerForApp } from "@/src/store/PlayerForApp";
 
 interface DialogDemoProps {
   open: boolean;
@@ -59,7 +59,7 @@ function Model(props: DialogDemoProps) {
                   {players
                     .filter((player) => player.isPlaying === true)
                     .map((player) => (
-                      <SelectItem key={player.id} value={player.name}>
+                      <SelectItem key={player.id} value={player.id.toString()}>
                         {player.name}
                       </SelectItem>
                     ))}

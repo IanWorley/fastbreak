@@ -1,5 +1,5 @@
 import PlayerCard from "./PlayerCard";
-import { usePlayerForApp } from "@/src/state/PlayerForApp";
+import { usePlayerForApp } from "@/src/store/PlayerForApp";
 
 function PlayerList() {
   return (

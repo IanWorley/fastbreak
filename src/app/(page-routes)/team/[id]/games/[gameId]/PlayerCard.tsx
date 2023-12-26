@@ -3,7 +3,7 @@
 import { Button } from "@/src/components/ui/button";
 import type { player } from "@prisma/client";
 import { useState } from "react";
-import { usePlayerForApp } from "@/src/state/PlayerForApp";
+import { usePlayerForApp } from "@/src/store/PlayerForApp";
 
 interface PlayerCardProps {
   player: player;
