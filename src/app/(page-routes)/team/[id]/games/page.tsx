@@ -40,13 +40,17 @@ export async function deleteGame(formData: FormData) {
 export async function getGames(id: number) {
   "use server";
 
-  const team_id = z.coerce.number().parse(id);
+  const team_id = z.coerce.number().safeParse(id);
 
   const user = await currentUser();
 
+  if (team_id.success === false) {
+    throw new Error("Invalid Team Id");
+  }
+
   const team = await prisma.team.findUnique({
     where: {
-      id: team_id,
+      id: team_id.data,
     },
   });
 
@@ -55,15 +59,13 @@ export async function getGames(id: number) {
   }
   const games = prisma.game.findMany({
     where: {
-      teamId: team_id,
+      teamId: team_id.data,
     },
   });
   return games;
 }
 
 async function Page(props: Props) {
-  console.log(props.params.id);
-
   const { id } = props.params;
 
   const data = await getGames(id);

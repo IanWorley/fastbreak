@@ -11,7 +11,13 @@ import {
 } from "@/src/components/ui/dialog";
 import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
-import { Form } from "@/src/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "@/src/components/ui/form";
 import {
   Select,
   SelectGroup,
@@ -20,7 +26,9 @@ import {
   SelectValue,
 } from "@/src/components/ui/select";
 import { SelectContent, SelectTrigger } from "@radix-ui/react-select";
+import { useForm } from "react-hook-form";
 import { usePlayerForApp } from "@/src/store/PlayerForApp";
+import { RadioGroup, RadioGroupItem } from "@/src/components/ui/radio-group";
 
 interface DialogDemoProps {
   open: boolean;
@@ -28,6 +36,7 @@ interface DialogDemoProps {
 }
 
 function Model(props: DialogDemoProps) {
+  const form = useForm();
   const { open, toggle } = props;
   const { players } = usePlayerForApp((state) => state);
   return (
@@ -37,47 +46,70 @@ function Model(props: DialogDemoProps) {
           <DialogTitle>Register Shot</DialogTitle>
           <DialogDescription>Mark the shot as made or missed</DialogDescription>
         </DialogHeader>
-
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Player
-            </Label>
-            <Input id="name" value="Pedro Duarte" className="col-span-3" />
+        <Form {...form}>
+          <div className="flex">
+            <div className="flex-row">
+              <FormField
+                control={form.control}
+                name="player_id"
+                render={({ field }) => (
+                  <>
+                    <FormItem>
+                      <Label htmlFor="player_select">Player</Label>
+                      <Select name="player_select">
+                        <FormControl {...field}>
+                          <SelectTrigger className="w-[180px]">
+                            <SelectValue placeholder="Select a Player" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectGroup className="bg-primary-foreground">
+                            <SelectLabel>Players </SelectLabel>
+                            {players
+                              .filter((player) => player.isPlaying === true)
+                              .map((player) => (
+                                <SelectItem
+                                  key={player.id}
+                                  value={player.id.toString()}
+                                >
+                                  {player.name}
+                                </SelectItem>
+                              ))}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    </FormItem>
+                    <FormItem>
+                      <FormLabel>Shot Type</FormLabel>
+                      <FormControl {...field}>
+                        <RadioGroup>
+                          <FormControl>
+                            <FormLabel>Made</FormLabel>
+                            <RadioGroupItem value="Made"></RadioGroupItem>
+                          </FormControl>
+                          <FormControl>
+                            <FormLabel>Missed</FormLabel>
+                            <RadioGroupItem value="Missed"></RadioGroupItem>
+                          </FormControl>
+                        </RadioGroup>
+                      </FormControl>
+                    </FormItem>
+                  </>
+                )}
+              />
+            </div>
           </div>
-          <div className="flex ">
-            <Label htmlFor="username" className="text-right">
-              Select
-            </Label>
-            <Select>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Select a fruit" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup className="bg-primary-foreground">
-                  <SelectLabel>Fruits</SelectLabel>
-                  {players
-                    .filter((player) => player.isPlaying === true)
-                    .map((player) => (
-                      <SelectItem key={player.id} value={player.id.toString()}>
-                        {player.name}
-                      </SelectItem>
-                    ))}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-        <DialogFooter>
-          <Button
-            type="submit"
-            onClick={() => {
-              toggle();
-            }}
-          >
-            Save changes
-          </Button>
-        </DialogFooter>
+          <DialogFooter>
+            <Button
+              type="submit"
+              onClick={() => {
+                toggle();
+              }}
+            >
+              Save changes
+            </Button>
+          </DialogFooter>
+        </Form>
       </DialogContent>
     </Dialog>
   );
