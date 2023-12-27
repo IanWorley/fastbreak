@@ -53,48 +53,57 @@ function Model(props: DialogDemoProps) {
                 control={form.control}
                 name="player_id"
                 render={({ field }) => (
-                  <>
-                    <FormItem>
-                      <Label htmlFor="player_select">Player</Label>
-                      <Select name="player_select">
-                        <FormControl {...field}>
-                          <SelectTrigger className="w-[180px]">
-                            <SelectValue placeholder="Select a Player" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectGroup className="bg-primary-foreground">
-                            <SelectLabel>Players </SelectLabel>
-                            {players
-                              .filter((player) => player.isPlaying === true)
-                              .map((player) => (
-                                <SelectItem
-                                  key={player.id}
-                                  value={player.id.toString()}
-                                >
-                                  {player.name}
-                                </SelectItem>
-                              ))}
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                    </FormItem>
-                    <FormItem>
-                      <FormLabel>Shot Type</FormLabel>
+                  <FormItem className="p-4">
+                    <Label htmlFor="player_select">Player</Label>
+                    <Select name="player_select">
                       <FormControl {...field}>
-                        <RadioGroup>
+                        <SelectTrigger className="w-[180px]">
+                          <SelectValue placeholder="Select a Player" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectGroup className="bg-primary-foreground">
+                          <SelectLabel>Players </SelectLabel>
+                          {players
+                            .filter((player) => player.isPlaying === true)
+                            .map((player) => (
+                              <SelectItem
+                                key={player.id}
+                                value={player.id.toString()}
+                              >
+                                {player.name}
+                              </SelectItem>
+                            ))}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                name="shot_type"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Shot Type</FormLabel>
+                    <FormControl {...field}>
+                      <RadioGroup className="flex items-center">
+                        <FormItem>
                           <FormControl>
-                            <FormLabel>Made</FormLabel>
                             <RadioGroupItem value="Made"></RadioGroupItem>
                           </FormControl>
+                          <FormLabel>Made</FormLabel>
+                        </FormItem>
+                        <FormItem>
                           <FormControl>
-                            <FormLabel>Missed</FormLabel>
                             <RadioGroupItem value="Missed"></RadioGroupItem>
                           </FormControl>
-                        </RadioGroup>
-                      </FormControl>
-                    </FormItem>
-                  </>
+                          <FormLabel>Missed</FormLabel>
+                        </FormItem>
+                      </RadioGroup>
+                    </FormControl>
+                  </FormItem>
                 )}
               />
             </div>
