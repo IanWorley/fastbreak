@@ -11,7 +11,6 @@ import PlayerList from "./PlayerList";
 function GameClient() {
   const { id, gameId } = useParams<{ id: string; gameId: string }>();
   const teamId = z.coerce.number().parse(id);
-  console.log(gameId);
 
   const [xPos, setXPos] = useState(0);
   const [yPos, setYPos] = useState(0);
