@@ -29,7 +29,7 @@ import { useForm } from "react-hook-form";
 import { usePlayerForApp } from "@/src/store/PlayerForApp";
 import { RadioGroup, RadioGroupItem } from "@/src/components/ui/radio-group";
 import * as z from "zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface DialogDemoProps {
   open: boolean;
@@ -60,7 +60,7 @@ function Model(props: DialogDemoProps) {
     resolver: zodResolver(FormSchema),
   });
 
-  // const form = useForm();
+  const queryClient = useQueryClient();
 
   const { mutateAsync } = useMutation({
     mutationFn: async (data: Shot) => {
@@ -76,6 +76,14 @@ function Model(props: DialogDemoProps) {
           }),
         }
       );
+      if (!res.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return res.json();
+    },
+    onSuccess: () => {
+      form.reset();
+      queryClient.invalidateQueries({ queryKey: ["players"] });
     },
   });
 
