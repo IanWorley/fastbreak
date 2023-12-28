@@ -36,6 +36,8 @@ interface DialogDemoProps {
   toggle: () => void;
   x: number;
   y: number;
+  gameId: string;
+  teamid: string;
 }
 
 interface Shot {
@@ -51,7 +53,7 @@ const FormSchema = z.object({
 });
 
 function Model(props: DialogDemoProps) {
-  const { open, toggle, x, y } = props;
+  const { open, toggle, x, y, teamid, gameId } = props;
   const { players } = usePlayerForApp((state) => state);
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -62,13 +64,18 @@ function Model(props: DialogDemoProps) {
 
   const { mutateAsync } = useMutation({
     mutationFn: async (data: Shot) => {
-      const res = await fetch("/api/shot", {
-        method: "POST",
-        body: JSON.stringify(data),
-      });
-
-      const json = await res.json();
-      return json;
+      const res = await fetch(
+        `/api/team/${teamid}/players/${data.player_id}/shots`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            made: data.shot_attempt,
+            x: data.x,
+            y: data.y,
+            gameId: z.coerce.number().parse(gameId),
+          }),
+        }
+      );
     },
   });
 

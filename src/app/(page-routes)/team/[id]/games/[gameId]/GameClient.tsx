@@ -9,9 +9,9 @@ import { usePlayerForApp } from "@/src/store/PlayerForApp";
 import PlayerList from "./PlayerList";
 
 function GameClient() {
-  const { id } = useParams<{ id: string }>();
+  const { id, gameId } = useParams<{ id: string; gameId: string }>();
   const teamId = z.coerce.number().parse(id);
-  console.log(teamId);
+  console.log(gameId);
 
   const [xPos, setXPos] = useState(0);
   const [yPos, setYPos] = useState(0);
@@ -56,7 +56,14 @@ function GameClient() {
           <PlayerList />
         </div>
       </div>
-      <Modal open={isOpen} toggle={toggle} x={xPos} y={yPos} />
+      <Modal
+        gameId={gameId}
+        teamid={id}
+        open={isOpen}
+        toggle={toggle}
+        x={xPos}
+        y={yPos}
+      />
     </div>
   );
 }
