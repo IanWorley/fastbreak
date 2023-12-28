@@ -7,9 +7,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/src/components/ui/dialog";
-import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
 import {
   Form,
@@ -29,16 +27,64 @@ import { SelectContent, SelectTrigger } from "@radix-ui/react-select";
 import { useForm } from "react-hook-form";
 import { usePlayerForApp } from "@/src/store/PlayerForApp";
 import { RadioGroup, RadioGroupItem } from "@/src/components/ui/radio-group";
+import * as z from "zod";
+import { useMutation } from "@tanstack/react-query";
 
 interface DialogDemoProps {
   open: boolean;
   toggle: () => void;
 }
 
+interface Shot {
+  shot_attempt: boolean;
+  player_id: number;
+  x: number;
+  y: number;
+}
+
+const FormSchema = z.object({
+  player_id: z.coerce.number(),
+  shot_attempt: z.string(),
+});
+
+export function useDialogDemoForm() {
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+  });
+}
+
 function Model(props: DialogDemoProps) {
   const form = useForm();
   const { open, toggle } = props;
   const { players } = usePlayerForApp((state) => state);
+
+  const {} = useMutation({
+    mutationFn: async (data) => {
+      const res = await fetch("/api/shot", {
+        method: "POST",
+        body: JSON.stringify(data),
+      });
+
+      const json = await res.json();
+      return json;
+    },
+  });
+
+  function onSubmit(data: z.infer<typeof FormSchema>) {
+    const player_id = z.coerce.number().parse(data.player_id);
+    let shot = null as unknown as Shot;
+
+    if (data.shot_attempt.toLowerCase() === "made") {
+      shot = { shot_attempt: true, player_id: player_id, x: 0, y: 0 };
+    } else if (data.shot_attempt === "Missed") {
+      shot = { shot_attempt: false, player_id: player_id, x: 0, y: 0 };
+    } else {
+      throw new Error("Invalid shot attempt");
+    }
+
+    console.log(shot);
+  }
+
   return (
     <Dialog open={open} onOpenChange={toggle}>
       <DialogContent className="sm:max-w-[425px]">
@@ -82,7 +128,7 @@ function Model(props: DialogDemoProps) {
               />
 
               <FormField
-                name="shot_type"
+                name="shot_attempt"
                 control={form.control}
                 render={({ field }) => (
                   <FormItem>
@@ -125,3 +171,19 @@ function Model(props: DialogDemoProps) {
 }
 
 export default Model;
+function zodResolver(
+  FormSchema: z.ZodObject<
+    { player_id: z.ZodNumber; shot_attempt: z.ZodString },
+    "strip",
+    z.ZodTypeAny,
+    { player_id: number; shot_attempt: string },
+    { player_id: number; shot_attempt: string }
+  >
+):
+  | import("react-hook-form").Resolver<
+      { player_id: number; shot_attempt: string },
+      any
+    >
+  | undefined {
+  throw new Error("Function not implemented.");
+}
