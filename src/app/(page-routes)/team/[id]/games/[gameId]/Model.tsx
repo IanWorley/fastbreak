@@ -1,5 +1,6 @@
 "use client";
 import { Button } from "@/src/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Dialog,
   DialogContent,
@@ -33,6 +34,8 @@ import { useMutation } from "@tanstack/react-query";
 interface DialogDemoProps {
   open: boolean;
   toggle: () => void;
+  x: number;
+  y: number;
 }
 
 interface Shot {
@@ -43,23 +46,22 @@ interface Shot {
 }
 
 const FormSchema = z.object({
-  player_id: z.coerce.number(),
+  player_id: z.string(),
   shot_attempt: z.string(),
 });
 
-export function useDialogDemoForm() {
+function Model(props: DialogDemoProps) {
+  const { open, toggle, x, y } = props;
+  const { players } = usePlayerForApp((state) => state);
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
-}
 
-function Model(props: DialogDemoProps) {
-  const form = useForm();
-  const { open, toggle } = props;
-  const { players } = usePlayerForApp((state) => state);
+  // const form = useForm();
 
-  const {} = useMutation({
-    mutationFn: async (data) => {
+  const { mutateAsync } = useMutation({
+    mutationFn: async (data: Shot) => {
       const res = await fetch("/api/shot", {
         method: "POST",
         body: JSON.stringify(data),
@@ -75,12 +77,16 @@ function Model(props: DialogDemoProps) {
     let shot = null as unknown as Shot;
 
     if (data.shot_attempt.toLowerCase() === "made") {
-      shot = { shot_attempt: true, player_id: player_id, x: 0, y: 0 };
+      shot = { shot_attempt: true, player_id, x, y };
     } else if (data.shot_attempt === "Missed") {
-      shot = { shot_attempt: false, player_id: player_id, x: 0, y: 0 };
+      shot = { shot_attempt: false, player_id, x, y };
     } else {
       throw new Error("Invalid shot attempt");
     }
+
+    mutateAsync(shot);
+
+    toggle();
 
     console.log(shot);
   }
@@ -93,77 +99,80 @@ function Model(props: DialogDemoProps) {
           <DialogDescription>Mark the shot as made or missed</DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <div className="flex">
-            <div className="flex-row">
-              <FormField
-                control={form.control}
-                name="player_id"
-                render={({ field }) => (
-                  <FormItem className="p-4">
-                    <Label htmlFor="player_select">Player</Label>
-                    <Select name="player_select">
-                      <FormControl {...field}>
-                        <SelectTrigger className="w-[180px]">
-                          <SelectValue placeholder="Select a Player" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectGroup className="bg-primary-foreground">
-                          <SelectLabel>Players </SelectLabel>
-                          {players
-                            .filter((player) => player.isPlaying === true)
-                            .map((player) => (
-                              <SelectItem
-                                key={player.id}
-                                value={player.id.toString()}
-                              >
-                                {player.name}
-                              </SelectItem>
-                            ))}
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  </FormItem>
-                )}
-              />
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <div className="flex">
+              <div className="flex-row">
+                <FormField
+                  control={form.control}
+                  name="player_id"
+                  render={({ field }) => (
+                    <FormItem className="p-4">
+                      <Label htmlFor="player_select">Player</Label>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                        name="player_select"
+                      >
+                        <FormControl {...field}>
+                          <SelectTrigger className="w-[180px]">
+                            <SelectValue placeholder="Select a Player" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectGroup className="bg-primary-foreground">
+                            <SelectLabel>Players </SelectLabel>
+                            {players
+                              .filter((player) => player.isPlaying === true)
+                              .map((player) => (
+                                <SelectItem
+                                  key={player.id}
+                                  value={player.id.toString()}
+                                >
+                                  {player.name}
+                                </SelectItem>
+                              ))}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    </FormItem>
+                  )}
+                />
 
-              <FormField
-                name="shot_attempt"
-                control={form.control}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Shot Type</FormLabel>
-                    <FormControl {...field}>
-                      <RadioGroup className="flex items-center">
-                        <FormItem>
-                          <FormControl>
-                            <RadioGroupItem value="Made"></RadioGroupItem>
-                          </FormControl>
-                          <FormLabel>Made</FormLabel>
-                        </FormItem>
-                        <FormItem>
-                          <FormControl>
-                            <RadioGroupItem value="Missed"></RadioGroupItem>
-                          </FormControl>
-                          <FormLabel>Missed</FormLabel>
-                        </FormItem>
-                      </RadioGroup>
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
+                <FormField
+                  name="shot_attempt"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Shot Type</FormLabel>
+                      <FormControl>
+                        <RadioGroup
+                          onChange={field.onChange}
+                          defaultValue={field.value}
+                          className="flex items-center"
+                        >
+                          <FormItem>
+                            <FormControl>
+                              <RadioGroupItem value="Made"></RadioGroupItem>
+                            </FormControl>
+                            <FormLabel>Made</FormLabel>
+                          </FormItem>
+                          <FormItem>
+                            <FormControl>
+                              <RadioGroupItem value="Missed"></RadioGroupItem>
+                            </FormControl>
+                            <FormLabel>Missed</FormLabel>
+                          </FormItem>
+                        </RadioGroup>
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
             </div>
-          </div>
-          <DialogFooter>
-            <Button
-              type="submit"
-              onClick={() => {
-                toggle();
-              }}
-            >
-              Save changes
-            </Button>
-          </DialogFooter>
+            <DialogFooter>
+              <Button type="submit">Save changes</Button>
+            </DialogFooter>
+          </form>
         </Form>
       </DialogContent>
     </Dialog>
@@ -171,19 +180,3 @@ function Model(props: DialogDemoProps) {
 }
 
 export default Model;
-function zodResolver(
-  FormSchema: z.ZodObject<
-    { player_id: z.ZodNumber; shot_attempt: z.ZodString },
-    "strip",
-    z.ZodTypeAny,
-    { player_id: number; shot_attempt: string },
-    { player_id: number; shot_attempt: string }
-  >
-):
-  | import("react-hook-form").Resolver<
-      { player_id: number; shot_attempt: string },
-      any
-    >
-  | undefined {
-  throw new Error("Function not implemented.");
-}

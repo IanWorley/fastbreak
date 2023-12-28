@@ -12,12 +12,13 @@ interface Shot {
 
 interface BasketballCourtProps {
   toggle: () => void;
+  setCords: (x: number, y: number) => void;
 }
 
 const BasketballCourt: React.FC<BasketballCourtProps> = (
   props: BasketballCourtProps
 ) => {
-  const { toggle } = props;
+  const { toggle, setCords } = props;
   const [shots, setShots] = useState<Shot[]>([]);
   const [cursor, setCursor] = useState<{ x: number; y: number }>({
     x: 0,
@@ -68,6 +69,8 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
 
     // const newShot: Shot = { x, y, made };
     // setShots([...shots, newShot]);
+
+    setCords(x, y);
     toggle();
   };
 

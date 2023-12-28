@@ -13,6 +13,14 @@ function GameClient() {
   const teamId = z.coerce.number().parse(id);
   console.log(teamId);
 
+  const [xPos, setXPos] = useState(0);
+  const [yPos, setYPos] = useState(0);
+
+  const setCords = (x: number, y: number) => {
+    setXPos(x);
+    setYPos(y);
+  };
+
   const addPlayers = usePlayerForApp((state) => state.addPlayers);
 
   const { isLoading, data, isError } = useQuery({
@@ -42,13 +50,13 @@ function GameClient() {
 
   return (
     <div className="">
-      <BasketballCourt toggle={toggle} />
+      <BasketballCourt toggle={toggle} setCords={setCords} />
       <div className="flex justify-evenly">
         <div className="grid grid-cols-2 gap-16">
           <PlayerList />
         </div>
       </div>
-      <Modal open={isOpen} toggle={toggle} />
+      <Modal open={isOpen} toggle={toggle} x={xPos} y={yPos} />
     </div>
   );
 }
