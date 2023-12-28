@@ -87,8 +87,6 @@ function Model(props: DialogDemoProps) {
     mutateAsync(shot);
 
     toggle();
-
-    console.log(shot);
   }
 
   return (
