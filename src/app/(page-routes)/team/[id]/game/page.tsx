@@ -90,7 +90,7 @@ async function Page(props: Props) {
                 <div className="flex flex-row  gap-3">
                   <Link
                     className="w-full h-full block"
-                    href={`/team/${id}/games/${game.id}`}
+                    href={`/team/${id}/game/${game.id}`}
                   >
                     <Button className="w-full h-full">View</Button>
                   </Link>

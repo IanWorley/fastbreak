@@ -5,55 +5,47 @@ import { currentUser } from "@clerk/nextjs";
 
 export async function GET(
   Req: NextRequest,
-  { params }: { params: { id: number; playerid: number } }
+  { params }: { params: { teamid: number; playerid: number } }
 ) {
-  const teamId = z.coerce.number().safeParse(params.id);
+  const teamId = z.coerce.number().safeParse(params.teamid);
   const playerid = z.coerce.number().safeParse(params.playerid);
 
   try {
     if (!teamId.success || !playerid.success) {
-      return {
+      return new Response(JSON.stringify({ error: "Invalid teamId or  hi" }), {
         status: 400,
         headers: {
           "content-type": "application/json",
         },
-        body: JSON.stringify({ error: "Invalid teamId or playerid" }),
-      };
-    } else {
-      return {
-        status: 200,
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({ teamId: teamId.data, playerid: playerid.data }),
-      };
+      });
     }
+    return new Response(
+      JSON.stringify({ teamId: teamId.data, playerid: playerid.data })
+    );
   } catch (error) {
-    return {
+    return new Response(JSON.stringify({ error: error.message }), {
       status: 500,
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify({ error: error.message }),
-    };
+    });
   }
 }
 
 export async function POST(
   Req: NextRequest,
-  { params }: { params: { id: number; playerid: number } }
+  { params }: { params: { teamid: number; playerid: number } }
 ) {
-  const teamId = z.coerce.number().safeParse(params.id);
+  const teamId = z.coerce.number().safeParse(params.teamid);
   const playerid = z.coerce.number().safeParse(params.playerid);
 
   if (!Req.body) {
-    return {
+    return new Response(JSON.stringify({ error: "Missing body" }), {
       status: 400,
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify({ error: "Missing body" }),
-    };
+    });
   }
 
   const zodSchema = z.object({
@@ -127,6 +119,17 @@ export async function POST(
         points: requests.data.points,
         createdAt: new Date(),
         updatedAt: new Date(),
+      },
+    });
+
+    const player_total = await prisma.player.update({
+      where: {
+        id: player!.id,
+      },
+      data: {
+        totalPoints: {
+          increment: requests.data.points,
+        },
       },
     });
 

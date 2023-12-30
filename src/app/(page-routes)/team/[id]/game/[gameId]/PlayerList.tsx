@@ -3,7 +3,6 @@ import { usePlayerForApp } from "@/src/store/PlayerForApp";
 
 function PlayerList() {
   const { players } = usePlayerForApp((state) => state);
-  console.log(players);
 
   return (
     <>

@@ -104,10 +104,10 @@ export async function POST(
 
 export async function GET(
   Req: NextRequest,
-  { params }: { params: { id: number } }
+  { params }: { params: { teamid: number } }
 ) {
   try {
-    const teamId = z.coerce.number().safeParse(params.id);
+    const teamId = z.coerce.number().safeParse(params.teamid);
 
     if (!teamId.success) {
       return new Response(

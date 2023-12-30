@@ -87,6 +87,7 @@ function Model(props: DialogDemoProps) {
     onSuccess: () => {
       form.reset();
       queryClient.invalidateQueries({ queryKey: ["players"] });
+      queryClient.invalidateQueries({ queryKey: ["shots"] });
     },
   });
 

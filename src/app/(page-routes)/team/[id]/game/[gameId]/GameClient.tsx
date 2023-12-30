@@ -9,8 +9,9 @@ import { usePlayerForApp } from "@/src/store/PlayerForApp";
 import PlayerList from "./PlayerList";
 
 function GameClient() {
-  const { id, gameId } = useParams<{ id: string; gameId: string }>();
-  const teamId = z.coerce.number().parse(id);
+  const parms = useParams<{ id: string; gameId: string }>();
+  const teamId = z.coerce.number().parse(parms.id);
+  const gameId = z.coerce.number().parse(parms.gameId);
 
   const [xPos, setXPos] = useState(0);
   const [yPos, setYPos] = useState(0);
@@ -28,6 +29,10 @@ function GameClient() {
       const response = await fetch(`/api/team/${teamId}/players`);
 
       const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
 
       return data;
     },
@@ -49,15 +54,20 @@ function GameClient() {
 
   return (
     <div className="">
-      <BasketballCourt toggle={toggle} setCords={setCords} />
+      <BasketballCourt
+        toggle={toggle}
+        setCords={setCords}
+        gameId={gameId.toString()}
+        teamId={teamId}
+      />
       <div className="flex justify-evenly">
         <div className="grid grid-cols-2 gap-16">
           <PlayerList />
         </div>
       </div>
       <Modal
-        gameId={gameId}
-        teamid={id}
+        gameId={gameId.toString()}
+        teamid={teamId.toString()}
         open={isOpen}
         toggle={toggle}
         x={xPos}
