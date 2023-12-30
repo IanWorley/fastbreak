@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useRef, useEffect, MouseEvent } from "react";
 import courtBackground from "./Design.png"; // Replace with the actual path to your image
+import { useQuery } from "@tanstack/react-query";
 
 interface Shot {
   x: number;
@@ -19,6 +20,18 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
   props: BasketballCourtProps
 ) => {
   const { toggle, setCords } = props;
+
+  const {} = useQuery({
+    queryKey: ["shots"],
+    queryFn: async () => {
+      const res = await fetch(`/api/team/${teamid}/players/${playerid}/shots`);
+      if (!res.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return res.json();
+    },
+  });
+
   const [shots, setShots] = useState<Shot[]>([]);
   const [cursor, setCursor] = useState<{ x: number; y: number }>({
     x: 0,

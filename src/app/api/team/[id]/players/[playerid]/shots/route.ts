@@ -59,6 +59,7 @@ export async function POST(
   const zodSchema = z.object({
     x: z.number().min(0).max(499),
     y: z.number().min(0).max(499),
+    points: z.number().min(1).max(3),
     made: z.boolean(),
     gameId: z.number(),
   });
@@ -68,13 +69,12 @@ export async function POST(
   const requests = zodSchema.safeParse(jsonBody);
 
   if (!requests.success) {
-    return {
+    return new Response(JSON.stringify({ error: "Invalid body" }), {
       status: 400,
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify({ error: "Invalid body" }),
-    };
+    });
   }
 
   console.log(requests.data);
@@ -124,6 +124,9 @@ export async function POST(
         xPoint: requests.data.x,
         yPoint: requests.data.y,
         made: requests.data.made,
+        points: requests.data.points,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
     });
 

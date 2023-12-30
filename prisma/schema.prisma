@@ -41,14 +41,17 @@ model player {
 }
 
 model shot {
-  id       Int     @id @default(autoincrement())
-  team     team    @relation(fields: [teamId], references: [id])
-  teamId   Int
-  game     game    @relation(fields: [gameId], references: [id])
-  gameId   Int
-  player   player  @relation(fields: [playerId], references: [id])
-  playerId Int
-  xPoint   Int
-  yPoint   Int
-  made     Boolean
+  id        Int      @id @default(autoincrement())
+  team      team     @relation(fields: [teamId], references: [id])
+  teamId    Int
+  game      game     @relation(fields: [gameId], references: [id])
+  gameId    Int
+  player    player   @relation(fields: [playerId], references: [id])
+  playerId  Int
+  xPoint    Int
+  yPoint    Int
+  made      Boolean
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+  points    Int      @default(0)
 }

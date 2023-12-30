@@ -45,11 +45,13 @@ interface Shot {
   player_id: number;
   x: number;
   y: number;
+  points: string;
 }
 
 const FormSchema = z.object({
   player_id: z.string(),
   shot_attempt: z.string(),
+  points: z.string(),
 });
 
 function Model(props: DialogDemoProps) {
@@ -73,6 +75,7 @@ function Model(props: DialogDemoProps) {
             x: data.x,
             y: data.y,
             gameId: z.coerce.number().parse(gameId),
+            points: z.coerce.number().parse(data.points),
           }),
         }
       );
@@ -92,9 +95,9 @@ function Model(props: DialogDemoProps) {
     let shot = null as unknown as Shot;
 
     if (data.shot_attempt.toLowerCase() === "made") {
-      shot = { shot_attempt: true, player_id, x, y };
+      shot = { shot_attempt: true, player_id, x, y, points: data.points };
     } else if (data.shot_attempt === "Missed") {
-      shot = { shot_attempt: false, player_id, x, y };
+      shot = { shot_attempt: false, player_id, x, y, points: data.points };
     } else {
       throw new Error("Invalid shot attempt");
     }
@@ -174,6 +177,42 @@ function Model(props: DialogDemoProps) {
                               <RadioGroupItem value="Missed"></RadioGroupItem>
                             </FormControl>
                             <FormLabel>Missed</FormLabel>
+                          </FormItem>
+                        </RadioGroup>
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="points"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Points</FormLabel>
+                      <FormControl>
+                        <RadioGroup
+                          onChange={field.onChange}
+                          defaultValue={field.value as string}
+                          className="flex items-center"
+                        >
+                          <FormItem>
+                            <FormControl>
+                              <RadioGroupItem value={"1"}></RadioGroupItem>
+                            </FormControl>
+                            <FormLabel>Free throw</FormLabel>
+                          </FormItem>
+
+                          <FormItem>
+                            <FormControl>
+                              <RadioGroupItem value={"2"}></RadioGroupItem>
+                            </FormControl>
+                            <FormLabel>Two pointer</FormLabel>
+                          </FormItem>
+                          <FormItem>
+                            <FormControl>
+                              <RadioGroupItem value={"3"}></RadioGroupItem>
+                            </FormControl>
+                            <FormLabel>Three pointer</FormLabel>
                           </FormItem>
                         </RadioGroup>
                       </FormControl>
