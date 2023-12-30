@@ -30,6 +30,7 @@ import { usePlayerForApp } from "@/src/store/PlayerForApp";
 import { RadioGroup, RadioGroupItem } from "@/src/components/ui/radio-group";
 import * as z from "zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 interface DialogDemoProps {
   open: boolean;
@@ -88,6 +89,10 @@ function Model(props: DialogDemoProps) {
       form.reset();
       queryClient.invalidateQueries({ queryKey: ["players"] });
       queryClient.invalidateQueries({ queryKey: ["shots"] });
+    },
+    onError: (error) => {
+      console.log(error);
+      toast("Error", { type: "error" });
     },
   });
 
