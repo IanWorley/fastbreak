@@ -13,6 +13,7 @@ interface PlayerForAppState {
   updatePlayer: (player: player) => void;
   updatePlayers: (players: player[]) => void;
   addPlayers: (player: player[]) => void;
+  sortPlayers: () => void;
 }
 
 export const usePlayerForApp = create<PlayerForAppState>((set) => ({
@@ -30,14 +31,27 @@ export const usePlayerForApp = create<PlayerForAppState>((set) => ({
         (p) => !state.players.find((player) => player.id === p.id)
       );
 
+      const players = [
+        ...updatedPlayers,
+        ...newPlayers.map((player) => ({ ...player, isPlaying: false })),
+      ];
+
+      players.sort((a, b) => {
+        // Sort by isPlaying status first (put players who are playing first)
+        if (a.isPlaying !== b.isPlaying) {
+          return a.isPlaying ? -1 : 1;
+        }
+
+        // If isPlaying status is the same, sort alphabetically by name
+        return a.name.localeCompare(b.name);
+      });
+
       return {
-        players: [
-          ...updatedPlayers,
-          ...newPlayers.map((player) => ({ ...player, isPlaying: false })),
-        ],
+        players,
       };
     });
   },
+
   addPlayer: (player) =>
     set((state) => ({
       players: [...state.players, { ...player, isPlaying: false }],
@@ -71,4 +85,23 @@ export const usePlayerForApp = create<PlayerForAppState>((set) => ({
         p.id === player_id ? { ...p, isPlaying: !p.isPlaying } : p
       ),
     })),
+  sortPlayers: () => {
+    set((state) => {
+      const players = [...state.players];
+
+      players.sort((a, b) => {
+        // Sort by isPlaying status first (put players who are playing first)
+        if (a.isPlaying !== b.isPlaying) {
+          return a.isPlaying ? -1 : 1;
+        }
+
+        // If isPlaying status is the same, sort alphabetically by name
+        return a.name.localeCompare(b.name);
+      });
+
+      return {
+        players,
+      };
+    });
+  },
 }));

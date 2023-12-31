@@ -20,7 +20,7 @@ function Team({ team, onDelete }: ITeamProps) {
     >
       <h3 className="text-2xl p-4"> {team.name}</h3>
       <div className=" flex gap-3 w-full h-full ">
-        <Link className="  h-full  w-full" href={`/team/${team.id}/games`}>
+        <Link className="  h-full  w-full" href={`/team/${team.id}/game`}>
           <Button className="w-full h-full">View</Button>
         </Link>
         <Button

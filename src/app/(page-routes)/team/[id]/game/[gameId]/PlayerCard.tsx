@@ -13,10 +13,12 @@ function PlayerCard(props: PlayerCardProps) {
   const { player } = props;
   const [active, setActive] = useState(false);
   const toggleActive = usePlayerForApp((state) => state.togglePlayer);
+  const sortPlayers = usePlayerForApp((state) => state.sortPlayers);
 
   const toggle = () => {
     setActive(!active);
     toggleActive(player.id);
+    sortPlayers();
   };
 
   return (

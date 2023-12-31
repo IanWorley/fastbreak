@@ -1,10 +1,15 @@
 "use client";
 import React, { useState, useRef, useEffect, MouseEvent } from "react";
 import courtBackground from "./Design.png"; // Replace with the actual path to your image
+import { useQuery } from "@tanstack/react-query";
+import { useParams } from "next/navigation";
+import { set, z } from "zod";
+import { usePlayerForApp } from "@/src/store/PlayerForApp";
+import { shot } from "@prisma/client";
 
 interface Shot {
-  x: number;
-  y: number;
+  xPoint: number;
+  yPoint: number;
   made: boolean;
   playerid: number;
   gameid: number;
@@ -12,18 +17,51 @@ interface Shot {
 
 interface BasketballCourtProps {
   toggle: () => void;
+  setCords: (x: number, y: number) => void;
+  gameId: string;
+  teamId: number;
 }
 
 const BasketballCourt: React.FC<BasketballCourtProps> = (
   props: BasketballCourtProps
 ) => {
-  const { toggle } = props;
+  const { toggle, setCords, teamId, gameId } = props;
+
+  const players = usePlayerForApp((state) => state.players);
+
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["shots"],
+    queryFn: async () => {
+      const gameid = z.coerce.number().parse(gameId);
+      const res = await fetch(
+        `/api/team/${teamId}/games/${gameid}/players/shots`
+      );
+      if (!res.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return res.json();
+    },
+  });
+
   const [shots, setShots] = useState<Shot[]>([]);
   const [cursor, setCursor] = useState<{ x: number; y: number }>({
     x: 0,
     y: 0,
   });
+
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  useEffect(() => {
+    // TODO - display shots for players that are playing
+    if (!data) return;
+
+    const activeShots = data.filter((shots: shot) => {
+      const player = players.find((player) => player.id === shots.playerId);
+      return player && player.isPlaying;
+    });
+
+    setShots(activeShots);
+  }, [data, players]);
 
   useEffect(() => {
     const drawBasketballCourt = () => {
@@ -45,7 +83,7 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
       shots.forEach((shot, index) => {
         context.fillStyle = shot.made ? "#FF4500" : "#696969";
         context.beginPath();
-        context.arc(shot.x, shot.y, 5, 0, 2 * Math.PI);
+        context.arc(shot.xPoint, shot.yPoint, 5, 0, 2 * Math.PI);
         context.fill();
       });
 
@@ -68,6 +106,8 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
 
     // const newShot: Shot = { x, y, made };
     // setShots([...shots, newShot]);
+
+    setCords(x, y);
     toggle();
   };
 
@@ -99,9 +139,9 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
         <h3>Shot Log</h3>
         <ul>
           {shots.map((shot, index) => (
-            <li key={index}>{`Shot ${index + 1}: (${shot.x}, ${shot.y}) - ${
-              shot.made ? "Made" : "Missed"
-            }`}</li>
+            <li key={index}>{`Shot ${index + 1}: (${shot.xPoint}, ${
+              shot.yPoint
+            }) - ${shot.made ? "Made" : "Missed"}`}</li>
           ))}
         </ul>
       </div>

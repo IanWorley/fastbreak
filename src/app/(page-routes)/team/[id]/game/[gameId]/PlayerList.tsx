@@ -2,6 +2,8 @@ import PlayerCard from "./PlayerCard";
 import { usePlayerForApp } from "@/src/store/PlayerForApp";
 
 function PlayerList() {
+  const { players } = usePlayerForApp((state) => state);
+
   return (
     <>
       {usePlayerForApp((state) => state.players.length === 0) && (

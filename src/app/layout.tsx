@@ -5,6 +5,7 @@ import { cn } from "../lib/utils";
 import "./globals.css";
 import { ThemeProvider } from "../components/theme-provider";
 import { Providers } from "../components/providers";
+import { Toaster } from "sonner";
 
 export const fontSans = FontSans({
   subsets: ["latin"],
@@ -38,6 +39,7 @@ export default function RootLayout({
           >
             <Providers>{children}</Providers>
           </ThemeProvider>
+          <Toaster />
         </body>
       </html>
     </ClerkProvider>
