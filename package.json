@@ -25,9 +25,8 @@
     "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tabs": "^1.0.4",
-    "@tanstack/react-query": "^5.14.6",
+    "@tanstack/react-query": "^4.36.1",
     "@tanstack/react-query-devtools": "^5.13.5",
-    "@tanstack/react-query-next-experimental": "^5.14.6",
     "@tanstack/react-table": "^8.10.7",
     "axios": "^1.6.2",
     "class-variance-authority": "^0.7.0",
@@ -41,7 +40,14 @@
     "tailwind-merge": "^2.1.0",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.22.4",
-    "zustand": "^4.4.7"
+    "zustand": "^4.4.7",
+    "server-only": "^0.0.1",
+    "superjson": "^2.2.1",
+    "@trpc/client": "^10.43.6",
+    "@trpc/next": "^10.43.6",
+    "@trpc/react-query": "^10.43.6",
+    "@trpc/server": "^10.43.6",
+    "@t3-oss/env-nextjs": "^0.7.1"
   },
   "devDependencies": {
     "@types/node": "^20.10.5",
