@@ -3,7 +3,9 @@ import React, { useState, useRef, useEffect, MouseEvent } from "react";
 import courtBackground from "./Design.png"; // Replace with the actual path to your image
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
-import { z } from "zod";
+import { set, z } from "zod";
+import { usePlayerForApp } from "@/src/store/PlayerForApp";
+import { shot } from "@prisma/client";
 
 interface Shot {
   xPoint: number;
@@ -25,8 +27,7 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
 ) => {
   const { toggle, setCords, teamId, gameId } = props;
 
-  console.log(teamId);
-  console.log(gameId);
+  const players = usePlayerForApp((state) => state.players);
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["shots"],
@@ -51,9 +52,16 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
+    // TODO - display shots for players that are playing
     if (!data) return;
-    setShots(data);
-  }, [data]);
+
+    const activeShots = data.filter((shots: shot) => {
+      const player = players.find((player) => player.id === shots.playerId);
+      return player && player.isPlaying;
+    });
+
+    setShots(activeShots);
+  }, [data, players]);
 
   useEffect(() => {
     const drawBasketballCourt = () => {
