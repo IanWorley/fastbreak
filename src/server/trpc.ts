@@ -32,3 +32,5 @@ export const router = t.router;
 export const publicProcedure = t.procedure;
 // This means create a procedure that is protected by the isAuthed middleware
 export const protectedProcedure = t.procedure.use(isAuthed);
+
+export const proctectedTeamProcedure = t.procedure.use(isAuthed);

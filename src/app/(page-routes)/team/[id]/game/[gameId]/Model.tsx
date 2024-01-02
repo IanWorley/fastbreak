@@ -31,6 +31,7 @@ import { RadioGroup, RadioGroupItem } from "@/src/components/ui/radio-group";
 import * as z from "zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { trpc } from "@/src/app/_trpc/client";
 
 interface DialogDemoProps {
   open: boolean;
@@ -65,26 +66,7 @@ function Model(props: DialogDemoProps) {
 
   const queryClient = useQueryClient();
 
-  const { mutateAsync } = useMutation({
-    mutationFn: async (data: Shot) => {
-      const res = await fetch(
-        `/api/team/${teamid}/players/${data.player_id}/shots`,
-        {
-          method: "POST",
-          body: JSON.stringify({
-            made: data.shot_attempt,
-            x: data.x,
-            y: data.y,
-            gameId: z.coerce.number().parse(gameId),
-            points: z.coerce.number().parse(data.points),
-          }),
-        }
-      );
-      if (!res.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return res.json();
-    },
+  const { mutateAsync } = trpc.PlayerRouter.addShots.useMutation({
     onSuccess: () => {
       form.reset();
       queryClient.invalidateQueries({ queryKey: ["players"] });
@@ -95,6 +77,37 @@ function Model(props: DialogDemoProps) {
       toast("Error", { type: "error" });
     },
   });
+
+  // const { mutateAsync } = useMutation({
+  //   mutationFn: async (data: Shot) => {
+  //     const res = await fetch(
+  //       `/api/team/${teamid}/players/${data.player_id}/shots`,
+  //       {
+  //         method: "POST",
+  //         body: JSON.stringify({
+  //           made: data.shot_attempt,
+  //           x: data.x,
+  //           y: data.y,
+  //           gameId: z.coerce.number().parse(gameId),
+  //           points: z.coerce.number().parse(data.points),
+  //         }),
+  //       }
+  //     );
+  //     if (!res.ok) {
+  //       throw new Error("Network response was not ok");
+  //     }
+  //     return res.json();
+  //   },
+  //   onSuccess: () => {
+  //     form.reset();
+  //     queryClient.invalidateQueries({ queryKey: ["players"] });
+  //     queryClient.invalidateQueries({ queryKey: ["shots"] });
+  //   },
+  //   onError: (error) => {
+  //     console.log(error);
+  //     toast("Error", { type: "error" });
+  //   },
+  // });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
     const player_id = z.coerce.number().parse(data.player_id);
@@ -108,7 +121,15 @@ function Model(props: DialogDemoProps) {
       throw new Error("Invalid shot attempt");
     }
 
-    mutateAsync(shot);
+    mutateAsync({
+      teamId: teamid,
+      gameId: gameId,
+      playerId: data.player_id,
+      made: shot.shot_attempt,
+      x: x,
+      y: y,
+      points: data.points,
+    });
 
     toggle();
   }

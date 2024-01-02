@@ -6,6 +6,7 @@ import { currentUser } from "@clerk/nextjs";
 import { z } from "zod";
 import BasketBall from "./BasketballCourt";
 import GameClient from "./GameClient";
+import { serverClient } from "@/src/app/_trpc/serverClient";
 
 async function findGame(id: string) {
   "use server";
@@ -42,7 +43,10 @@ interface Props {
 
 async function page({ params }: Props) {
   const { id, gameId } = params;
-  const game = await findGame(gameId.toString());
+  const game = await serverClient.GameRouter.grabGame({
+    teamId: id.toString(),
+    gameId: gameId.toString(),
+  });
 
   if (game === null) {
     return <div>Game not found</div>;
