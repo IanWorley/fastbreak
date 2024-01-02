@@ -13,14 +13,14 @@ function FormNewPlayer() {
   const { mutateAsync } = useMutation({
     mutationKey: ["playerMutation"],
     mutationFn: async (data) => {
-      const response = await fetch(`/api/team/${id}/players`, {
+      const response = await fetch(`/api/team/${id}/player`, {
         method: "POST",
         body: JSON.stringify(data),
       });
       return data;
     },
     onSuccess: async () => {
-      router.push(`/team/${id}/players`);
+      router.push(`/team/${id}/player`);
     },
     onError: () => {
       alert("error");

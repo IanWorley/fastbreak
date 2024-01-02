@@ -194,7 +194,7 @@ export function DataTableDemo() {
         />
 
         <div className="">
-          <Link href={`/team/${teamId}/players/new`}>
+          <Link href={`/team/${teamId}/player/new`}>
             <Button className="mx-4"> Add player </Button>
           </Link>
           <DropdownMenu>

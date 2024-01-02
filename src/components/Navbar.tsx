@@ -6,10 +6,14 @@ import { ModeToggle } from "./ModeToggle";
 
 interface NavbarProps {
   className?: string;
+  viewingTeam?: boolean; // Add the 'viewingTeam' prop to the interface definition
+  teamId?: number;
 }
 
-async function Navbar({ className }: NavbarProps) {
+async function Navbar({ className, viewingTeam, teamId }: NavbarProps) {
+  // Import the 'viewingTeam' prop
   const user = await currentUser();
+
   return (
     <div
       className={
@@ -22,6 +26,12 @@ async function Navbar({ className }: NavbarProps) {
           <Link href="/dashboard" className=" ">
             Dashboard
           </Link>
+          {viewingTeam && (
+            <div className="p-4 flex-row flex items-center gap-10">
+              <Link href={`/team/${teamId}/game`}>Games</Link>
+            </div>
+          )}
+
           <UserButton afterSignOutUrl="http://localhost:3000/" />
         </div>
       ) : (
@@ -31,6 +41,7 @@ async function Navbar({ className }: NavbarProps) {
           </SignInButton>
         </div>
       )}
+
       <div className="p-4 items-center">
         <ModeToggle />
       </div>

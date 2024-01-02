@@ -45,7 +45,7 @@ async function Page(props: Props) {
 
   return (
     <main className="pt-20">
-      <Navbar className="fixed" />
+      <Navbar className="fixed" teamId={id} viewingTeam={true} />
       <h1 className="text-5xl font-extrabold text-center block p-7"> Games </h1>
       <div className=" ">
         <div className="md:grid grid-cols-2">

@@ -53,8 +53,8 @@ async function page({ params }: Props) {
   }
 
   return (
-    <main className="">
-      <Navbar />
+    <main className="pt-20">
+      <Navbar teamId={id} viewingTeam={true} className="fixed top-0 " />
       <h1 className="text-center text-4xl p-10 font-extrabold">{game!.name}</h1>
       <GameClient />
     </main>

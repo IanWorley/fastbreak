@@ -62,8 +62,11 @@
   "description": "This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).",
   "main": "next.config.js",
   "directories": {
-    "lib": "./src/lib"
+    "lib": "./src/lib",
+    "server": "./src/server"
   },
+
+
   "keywords": [],
   "author": "",
   "license": "ISC"
