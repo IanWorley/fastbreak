@@ -22,7 +22,7 @@ const isAuthed = t.middleware(async ({ next }) => {
 
   return next({
     ctx: {
-      user: user,
+      user,
     },
   });
 });
