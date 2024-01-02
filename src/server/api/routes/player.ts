@@ -3,6 +3,55 @@ import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
 export const playerRouter = router({
+  addPlayer: protectedProcedure
+    .input(
+      z.object({
+        name: z.string(),
+        jerseyNumber: z.number().positive(),
+        teamId: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const teamId = z.coerce.number().safeParse(input.teamId);
+      const jerseyNumber = z.coerce.number().safeParse(input.jerseyNumber);
+
+      if (!jerseyNumber.success) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Jersey number not found",
+        });
+      }
+
+      if (!teamId.success) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Team not found",
+        });
+      }
+
+      try {
+        const team = await ctx.db.team.findUniqueOrThrow({
+          where: {
+            id: teamId.data,
+            users_id: ctx.user.id,
+          },
+        });
+
+        return await ctx.db.player.create({
+          data: {
+            name: input.name,
+            jersey: jerseyNumber.data,
+            teamId: teamId.data,
+          },
+        });
+      } catch (e) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Team not found",
+        });
+      }
+    }),
+
   addShots: protectedProcedure
     .input(
       z.object({

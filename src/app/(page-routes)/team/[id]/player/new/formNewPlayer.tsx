@@ -1,4 +1,5 @@
 "use client";
+import { trpc } from "@/src/app/_trpc/client";
 import { Button } from "@/src/components/ui/button";
 import { CardContent, CardFooter } from "@/src/components/ui/card";
 import { Input } from "@/src/components/ui/input";
@@ -10,16 +11,30 @@ function FormNewPlayer() {
   const { id } = useParams();
   const { register, handleSubmit } = useForm();
   const router = useRouter();
-  const { mutateAsync } = useMutation({
-    mutationKey: ["playerMutation"],
-    mutationFn: async (data) => {
-      const response = await fetch(`/api/team/${id}/player`, {
-        method: "POST",
-        body: JSON.stringify(data),
-      });
-      return data;
-    },
-    onSuccess: async () => {
+  // const { mutateAsync } = useMutation({
+  //   mutationKey: ["playerMutation"],
+  //   mutationFn: async (data) => {
+  //     const response = await fetch(`/api/team/${id}/player`, {
+  //       method: "POST",
+  //       body: JSON.stringify(data),
+  //     });
+
+  //     if (!response.ok) {
+  //       throw new Error("Network response was not ok");
+  //     }
+
+  //     return data;
+  //   },
+  //   onSuccess: async () => {
+  //     router.push(`/team/${id}/player`);
+  //   },
+  //   onError: () => {
+  //     alert("error");
+  //   },
+  // });
+
+  const { mutateAsync } = trpc.PlayerRouter.addPlayer.useMutation({
+    onSuccess: () => {
       router.push(`/team/${id}/player`);
     },
     onError: () => {
@@ -27,7 +42,13 @@ function FormNewPlayer() {
     },
   });
 
-  const onSubmit: SubmitHandler<any> = (data) => mutateAsync(data);
+  const onSubmit: SubmitHandler<any> = (data) => {
+    data.jerseyNumber = parseInt(data.jerseyNumber);
+
+    const info = { ...data, teamId: id };
+    console.log(info);
+    mutateAsync(info);
+  };
 
   return (
     <div>
@@ -42,7 +63,7 @@ function FormNewPlayer() {
           <Input
             type="number"
             min={0}
-            {...register("jersey", { required: true })}
+            {...register("jerseyNumber", { required: true })}
           />
         </CardContent>
         <CardFooter className="flex justify-end">

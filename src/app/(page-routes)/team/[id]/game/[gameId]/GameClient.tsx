@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import BasketballCourt from "./BasketballCourt";
-import { useQuery } from "@tanstack/react-query";
 import Modal from "./Model";
 import { useParams } from "next/navigation";
 import { z } from "zod";
