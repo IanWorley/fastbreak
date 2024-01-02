@@ -4,7 +4,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { cn } from "../lib/utils";
 import "./globals.css";
 import { ThemeProvider } from "../components/theme-provider";
-import { Providers } from "../components/providers";
+import Provider from "./_trpc/provider";
 import { Toaster } from "sonner";
 
 export const fontSans = FontSans({
@@ -37,7 +37,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <Providers>{children}</Providers>
+            <Provider>{children}</Provider>
           </ThemeProvider>
           <Toaster />
         </body>

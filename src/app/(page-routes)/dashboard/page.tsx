@@ -5,17 +5,7 @@ import { currentUser } from "@clerk/nextjs";
 import { revalidatePath } from "next/cache";
 import Link from "next/link";
 import Team from "./Team";
-
-async function getTeams() {
-  const user = await currentUser();
-
-  const teams = await prisma.team.findMany({
-    where: {
-      users_id: user!.id,
-    },
-  });
-  return teams;
-}
+import { serverClient } from "../../_trpc/serverClient";
 
 export async function delete_Team(id: number) {
   "use server";
@@ -28,7 +18,7 @@ export async function delete_Team(id: number) {
 }
 
 async function page() {
-  const teams = await getTeams();
+  const teams = await serverClient.TeamRouter.grabTeams();
 
   return (
     <main className="overflow-y-scroll pt-20">
@@ -41,6 +31,12 @@ async function page() {
           </Link>
         </div>
         <div className="md:grid flex flex-col  grid-cols-2  ">
+          {teams.length === 0 && (
+            <div className="flex flex-col items-center justify-center">
+              <p className="text-3xl font-bold">No Teams</p>
+            </div>
+          )}
+
           {teams.map((team) => (
             <Team team={team} key={team.id} onDelete={delete_Team} />
           ))}

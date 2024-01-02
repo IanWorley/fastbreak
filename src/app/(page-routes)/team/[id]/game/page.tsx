@@ -7,6 +7,7 @@ import { revalidatePath } from "next/cache";
 import type { game } from "@prisma/client";
 import { Button } from "@/src/components/ui/button";
 import Link from "next/link";
+import { serverClient } from "@/src/app/_trpc/serverClient";
 interface Props {
   params: { id: number };
 }
@@ -37,38 +38,10 @@ export async function deleteGame(formData: FormData) {
   revalidatePath("/dashboard");
 }
 
-export async function getGames(id: number) {
-  "use server";
-
-  const team_id = z.coerce.number().safeParse(id);
-
-  const user = await currentUser();
-
-  if (team_id.success === false) {
-    throw new Error("Invalid Team Id");
-  }
-
-  const team = await prisma.team.findUnique({
-    where: {
-      id: team_id.data,
-    },
-  });
-
-  if (team?.users_id !== user!.id) {
-    throw new Error("You do not have permission to view this page");
-  }
-  const games = prisma.game.findMany({
-    where: {
-      teamId: team_id.data,
-    },
-  });
-  return games;
-}
-
 async function Page(props: Props) {
   const { id } = props.params;
 
-  const data = await getGames(id);
+  const data = await serverClient.GameRouter.grabGames(id.toString());
 
   return (
     <main className="pt-20">

@@ -7,6 +7,8 @@ import { useParams } from "next/navigation";
 import { z } from "zod";
 import { usePlayerForApp } from "@/src/store/PlayerForApp";
 import PlayerList from "./PlayerList";
+import { appRouter } from "@/src/server";
+import { trpc } from "@/src/app/_trpc/client";
 
 function GameClient() {
   const parms = useParams<{ id: string; gameId: string }>();
@@ -23,20 +25,12 @@ function GameClient() {
 
   const addPlayers = usePlayerForApp((state) => state.addPlayers);
 
-  const { isLoading, data, isError } = useQuery({
-    queryKey: ["players"],
-    queryFn: async () => {
-      const response = await fetch(`/api/team/${teamId}/players`);
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      return data;
-    },
-  });
+  const { data, isLoading, isError } = trpc.TeamRouter.grabPlayers.useQuery(
+    teamId.toString(),
+    {
+      queryKey: ["players"],
+    }
+  );
 
   // is open state
   const [isOpen, setIsOpen] = useState(false);

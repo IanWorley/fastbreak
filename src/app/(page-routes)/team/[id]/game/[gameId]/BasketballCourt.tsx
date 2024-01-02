@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 import { set, z } from "zod";
 import { usePlayerForApp } from "@/src/store/PlayerForApp";
 import { shot } from "@prisma/client";
+import { trpc } from "@/src/app/_trpc/client";
 
 interface Shot {
   xPoint: number;
@@ -29,19 +30,16 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
 
   const players = usePlayerForApp((state) => state.players);
 
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["shots"],
-    queryFn: async () => {
-      const gameid = z.coerce.number().parse(gameId);
-      const res = await fetch(
-        `/api/team/${teamId}/games/${gameid}/players/shots`
-      );
-      if (!res.ok) {
-        throw new Error("Network response was not ok");
+  const { data, isLoading, isError } =
+    trpc.GameRouter.grabPlayersShotsFromGame.useQuery(
+      {
+        teamId: teamId.toString(),
+        gameId: gameId.toString(),
+      },
+      {
+        queryKey: ["shots"],
       }
-      return res.json();
-    },
-  });
+    );
 
   const [shots, setShots] = useState<Shot[]>([]);
   const [cursor, setCursor] = useState<{ x: number; y: number }>({
@@ -55,7 +53,7 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
     // TODO - display shots for players that are playing
     if (!data) return;
 
-    const activeShots = data.filter((shots: shot) => {
+    const activeShots = data.filter((shots) => {
       const player = players.find((player) => player.id === shots.playerId);
       return player && player.isPlaying;
     });
