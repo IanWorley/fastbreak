@@ -25,10 +25,7 @@ function GameClient() {
   const addPlayers = usePlayerForApp((state) => state.addPlayers);
 
   const { data, isLoading, isError } = trpc.TeamRouter.grabPlayers.useQuery(
-    teamId.toString(),
-    {
-      queryKey: ["players"],
-    }
+    teamId.toString()
   );
 
   // is open state

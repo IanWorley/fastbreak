@@ -31,15 +31,10 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
   const players = usePlayerForApp((state) => state.players);
 
   const { data, isLoading, isError } =
-    trpc.GameRouter.grabPlayersShotsFromGame.useQuery(
-      {
-        teamId: teamId.toString(),
-        gameId: gameId.toString(),
-      },
-      {
-        queryKey: ["shots"],
-      }
-    );
+    trpc.GameRouter.grabPlayersShotsFromGame.useQuery({
+      teamId: teamId.toString(),
+      gameId: gameId.toString(),
+    });
 
   const [shots, setShots] = useState<Shot[]>([]);
   const [cursor, setCursor] = useState<{ x: number; y: number }>({
