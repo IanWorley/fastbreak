@@ -64,14 +64,15 @@ function Model(props: DialogDemoProps) {
     resolver: zodResolver(FormSchema),
   });
 
-  const queryClient = useQueryClient();
+  const utils = trpc.useUtils();
 
   const { mutateAsync } = trpc.PlayerRouter.addShots.useMutation({
     onSuccess: () => {
       form.reset();
-      queryClient.invalidateQueries({ queryKey: ["players"] });
-      queryClient.invalidateQueries({ queryKey: ["shots"] });
+      utils.TeamRouter.grabPlayers.invalidate();
+      utils.GameRouter.grabPlayersShotsFromGame.invalidate();
     },
+
     onError: (error) => {
       console.log(error);
       toast("Error", { type: "error" });
