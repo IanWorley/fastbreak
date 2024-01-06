@@ -4,7 +4,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { cn } from "../lib/utils";
 import "./globals.css";
 import { ThemeProvider } from "../components/theme-provider";
-import Provider from "./_trpc/provider";
+import Provider from "./_trpc/Provider";
 import { Toaster } from "sonner";
 
 export const fontSans = FontSans({

@@ -27,7 +27,7 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tabs": "^1.0.4",
     "@tanstack/react-query": "^4.36.1",
-    "@tanstack/react-query-devtools": "^5.17.0",
+    "@tanstack/react-query-devtools": "^4.0.0",
     "@tanstack/react-table": "^8.11.2",
     "@trpc/client": "^10.45.0",
     "@trpc/react-query": "^10.45.0",
@@ -65,8 +65,6 @@
     "lib": "./src/lib",
     "server": "./src/server"
   },
-
-
   "keywords": [],
   "author": "",
   "license": "ISC"
