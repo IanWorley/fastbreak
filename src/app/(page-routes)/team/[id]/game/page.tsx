@@ -82,7 +82,7 @@ async function Page(props: Props) {
             ))}
         </div>
         <div className="fixed z-10 p-4 right-0 bottom-0 m-4">
-          <Link href={`/team/${id}/games/new `}>
+          <Link href={`/team/${id}/game/new `}>
             <Button className="" variant={"secondary"}>
               Add Game
             </Button>

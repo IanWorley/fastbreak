@@ -35,7 +35,7 @@ export async function createGame(form: FormData) {
         team: { connect: { id: team.id } },
       },
     });
-    redirect(`/team/${id}/games`);
+    redirect(`/team/${id}/game`);
   } else {
     redirect("/dashboard");
   }
