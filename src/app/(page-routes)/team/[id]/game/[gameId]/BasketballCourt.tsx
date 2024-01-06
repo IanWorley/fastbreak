@@ -45,7 +45,6 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
-    // TODO - display shots for players that are playing
     if (!data) return;
 
     const activeShots = data.filter((shots) => {

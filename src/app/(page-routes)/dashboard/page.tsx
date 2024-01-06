@@ -26,9 +26,16 @@ async function page() {
       <div className="">
         <div className="flex sm:flex-row  flex-col   p-10 justify-evenly items-center ">
           <p className="text-3xl font-bold  ">Your Teams </p>
-          <Link href="/team/new">
-            <Button> Create Team </Button>
-          </Link>
+          {teams.length > 1 ? (
+            <Link href="/team/new">
+              <Button> Create Team </Button>
+            </Link>
+          ) : (
+            <Button variant={"ghost"} disabled={true}>
+              {" "}
+              Create Team{" "}
+            </Button>
+          )}
         </div>
         <div className="md:grid flex flex-col  grid-cols-2  ">
           {teams.length === 0 && (
