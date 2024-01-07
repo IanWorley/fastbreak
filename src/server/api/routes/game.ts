@@ -1,13 +1,31 @@
 import { router, protectedProcedure } from "@/src/server/trpc";
-import { team } from "@prisma/client";
 import { TRPCClientError } from "@trpc/client";
 import { TRPCError } from "@trpc/server";
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
 import { z } from "zod";
 
 export const gameRouter = router({
   grabGames: protectedProcedure
     .input(z.string())
     .query(async ({ ctx, input }) => {
+      const ratelimit = new Ratelimit({
+        redis: Redis.fromEnv(),
+        limiter: Ratelimit.slidingWindow(10, "10 s"),
+        analytics: false,
+
+        prefix: "@upstash/ratelimit",
+      });
+
+      const { success } = await ratelimit.limit(ctx.user.id);
+
+      if (!success) {
+        throw new TRPCError({
+          code: "TOO_MANY_REQUESTS",
+          message: "Too many requests",
+        });
+      }
+
       const teamId = z.coerce.number().safeParse(input);
 
       if (!teamId.success) {
@@ -40,6 +58,23 @@ export const gameRouter = router({
   grabGame: protectedProcedure
     .input(z.object({ gameId: z.string(), teamId: z.string() }))
     .query(async ({ ctx, input }) => {
+      const ratelimit = new Ratelimit({
+        redis: Redis.fromEnv(),
+        limiter: Ratelimit.slidingWindow(10, "10 s"),
+        analytics: false,
+
+        prefix: "@upstash/ratelimit",
+      });
+
+      const { success } = await ratelimit.limit(ctx.user.id);
+
+      if (!success) {
+        throw new TRPCError({
+          code: "TOO_MANY_REQUESTS",
+          message: "Too many requests",
+        });
+      }
+
       const gameId = z.coerce.number().safeParse(input.gameId);
       const teamId = z.coerce.number().safeParse(input.teamId);
 
@@ -80,6 +115,23 @@ export const gameRouter = router({
   grabPlayersShotsFromGame: protectedProcedure
     .input(z.object({ gameId: z.string(), teamId: z.string() }))
     .query(async ({ ctx, input }) => {
+      const ratelimit = new Ratelimit({
+        redis: Redis.fromEnv(),
+        limiter: Ratelimit.slidingWindow(10, "10 s"),
+        analytics: false,
+
+        prefix: "@upstash/ratelimit",
+      });
+
+      const { success } = await ratelimit.limit(ctx.user.id);
+
+      if (!success) {
+        throw new TRPCError({
+          code: "TOO_MANY_REQUESTS",
+          message: "Too many requests",
+        });
+      }
+
       const gameId = z.coerce.number().safeParse(input.gameId);
       const teamId = z.coerce.number().safeParse(input.teamId);
 

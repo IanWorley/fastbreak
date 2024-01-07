@@ -13,10 +13,27 @@ import { currentUser } from "@clerk/nextjs";
 import { redirect, useParams } from "next/navigation";
 import { z } from "zod";
 import NewTeamFormClient from "./NewTeamFormClient";
+import { Redis } from "@upstash/redis";
+import { Ratelimit } from "@upstash/ratelimit";
 
 export async function createGame(form: FormData) {
   "use server";
+
   const user = await currentUser();
+
+  const ratelimit = new Ratelimit({
+    redis: Redis.fromEnv(),
+    limiter: Ratelimit.slidingWindow(10, "10 s"),
+    analytics: false,
+
+    prefix: "@upstash/ratelimit",
+  });
+
+  const { success } = await ratelimit.limit(user!.id);
+
+  if (!success) {
+    throw Error("Too many requests");
+  }
 
   const id = z.coerce.number().parse(form.get("teamId"));
 

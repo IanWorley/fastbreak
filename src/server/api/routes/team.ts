@@ -1,9 +1,28 @@
 import { router, protectedProcedure } from "@/src/server/trpc";
 import { TRPCError } from "@trpc/server";
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
 import { z } from "zod";
 
 export const teamsRouter = router({
   grabTeams: protectedProcedure.query(async ({ ctx, input }) => {
+    const ratelimit = new Ratelimit({
+      redis: Redis.fromEnv(),
+      limiter: Ratelimit.slidingWindow(10, "10 s"),
+      analytics: false,
+
+      prefix: "@upstash/ratelimit",
+    });
+
+    const { success } = await ratelimit.limit(ctx.user.id);
+
+    if (!success) {
+      throw new TRPCError({
+        code: "TOO_MANY_REQUESTS",
+        message: "Too many requests",
+      });
+    }
+
     return await ctx.db.team.findMany({
       where: {
         users_id: ctx.user.id,
@@ -13,6 +32,23 @@ export const teamsRouter = router({
   grabPlayers: protectedProcedure
     .input(z.string())
     .query(async ({ ctx, input }) => {
+      const ratelimit = new Ratelimit({
+        redis: Redis.fromEnv(),
+        limiter: Ratelimit.slidingWindow(10, "10 s"),
+        analytics: false,
+
+        prefix: "@upstash/ratelimit",
+      });
+
+      const { success } = await ratelimit.limit(ctx.user.id);
+
+      if (!success) {
+        throw new TRPCError({
+          code: "TOO_MANY_REQUESTS",
+          message: "Too many requests",
+        });
+      }
+
       const teamId = z.coerce.number().safeParse(input);
 
       if (!teamId.success) {
