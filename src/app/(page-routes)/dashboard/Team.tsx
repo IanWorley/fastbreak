@@ -2,17 +2,20 @@
 
 import { Button } from "@/src/components/ui/button";
 import Link from "next/link";
+import { trpc } from "../../_trpc/client";
 
 type ITeamProps = {
   team: {
     id: number;
     name: string;
   };
-
-  onDelete: (id: number) => void;
 };
 
-function Team({ team, onDelete }: ITeamProps) {
+function Team(props: ITeamProps) {
+  const { team } = props;
+
+  const { mutateAsync } = trpc.TeamRouter.deleteTeam.useMutation();
+
   return (
     <div
       className=" flex flex-col border bg-primary-foreground mx-10  md:mx-36 my-3  "
@@ -27,7 +30,7 @@ function Team({ team, onDelete }: ITeamProps) {
           className="w-full h-full"
           variant={"destructive"}
           onClick={() => {
-            onDelete(team.id);
+            mutateAsync(team.id.toString());
           }}
         >
           Delete

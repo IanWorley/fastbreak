@@ -7,35 +7,6 @@ import Link from "next/link";
 import Team from "./Team";
 import { serverClient } from "../../_trpc/serverClient";
 
-export async function delete_Team(id: number) {
-  "use server";
-
-  const shots = await prisma.shot.deleteMany({
-    where: {
-      teamId: id,
-    },
-  });
-
-  const players = await prisma.player.deleteMany({
-    where: {
-      teamId: id,
-    },
-  });
-
-  const games = await prisma.game.deleteMany({
-    where: {
-      teamId: id,
-    },
-  });
-
-  const team = await prisma.team.delete({
-    where: {
-      id: id,
-    },
-  });
-  revalidatePath("/dashboard");
-}
-
 async function page() {
   const teams = await serverClient.TeamRouter.grabTeams();
   console.log(teams.length);
@@ -65,7 +36,7 @@ async function page() {
           )}
 
           {teams.map((team) => (
-            <Team team={team} key={team.id} onDelete={delete_Team} />
+            <Team team={team} key={team.id} />
           ))}
         </div>
       </div>

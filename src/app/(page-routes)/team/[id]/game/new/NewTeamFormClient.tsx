@@ -1,17 +1,14 @@
 "use client";
 
+import { trpc } from "@/src/app/_trpc/client";
 import { Button } from "@/src/components/ui/button";
 import { CardContent, CardFooter } from "@/src/components/ui/card";
 import { Input } from "@/src/components/ui/input";
 import { useParams } from "next/navigation";
 
-interface INewFormClientsProps {
-  onSubmit: (formData: FormData) => Promise<void>;
-}
-
-function NewTeamFormClient(props: INewFormClientsProps) {
+function NewTeamFormClient() {
   const { id } = useParams();
-  const { onSubmit } = props;
+
   return (
     <form className="" action={onSubmit}>
       <CardContent>
