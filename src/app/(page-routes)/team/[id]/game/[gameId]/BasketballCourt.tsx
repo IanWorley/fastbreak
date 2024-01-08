@@ -52,7 +52,13 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
       return player && player.isPlaying;
     });
 
-    setShots(activeShots);
+    setShots(
+      activeShots.map((shot) => ({
+        ...shot,
+        playerid: shot.playerId,
+        gameid: shot.gameId,
+      }))
+    );
   }, [data, players]);
 
   useEffect(() => {

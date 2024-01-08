@@ -11,9 +11,8 @@ import {
   FormLabel,
 } from "@/src/components/ui/form";
 import { Input } from "@/src/components/ui/input";
-import { revalidatePath } from "next/cache";
 import { useParams } from "next/navigation";
-import router from "next/router";
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -21,10 +20,14 @@ import { z } from "zod";
 function NewTeamFormClient() {
   const { id } = useParams();
 
+  const router = useRouter();
+
+  const teamId = z.coerce.number().parse(id);
+
+  // TODO FIND A WAY TO change route after mutation
   const { mutateAsync } = trpc.GameRouter.createGame.useMutation({
     onSuccess: () => {
-      router.push(`/team/${id}/game`);
-      revalidatePath(`/team/${id}/game`);
+      router.push(`/team/${teamId}/game`);
     },
     onError: (err) => {
       console.log(err);
@@ -45,7 +48,7 @@ function NewTeamFormClient() {
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     const res = await mutateAsync({
       name: data.gameName,
-      teamId: z.number().parse(id),
+      teamId: teamId,
     });
   };
 

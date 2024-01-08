@@ -74,6 +74,7 @@ export const playerRouter = router({
   addShots: protectedProcedure
     .input(
       z.object({
+        points: z.number().min(0).max(3),
         playerId: z.string(),
         teamId: z.string(),
         made: z.boolean(),
@@ -149,6 +150,13 @@ export const playerRouter = router({
         });
       }
 
+      if (!input.points) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Points not found",
+        });
+      }
+
       try {
         const team = await ctx.db.team.findUniqueOrThrow({
           where: {
@@ -179,6 +187,7 @@ export const playerRouter = router({
             yPoint: y.data,
             gameId: gameId.data,
             teamId: teamId.data, // Add the missing teamId property
+            points: input.points,
           },
         });
       } catch (e) {
