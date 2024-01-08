@@ -12,7 +12,7 @@ interface Props {
   params: { id: number };
 }
 
-export async function deleteGame(formData: FormData) {
+async function deleteGame(formData: FormData) {
   "use server";
 
   const id = z.coerce.number().parse(formData.get("id"));

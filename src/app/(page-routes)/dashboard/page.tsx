@@ -9,7 +9,6 @@ import { serverClient } from "../../_trpc/serverClient";
 
 async function page() {
   const teams = await serverClient.TeamRouter.grabTeams();
-  console.log(teams.length);
 
   return (
     <main className="overflow-y-scroll pt-20">
