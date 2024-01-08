@@ -32,9 +32,9 @@ export default async function Home() {
           )}
         </div>
 
-        <footer className="flex items-center justify-center w-full h-24 border-t">
+        {/* <footer className="flex items-center justify-center w-full h-24 border-t">
           <Button>Button</Button>
-        </footer>
+        </footer> */}
       </main>
     </div>
   );

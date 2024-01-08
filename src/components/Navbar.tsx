@@ -1,6 +1,6 @@
 import { SignInButton, UserButton, auth, currentUser } from "@clerk/nextjs";
 import Link from "next/link";
-import React from "react";
+import React, { use } from "react";
 import { Button } from "./ui/button";
 import { ModeToggle } from "./ModeToggle";
 
@@ -28,7 +28,12 @@ async function Navbar({ className, viewingTeam, teamId }: NavbarProps) {
           </Link>
           {viewingTeam && (
             <div className="p-4 flex-row flex items-center gap-10">
-              <Link href={`/team/${teamId}/game`}>Games</Link>
+              <div className="">
+                <Link href={`/team/${teamId}/game`}>Games</Link>
+              </div>
+              <div className="">
+                <Link href={`/team/${teamId}/player`}>Roster</Link>
+              </div>
             </div>
           )}
 

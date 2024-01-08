@@ -32,6 +32,7 @@ import * as z from "zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { trpc } from "@/src/app/_trpc/client";
+import { shot } from "@prisma/client";
 
 interface DialogDemoProps {
   open: boolean;
@@ -40,14 +41,6 @@ interface DialogDemoProps {
   y: number;
   gameId: string;
   teamid: string;
-}
-
-interface Shot {
-  shot_attempt: boolean;
-  player_id: number;
-  x: number;
-  y: number;
-  points: string;
 }
 
 const FormSchema = z.object({
@@ -75,7 +68,7 @@ function Model(props: DialogDemoProps) {
 
     onError: (error) => {
       console.log(error);
-      toast("Error", { type: "error" });
+      toast.error("Error");
     },
   });
 
@@ -111,25 +104,21 @@ function Model(props: DialogDemoProps) {
   // });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    const player_id = z.coerce.number().parse(data.player_id);
-    let shot = null as unknown as Shot;
+    const player_id = z.coerce.number().safeParse(data.player_id);
 
-    if (data.shot_attempt.toLowerCase() === "made") {
-      shot = { shot_attempt: true, player_id, x, y, points: data.points };
-    } else if (data.shot_attempt === "Missed") {
-      shot = { shot_attempt: false, player_id, x, y, points: data.points };
-    } else {
-      throw new Error("Invalid shot attempt");
+    if (!player_id.success) {
+      throw new Error("Invalid player id");
     }
 
     mutateAsync({
       teamId: teamid,
       gameId: gameId,
       playerId: data.player_id,
-      made: shot.shot_attempt,
+      made:
+        data.shot_attempt.toLowerCase() === "Made".toLowerCase() ? true : false,
       x: x,
       y: y,
-      points: data.points,
+      points: z.coerce.number().parse(data.points),
     });
 
     toggle();

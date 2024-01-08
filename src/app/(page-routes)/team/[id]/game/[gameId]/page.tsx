@@ -7,9 +7,27 @@ import { z } from "zod";
 import BasketBall from "./BasketballCourt";
 import GameClient from "./GameClient";
 import { serverClient } from "@/src/app/_trpc/serverClient";
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
 
 async function findGame(id: string) {
   "use server";
+
+  const user = await currentUser();
+
+  const ratelimit = new Ratelimit({
+    redis: Redis.fromEnv(),
+    limiter: Ratelimit.slidingWindow(10, "10 s"),
+    analytics: false,
+
+    prefix: "@upstash/ratelimit",
+  });
+
+  const { success } = await ratelimit.limit(user!.id);
+
+  if (!success) {
+    throw Error("Too many requests");
+  }
 
   // covnert to number
   const gameId = z.coerce.number().parse(id);
@@ -28,8 +46,6 @@ async function findGame(id: string) {
     });
 
     return game;
-
-    throw new Error("You do not have permission to view this page");
   } catch (error) {
     console.error(error);
 

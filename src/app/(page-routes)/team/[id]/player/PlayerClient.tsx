@@ -43,6 +43,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import type { player } from "@prisma/client";
 import Link from "next/link";
+import { trpc } from "@/src/app/_trpc/client";
 
 export const columns: ColumnDef<player>[] = [
   {
@@ -144,18 +145,12 @@ export function DataTableDemo() {
   const [rowSelection, setRowSelection] = React.useState({});
   const { id: teamId } = useParams<{ id: string }>();
 
-  const { isLoading, isError, data } = useQuery({
-    queryKey: ["players"],
-    queryFn: async () => {
-      const response = await fetch(`/api/team/${teamId}/players`);
-
-      const data = await response.json();
-      return data;
-    },
-  });
+  const { data, isLoading, isError } = trpc.TeamRouter.grabPlayers.useQuery(
+    teamId.toString()
+  );
 
   const table = useReactTable({
-    data,
+    data: data ?? [],
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -304,14 +299,3 @@ export function DataTableDemo() {
 }
 
 export default DataTableDemo;
-
-interface props {
-  mutation: any;
-  children: React.ReactNode;
-}
-
-export const TableMutation = (props: props) => {
-  const { mutation, children } = props;
-  const MutationContext = React.createContext(mutation);
-  return <> {children} </>;
-};

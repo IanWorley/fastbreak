@@ -4,7 +4,7 @@ import { z } from "zod";
 import { currentUser } from "@clerk/nextjs";
 import { revalidatePath } from "next/cache";
 // type from prisma schema
-import type { game } from "@prisma/client";
+import type { Game } from "@prisma/client";
 import { Button } from "@/src/components/ui/button";
 import Link from "next/link";
 import { serverClient } from "@/src/app/_trpc/serverClient";
@@ -12,7 +12,7 @@ interface Props {
   params: { id: number };
 }
 
-export async function deleteGame(formData: FormData) {
+async function deleteGame(formData: FormData) {
   "use server";
 
   const id = z.coerce.number().parse(formData.get("id"));
@@ -50,7 +50,7 @@ async function Page(props: Props) {
       <div className=" ">
         <div className="md:grid grid-cols-2">
           {data.length >= 0 &&
-            data.map((game: game) => (
+            data.map((game: Game) => (
               <div
                 className="bg-primary-foreground   md:mx-32  mx-8  my-4"
                 key={game.id}
@@ -82,7 +82,7 @@ async function Page(props: Props) {
             ))}
         </div>
         <div className="fixed z-10 p-4 right-0 bottom-0 m-4">
-          <Link href={`/team/${id}/games/new `}>
+          <Link href={`/team/${id}/game/new `}>
             <Button className="" variant={"secondary"}>
               Add Game
             </Button>

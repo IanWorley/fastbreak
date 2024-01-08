@@ -7,16 +7,6 @@ import Link from "next/link";
 import Team from "./Team";
 import { serverClient } from "../../_trpc/serverClient";
 
-export async function delete_Team(id: number) {
-  "use server";
-  const team = await prisma.team.delete({
-    where: {
-      id: id,
-    },
-  });
-  revalidatePath("/dashboard");
-}
-
 async function page() {
   const teams = await serverClient.TeamRouter.grabTeams();
 
@@ -26,9 +16,16 @@ async function page() {
       <div className="">
         <div className="flex sm:flex-row  flex-col   p-10 justify-evenly items-center ">
           <p className="text-3xl font-bold  ">Your Teams </p>
-          <Link href="/team/new">
-            <Button> Create Team </Button>
-          </Link>
+          {teams.length === 0 ? (
+            <Link href="/team/new">
+              <Button> Create Team </Button>
+            </Link>
+          ) : (
+            <Button variant={"ghost"} disabled={true}>
+              {" "}
+              Create Team{" "}
+            </Button>
+          )}
         </div>
         <div className="md:grid flex flex-col  grid-cols-2  ">
           {teams.length === 0 && (
@@ -38,7 +35,7 @@ async function page() {
           )}
 
           {teams.map((team) => (
-            <Team team={team} key={team.id} onDelete={delete_Team} />
+            <Team team={team} key={team.id} />
           ))}
         </div>
       </div>

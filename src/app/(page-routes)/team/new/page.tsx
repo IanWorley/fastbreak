@@ -12,8 +12,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/src/components/ui/card";
+import { serverClient } from "@/src/app/_trpc/serverClient";
 
-function page() {
+async function page() {
   const CreateTeam = async (formData: FormData) => {
     "use server";
     const teamName = z.string().min(3).parse(formData.get("teamName"));
@@ -29,6 +30,12 @@ function page() {
 
     redirect("/dashboard");
   };
+
+  const teams = await serverClient.TeamRouter.grabTeams();
+
+  if (teams.length >= 1) {
+    redirect("/dashboard");
+  }
 
   return (
     <div className="flex flex-col h-screen">

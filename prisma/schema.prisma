@@ -6,45 +6,49 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
-model team {
+model Team {
   id       Int      @id @default(autoincrement())
   name     String
   shots    shot[]
   players  player[]
   users_id String
-  game     game[]
+  games    Game[]   @relation("gameTOteam")
 
   @@index([users_id], name: "users_id")
 }
 
-model game {
+model Game {
   id     Int    @id @default(autoincrement())
   name   String
   teamId Int
-  shot   shot[]
-  team   team   @relation(fields: [teamId], references: [id])
+  shots  shot[]
+  team   Team   @relation("gameTOteam", fields: [teamId], references: [id])
+
+  @@index([teamId])
 }
 
 model player {
   id          Int    @id @default(autoincrement())
   name        String
   jersey      Int
-  team        team   @relation(fields: [teamId], references: [id])
+  team        Team   @relation(fields: [teamId], references: [id])
   teamId      Int
   shots       shot[]
   totalPoints Int    @default(0)
+
+  @@index([teamId])
 }
 
 model shot {
   id        Int      @id @default(autoincrement())
-  team      team     @relation(fields: [teamId], references: [id])
+  team      Team     @relation(fields: [teamId], references: [id])
   teamId    Int
-  game      game     @relation(fields: [gameId], references: [id])
+  game      Game     @relation(fields: [gameId], references: [id])
   gameId    Int
   player    player   @relation(fields: [playerId], references: [id])
   playerId  Int
@@ -54,4 +58,8 @@ model shot {
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
   points    Int      @default(0)
+
+  @@index([teamId])
+  @@index([gameId])
+  @@index([playerId])
 }

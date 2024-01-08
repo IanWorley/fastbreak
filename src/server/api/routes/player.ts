@@ -1,6 +1,8 @@
 import { router, publicProcedure, protectedProcedure } from "@/src/server/trpc";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import { Ratelimit } from "@upstash/ratelimit"; // for deno: see above
+import { Redis } from "@upstash/redis"; // see below for cloudflare and fastly adapters
 
 export const playerRouter = router({
   addPlayer: protectedProcedure
@@ -12,6 +14,23 @@ export const playerRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
+      const ratelimit = new Ratelimit({
+        redis: Redis.fromEnv(),
+        limiter: Ratelimit.slidingWindow(10, "10 s"),
+        analytics: false,
+
+        prefix: "@upstash/ratelimit",
+      });
+
+      const { success } = await ratelimit.limit(ctx.user.id);
+
+      if (!success) {
+        throw new TRPCError({
+          code: "TOO_MANY_REQUESTS",
+          message: "Too many requests",
+        });
+      }
+
       const teamId = z.coerce.number().safeParse(input.teamId);
       const jerseyNumber = z.coerce.number().safeParse(input.jerseyNumber);
 
@@ -55,6 +74,7 @@ export const playerRouter = router({
   addShots: protectedProcedure
     .input(
       z.object({
+        points: z.number().min(0).max(3),
         playerId: z.string(),
         teamId: z.string(),
         made: z.boolean(),
@@ -64,6 +84,25 @@ export const playerRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
+      const ratelimit = new Ratelimit({
+        redis: Redis.fromEnv(),
+        limiter: Ratelimit.slidingWindow(30, "15 s"),
+        analytics: false,
+
+        prefix: "@upstash/ratelimit",
+      });
+
+      const ratelimitKey = `addShots:${ctx.user.id}`;
+
+      const { success } = await ratelimit.limit(ratelimitKey);
+
+      if (!success) {
+        throw new TRPCError({
+          code: "TOO_MANY_REQUESTS",
+          message: "Too many requests",
+        });
+      }
+
       const playerId = z.coerce.number().safeParse(input.playerId);
       const teamId = z.coerce.number().safeParse(input.teamId);
       const x = z.coerce.number().safeParse(input.x);
@@ -111,6 +150,13 @@ export const playerRouter = router({
         });
       }
 
+      if (!input.points) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Points not found",
+        });
+      }
+
       try {
         const team = await ctx.db.team.findUniqueOrThrow({
           where: {
@@ -141,6 +187,7 @@ export const playerRouter = router({
             yPoint: y.data,
             gameId: gameId.data,
             teamId: teamId.data, // Add the missing teamId property
+            points: input.points,
           },
         });
       } catch (e) {

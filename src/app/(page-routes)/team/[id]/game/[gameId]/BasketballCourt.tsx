@@ -45,7 +45,6 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
-    // TODO - display shots for players that are playing
     if (!data) return;
 
     const activeShots = data.filter((shots) => {
@@ -53,7 +52,13 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
       return player && player.isPlaying;
     });
 
-    setShots(activeShots);
+    setShots(
+      activeShots.map((shot) => ({
+        ...shot,
+        playerid: shot.playerId,
+        gameid: shot.gameId,
+      }))
+    );
   }, [data, players]);
 
   useEffect(() => {
