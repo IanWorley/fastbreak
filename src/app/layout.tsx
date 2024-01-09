@@ -6,6 +6,7 @@ import "./globals.css";
 import { ThemeProvider } from "../components/theme-provider";
 import Provider from "./_trpc/Provider";
 import { Toaster } from "sonner";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const fontSans = FontSans({
   subsets: ["latin"],
@@ -24,6 +25,7 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
+      <SpeedInsights />
       <html lang="en">
         <body
           className={cn(
