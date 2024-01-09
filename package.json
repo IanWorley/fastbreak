@@ -13,7 +13,7 @@
     "prisma:seed": "prisma db seed --preview-feature"
   },
   "dependencies": {
-    "@clerk/nextjs": "^4.27.6",
+    "@clerk/nextjs": "^4.29.2",
     "@hookform/resolvers": "^3.3.3",
     "@prisma/client": "^5.7.1",
     "@prisma/extension-accelerate": "^0.6.2",
