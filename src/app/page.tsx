@@ -4,6 +4,7 @@ import { SignInButton, UserButton, currentUser } from "@clerk/nextjs";
 
 import Link from "next/link";
 import Navbar from "@/src/components/Navbar";
+import { getBaseUrl } from "../lib/utils";
 
 export default async function Home() {
   const user = await currentUser();
@@ -26,7 +27,7 @@ export default async function Home() {
               <Button> Dashboard </Button>
             </Link>
           ) : (
-            <SignInButton redirectUrl="http://localhost:3000/dashboard">
+            <SignInButton redirectUrl={`${getBaseUrl()}/dashboard`}>
               <Button variant={"default"}>Sign In</Button>
             </SignInButton>
           )}

@@ -1,8 +1,5 @@
 import Navbar from "@/src/components/Navbar";
 import { Button } from "@/src/components/ui/button";
-import prisma from "@/src/lib/PrismaClient";
-import { currentUser } from "@clerk/nextjs";
-import { revalidatePath } from "next/cache";
 import Link from "next/link";
 import Team from "./Team";
 import { serverClient } from "../../_trpc/serverClient";

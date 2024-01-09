@@ -3,6 +3,7 @@ import Link from "next/link";
 import React, { use } from "react";
 import { Button } from "./ui/button";
 import { ModeToggle } from "./ModeToggle";
+import { getBaseUrl } from "../lib/utils";
 
 interface NavbarProps {
   className?: string;
@@ -37,12 +38,12 @@ async function Navbar({ className, viewingTeam, teamId }: NavbarProps) {
             </div>
           )}
 
-          <UserButton afterSignOutUrl="http://localhost:3000/" />
+          <UserButton afterSignOutUrl={`${getBaseUrl()}`} />
         </div>
       ) : (
         <div className="p-4  ">
-          <SignInButton>
-            <Button> Sign In </Button>
+          <SignInButton redirectUrl={`${getBaseUrl()}/dashboard`}>
+            <Button variant={"default"}>Sign In</Button>
           </SignInButton>
         </div>
       )}
