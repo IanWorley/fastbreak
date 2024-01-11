@@ -1,17 +1,17 @@
-import Navbar from "@/src/components/Navbar";
-import { Button } from "@/src/components/ui/button";
+import Navbar from "~/app/_components/Navbar";
+import { Button } from "~/app/_components/shadcn/ui/button";
 import Link from "next/link";
 import Team from "./Team";
-import { serverClient } from "../../_trpc/serverClient";
+import { api } from "~/trpc/server";
 
 async function page() {
-  const teams = await serverClient.TeamRouter.grabTeams();
+  const teams = await api.team.grabTeams.query();
 
   return (
     <main className="overflow-y-scroll pt-20">
       <Navbar className="fixed" />
       <div className="">
-        <div className="flex sm:flex-row  flex-col   p-10 justify-evenly items-center ">
+        <div className="flex flex-col  items-center   justify-evenly p-10 sm:flex-row ">
           <p className="text-3xl font-bold  ">Your Teams </p>
           {teams.length === 0 ? (
             <Link href="/team/new">
@@ -19,12 +19,11 @@ async function page() {
             </Link>
           ) : (
             <Button variant={"ghost"} disabled={true}>
-              {" "}
-              Create Team{" "}
+              Create Team
             </Button>
           )}
         </div>
-        <div className="md:grid flex flex-col  grid-cols-2  ">
+        <div className="flex grid-cols-2 flex-col  md:grid  ">
           {teams.length === 0 && (
             <div className="flex flex-col items-center justify-center">
               <p className="text-3xl font-bold">No Teams</p>

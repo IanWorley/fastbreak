@@ -1,4 +1,4 @@
-import Navbar from "@/src/components/Navbar";
+import Navbar from "~/app/_components/Navbar";
 import React from "react";
 import PlayerClient from "./PlayerClient";
 

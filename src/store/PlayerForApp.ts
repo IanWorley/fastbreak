@@ -1,7 +1,7 @@
-import { player } from "@prisma/client/edge";
+import { type player } from "@prisma/client";
 import { create } from "zustand";
 
-interface PlayerForApp extends player {
+export interface PlayerForApp extends player {
   isPlaying: boolean;
 }
 
@@ -28,7 +28,7 @@ export const usePlayerForApp = create<PlayerForAppState>((set) => ({
       });
 
       const newPlayers = rawPlayerApi.filter(
-        (p) => !state.players.find((player) => player.id === p.id)
+        (p) => !state.players.find((player) => player.id === p.id),
       );
 
       const players = [
@@ -60,7 +60,7 @@ export const usePlayerForApp = create<PlayerForAppState>((set) => ({
   updatePlayer: (player) =>
     set((state) => ({
       players: state.players.map((p) =>
-        p.id === player.id ? { ...p, ...player } : p
+        p.id === player.id ? { ...p, ...player } : p,
       ),
     })),
 
@@ -70,7 +70,7 @@ export const usePlayerForApp = create<PlayerForAppState>((set) => ({
       players: state.players.map((p) =>
         players.find((player) => player.id === p.id)
           ? { ...p, ...players.find((player) => player.id === p.id) }
-          : p
+          : p,
       ),
     })),
 
@@ -82,7 +82,7 @@ export const usePlayerForApp = create<PlayerForAppState>((set) => ({
   togglePlayer: (player_id) =>
     set((state) => ({
       players: state.players.map((p) =>
-        p.id === player_id ? { ...p, isPlaying: !p.isPlaying } : p
+        p.id === player_id ? { ...p, isPlaying: !p.isPlaying } : p,
       ),
     })),
   sortPlayers: () => {

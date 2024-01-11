@@ -4,10 +4,9 @@ import BasketballCourt from "./BasketballCourt";
 import Modal from "./Model";
 import { useParams } from "next/navigation";
 import { z } from "zod";
-import { usePlayerForApp } from "@/src/store/PlayerForApp";
+import { usePlayerForApp } from "~/store/PlayerForApp";
 import PlayerList from "./PlayerList";
-import { appRouter } from "@/src/server";
-import { trpc } from "@/src/app/_trpc/client";
+import { api } from "~/trpc/react";
 
 function GameClient() {
   const parms = useParams<{ id: string; gameId: string }>();
@@ -24,8 +23,8 @@ function GameClient() {
 
   const addPlayers = usePlayerForApp((state) => state.addPlayers);
 
-  const { data, isLoading, isError } = trpc.TeamRouter.grabPlayers.useQuery(
-    teamId.toString()
+  const { data, isLoading, isError } = api.team.grabPlayers.useQuery(
+    teamId.toString(),
   );
 
   // is open state

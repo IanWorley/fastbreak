@@ -1,5 +1,5 @@
 import PlayerCard from "./PlayerCard";
-import { usePlayerForApp } from "@/src/store/PlayerForApp";
+import { usePlayerForApp } from "~/store/PlayerForApp";
 
 function PlayerList() {
   const { players } = usePlayerForApp((state) => state);
@@ -8,14 +8,14 @@ function PlayerList() {
     <>
       {usePlayerForApp((state) => state.players.length === 0) && (
         <div className="bg-primary-foreground p-10 ">
-          <p className="text-3xl p-4"> No Players </p>
+          <p className="p-4 text-3xl"> No Players </p>
         </div>
       )}
 
       {usePlayerForApp((state) =>
         state.players.map((player) => (
           <PlayerCard player={player} key={player.id} />
-        ))
+        )),
       )}
     </>
   );

@@ -2,64 +2,64 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider     = "mysql"
-  url          = env("DATABASE_URL")
-  relationMode = "prisma"
+    provider     = "mysql"
+    url          = env("DATABASE_URL")
+    relationMode = "prisma"
 }
 
-model Team {
-  id       Int      @id @default(autoincrement())
-  name     String
-  shots    shot[]
-  players  player[]
-  users_id String
-  games    Game[]   @relation("gameTOteam")
+model team {
+    id       Int      @id @default(autoincrement())
+    name     String
+    shots    shot[]
+    players  player[]
+    users_id String
+    games    game[]   @relation("gameTOteam")
 
-  @@index([users_id], name: "users_id")
+    @@index([users_id], name: "users_id")
 }
 
-model Game {
-  id     Int    @id @default(autoincrement())
-  name   String
-  teamId Int
-  shots  shot[]
-  team   Team   @relation("gameTOteam", fields: [teamId], references: [id])
+model game {
+    id     Int    @id @default(autoincrement())
+    name   String
+    teamId Int
+    shots  shot[]
+    team   team   @relation("gameTOteam", fields: [teamId], references: [id])
 
-  @@index([teamId])
+    @@index([teamId])
 }
 
 model player {
-  id          Int    @id @default(autoincrement())
-  name        String
-  jersey      Int
-  team        Team   @relation(fields: [teamId], references: [id])
-  teamId      Int
-  shots       shot[]
-  totalPoints Int    @default(0)
+    id          Int    @id @default(autoincrement())
+    name        String
+    jersey      Int
+    team        team   @relation(fields: [teamId], references: [id])
+    teamId      Int
+    shots       shot[]
+    totalPoints Int    @default(0)
 
-  @@index([teamId])
+    @@index([teamId])
 }
 
 model shot {
-  id        Int      @id @default(autoincrement())
-  team      Team     @relation(fields: [teamId], references: [id])
-  teamId    Int
-  game      Game     @relation(fields: [gameId], references: [id])
-  gameId    Int
-  player    player   @relation(fields: [playerId], references: [id])
-  playerId  Int
-  xPoint    Int
-  yPoint    Int
-  made      Boolean
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
-  points    Int      @default(0)
+    id        Int      @id @default(autoincrement())
+    team      team     @relation(fields: [teamId], references: [id])
+    teamId    Int
+    game      game     @relation(fields: [gameId], references: [id])
+    gameId    Int
+    player    player   @relation(fields: [playerId], references: [id])
+    playerId  Int
+    xPoint    Int
+    yPoint    Int
+    made      Boolean
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now()) @updatedAt
+    points    Int      @default(0)
 
-  @@index([teamId])
-  @@index([gameId])
-  @@index([playerId])
+    @@index([teamId])
+    @@index([gameId])
+    @@index([playerId])
 }

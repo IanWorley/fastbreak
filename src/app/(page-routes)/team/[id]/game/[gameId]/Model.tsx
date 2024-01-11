@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/src/components/ui/button";
+import { Button } from "~/app/_components/shadcn/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Dialog,
@@ -8,30 +8,33 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/src/components/ui/dialog";
-import { Label } from "@/src/components/ui/label";
+} from "~/app/_components/shadcn/ui/dialog";
+import { Label } from "~/app/_components/shadcn/ui/label";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-} from "@/src/components/ui/form";
+} from "~/app/_components/shadcn/ui/form";
 import {
   Select,
   SelectGroup,
   SelectItem,
   SelectLabel,
   SelectValue,
-} from "@/src/components/ui/select";
+} from "~/app/_components/shadcn/ui/select";
 import { SelectContent, SelectTrigger } from "@radix-ui/react-select";
 import { useForm } from "react-hook-form";
-import { usePlayerForApp } from "@/src/store/PlayerForApp";
-import { RadioGroup, RadioGroupItem } from "@/src/components/ui/radio-group";
+import { usePlayerForApp } from "~/store/PlayerForApp";
+import {
+  RadioGroup,
+  RadioGroupItem,
+} from "~/app/_components/shadcn/ui/radio-group";
 import * as z from "zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { trpc } from "@/src/app/_trpc/client";
+import { api } from "~/trpc/react";
 import { shot } from "@prisma/client";
 
 interface DialogDemoProps {
@@ -57,18 +60,19 @@ function Model(props: DialogDemoProps) {
     resolver: zodResolver(FormSchema),
   });
 
-  const utils = trpc.useUtils();
+  const utils = api.useUtils();
 
-  const { mutateAsync } = trpc.PlayerRouter.addShots.useMutation({
+  const { mutateAsync } = api.player.addShots.useMutation({
     onSuccess: () => {
       form.reset();
-      utils.TeamRouter.grabPlayers.invalidate();
-      utils.GameRouter.grabPlayersShotsFromGame.invalidate();
+      void utils.team.grabPlayers.invalidate();
+      void utils.game.grabPlayersShotsFromGame.invalidate();
     },
 
     onError: (error) => {
       console.log(error);
-      toast.error("Error");
+      // eslint-disable-next-line
+      toast.error(error.message ?? "An error occurred");
     },
   });
 
@@ -103,14 +107,14 @@ function Model(props: DialogDemoProps) {
   //   },
   // });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
     const player_id = z.coerce.number().safeParse(data.player_id);
 
     if (!player_id.success) {
       throw new Error("Invalid player id");
     }
 
-    mutateAsync({
+    await mutateAsync({
       teamId: teamid,
       gameId: gameId,
       playerId: data.player_id,
@@ -209,7 +213,7 @@ function Model(props: DialogDemoProps) {
                       <FormControl>
                         <RadioGroup
                           onChange={field.onChange}
-                          defaultValue={field.value as string}
+                          defaultValue={field.value}
                           className="flex items-center"
                         >
                           <FormItem>
