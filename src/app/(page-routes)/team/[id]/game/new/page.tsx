@@ -1,28 +1,14 @@
-import Navbar from "@/src/components/Navbar";
-import { Button } from "@/src/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/src/components/ui/card";
-import { Input } from "@/src/components/ui/input";
-import prisma from "@/src/lib/PrismaClient";
-import { currentUser } from "@clerk/nextjs";
-import { redirect, useParams } from "next/navigation";
-import { z } from "zod";
+import Navbar from "~/app/_components/Navbar";
+import { Card, CardHeader, CardTitle } from "~/app/_components/shadcn/ui/card";
 import NewTeamFormClient from "./NewTeamFormClient";
-import { Redis } from "@upstash/redis";
-import { Ratelimit } from "@upstash/ratelimit";
 
 function page() {
   return (
     <main>
-      <div className="flex flex-col h-screen">
+      <div className="flex h-screen flex-col">
         <Navbar className="h-14" />
-        <div className="flex-grow flex items-center justify-center">
-          <Card className="sm:w-auto  p-4">
+        <div className="flex flex-grow items-center justify-center">
+          <Card className="p-4  sm:w-auto">
             <CardHeader>
               <CardTitle className="text-4xl font-extrabold">
                 Create a Game

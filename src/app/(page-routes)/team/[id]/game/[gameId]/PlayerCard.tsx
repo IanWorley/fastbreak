@@ -1,9 +1,9 @@
 "use client";
 
-import { Button } from "@/src/components/ui/button";
+import { Button } from "~/app/_components/shadcn/ui/button";
 import type { player } from "@prisma/client";
 import { useState } from "react";
-import { usePlayerForApp } from "@/src/store/PlayerForApp";
+import { usePlayerForApp } from "~/store/PlayerForApp";
 
 interface PlayerCardProps {
   player: player;
@@ -23,7 +23,7 @@ function PlayerCard(props: PlayerCardProps) {
 
   return (
     <div key={player.id} className="bg-primary-foreground p-10 ">
-      <p className="text-3xl p-4"> {player.name} </p>
+      <p className="p-4 text-3xl"> {player.name} </p>
       <div className="flex space-x-4  ">
         <Button
           className={"w-full " + `${active ? "bg-green-500" : "bg-red-600"}`}

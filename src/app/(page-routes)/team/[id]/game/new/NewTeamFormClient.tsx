@@ -1,20 +1,21 @@
 "use client";
 
-import { trpc } from "@/src/app/_trpc/client";
-import { Button } from "@/src/components/ui/button";
-import { CardContent, CardFooter } from "@/src/components/ui/card";
+import { api } from "~/trpc/react";
+import { Button } from "~/app/_components/shadcn/ui/button";
+import { CardContent, CardFooter } from "~/app/_components/shadcn/ui/card";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-} from "@/src/components/ui/form";
-import { Input } from "@/src/components/ui/input";
+} from "~/app/_components/shadcn/ui/form";
+import { Input } from "~/app/_components/shadcn/ui/input";
 import { useParams, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { revalidatePath } from "next/cache";
 
 function NewTeamFormClient() {
   const { id } = useParams();
@@ -24,8 +25,9 @@ function NewTeamFormClient() {
   const teamId = z.coerce.number().parse(id);
 
   // TODO FIND A WAY TO change route after mutation
-  const { mutateAsync } = trpc.GameRouter.createGame.useMutation({
+  const { mutateAsync } = api.game.createGame.useMutation({
     onSuccess: () => {
+      revalidatePath(`/team/${teamId}/game`);
       router.push(`/team/${teamId}/game`);
     },
     onError: (err) => {

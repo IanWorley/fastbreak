@@ -1,6 +1,3 @@
 {
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "cSpell.words": [
-    "Ratelimit"
-  ]
+    "typescript.tsdk": "node_modules/typescript/lib"
 }

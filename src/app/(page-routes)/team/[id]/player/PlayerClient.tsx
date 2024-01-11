@@ -19,8 +19,8 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-import { Button } from "@/src/components/ui/button";
-import { Checkbox } from "@/src/components/ui/checkbox";
+import { Button } from "~/app/_components/shadcn/ui/button";
+import { Checkbox } from "~/app/_components/shadcn/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -29,8 +29,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/src/components/ui/dropdown-menu";
-import { Input } from "@/src/components/ui/input";
+} from "~/app/_components/shadcn/ui/dropdown-menu";
+import { Input } from "~/app/_components/shadcn/ui/input";
 import {
   Table,
   TableBody,
@@ -38,12 +38,12 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/src/components/ui/table";
+} from "~/app/_components/shadcn/ui/table";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import type { player } from "@prisma/client";
 import Link from "next/link";
-import { trpc } from "@/src/app/_trpc/client";
+import { api } from "~/trpc/react";
 
 export const columns: ColumnDef<player>[] = [
   {
@@ -122,7 +122,7 @@ export const columns: ColumnDef<player>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => {}}>Delete</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => { console.log("delete")}}>Delete</DropdownMenuItem>
             {
               //   <DropdownMenuSeparator />
               //  <DropdownMenuItem>Delete</DropdownMenuItem>
@@ -138,15 +138,15 @@ export const columns: ColumnDef<player>[] = [
 export function DataTableDemo() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
+    [],
   );
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
   const { id: teamId } = useParams<{ id: string }>();
 
-  const { data, isLoading, isError } = trpc.TeamRouter.grabPlayers.useQuery(
-    teamId.toString()
+  const { data, isLoading, isError } = api.team.grabPlayers.useQuery(
+    teamId.toString(),
   );
 
   const table = useReactTable({
@@ -178,7 +178,7 @@ export function DataTableDemo() {
 
   return (
     <div className="min-w-screen min-h-screen ">
-      <div className="flex justify-between items-center py-4">
+      <div className="flex items-center justify-between py-4">
         <Input
           placeholder="Filter by name"
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
@@ -232,7 +232,7 @@ export function DataTableDemo() {
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext()
+                            header.getContext(),
                           )}
                     </TableHead>
                   );
@@ -251,7 +251,7 @@ export function DataTableDemo() {
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext()
+                        cell.getContext(),
                       )}
                     </TableCell>
                   ))}

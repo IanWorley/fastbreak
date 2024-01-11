@@ -3,10 +3,9 @@ import React, { useState, useRef, useEffect, MouseEvent } from "react";
 import courtBackground from "./Design.png"; // Replace with the actual path to your image
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
-import { set, z } from "zod";
-import { usePlayerForApp } from "@/src/store/PlayerForApp";
+import { usePlayerForApp } from "~/store/PlayerForApp";
 import { shot } from "@prisma/client";
-import { trpc } from "@/src/app/_trpc/client";
+import { api } from "~/trpc/react";
 
 interface Shot {
   xPoint: number;
@@ -24,14 +23,14 @@ interface BasketballCourtProps {
 }
 
 const BasketballCourt: React.FC<BasketballCourtProps> = (
-  props: BasketballCourtProps
+  props: BasketballCourtProps,
 ) => {
   const { toggle, setCords, teamId, gameId } = props;
 
   const players = usePlayerForApp((state) => state.players);
 
   const { data, isLoading, isError } =
-    trpc.GameRouter.grabPlayersShotsFromGame.useQuery({
+    api.game.grabPlayersShotsFromGame.useQuery({
       teamId: teamId.toString(),
       gameId: gameId.toString(),
     });
@@ -57,7 +56,7 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
         ...shot,
         playerid: shot.playerId,
         gameid: shot.gameId,
-      }))
+      })),
     );
   }, [data, players]);
 
@@ -120,7 +119,7 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
   };
 
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="flex flex-col items-center justify-center">
       <div>
         <canvas
           ref={canvasRef}

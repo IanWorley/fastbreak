@@ -1,16 +1,19 @@
 "use client";
-import { trpc } from "@/src/app/_trpc/client";
-import { Button } from "@/src/components/ui/button";
-import { CardContent, CardFooter } from "@/src/components/ui/card";
-import { Input } from "@/src/components/ui/input";
+import { Button } from "~/app/_components/shadcn/ui/button";
+import { CardContent, CardFooter } from "~/app/_components/shadcn/ui/card";
+import { Input } from "~/app/_components/shadcn/ui/input";
 import { useMutation } from "@tanstack/react-query";
 import { redirect, useParams, useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { z } from "zod";
+import { api } from "~/trpc/react";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 function FormNewPlayer() {
   const { id } = useParams();
-  const { register, handleSubmit } = useForm();
+  const teamId = z.coerce.number().parse(id);
   const router = useRouter();
+
   // const { mutateAsync } = useMutation({
   //   mutationKey: ["playerMutation"],
   //   mutationFn: async (data) => {
@@ -33,21 +36,33 @@ function FormNewPlayer() {
   //   },
   // });
 
-  const { mutateAsync } = trpc.PlayerRouter.addPlayer.useMutation({
+  const formSchema = z.object({
+    name: z.string().min(3),
+    jerseyNumber: z.string().max(1),
+  });
+
+  const { register, handleSubmit } = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+  });
+
+  const { mutateAsync } = api.player.addPlayer.useMutation({
     onSuccess: () => {
-      router.push(`/team/${id}/player`);
+      router.push(`/team/${teamId}/player`);
     },
     onError: () => {
       alert("error");
     },
   });
 
-  const onSubmit: SubmitHandler<any> = (data) => {
-    data.jerseyNumber = parseInt(data.jerseyNumber);
-
-    const info = { ...data, teamId: id };
-    console.log(info);
-    mutateAsync(info);
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    const info = z
+      .object({
+        name: z.string().min(3),
+        jerseyNumber: z.coerce.number().positive(),
+        teamId: z.string(),
+      })
+      .parse({ ...data, teamId: id });
+    await mutateAsync(info);
   };
 
   return (

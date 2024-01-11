@@ -1,13 +1,12 @@
-import Navbar from "@/src/components/Navbar";
-import prisma from "@/src/lib/PrismaClient";
+import Navbar from "~/app/_components/Navbar";
 import { z } from "zod";
 import { currentUser } from "@clerk/nextjs";
 import { revalidatePath } from "next/cache";
 // type from prisma schema
-import type { Game } from "@prisma/client";
-import { Button } from "@/src/components/ui/button";
+import { Button } from "~/app/_components/shadcn/ui/button";
+import { db } from "~/server/db";
 import Link from "next/link";
-import { serverClient } from "@/src/app/_trpc/serverClient";
+import { api } from "~/trpc/server";
 interface Props {
   params: { id: number };
 }
@@ -17,19 +16,19 @@ async function deleteGame(formData: FormData) {
 
   const id = z.coerce.number().parse(formData.get("id"));
 
-  const game = await prisma.game.findUnique({
+  const game = await db.game.findUnique({
     where: {
       id: id,
     },
   });
 
-  const team = await prisma.team.findUnique({
+  const team = await db.team.findUnique({
     where: {
       id: game!.teamId,
     },
   });
 
-  await prisma.game.delete({
+  await db.game.delete({
     where: {
       id: id,
     },
@@ -41,38 +40,38 @@ async function deleteGame(formData: FormData) {
 async function Page(props: Props) {
   const { id } = props.params;
 
-  const data = await serverClient.GameRouter.grabGames(id.toString());
+  const data = await api.game.grabGames.query(z.coerce.number().parse(id));
 
   return (
     <main className="pt-20">
       <Navbar className="fixed" teamId={id} viewingTeam={true} />
-      <h1 className="text-5xl font-extrabold text-center block p-7"> Games </h1>
+      <h1 className="block p-7 text-center text-5xl font-extrabold"> Games </h1>
       <div className=" ">
-        <div className="md:grid grid-cols-2">
+        <div className="grid-cols-2 md:grid">
           {data.length >= 0 &&
-            data.map((game: Game) => (
+            data.map((game) => (
               <div
-                className="bg-primary-foreground   md:mx-32  mx-8  my-4"
+                className="mx-8   my-4  bg-primary-foreground  md:mx-32"
                 key={game.id}
               >
-                <h3 className="text-4xl font-semibold p-4 text-center">
+                <h3 className="p-4 text-center text-4xl font-semibold">
                   {" "}
                   {game.name}
                 </h3>
 
                 <div className="flex flex-row  gap-3">
                   <Link
-                    className="w-full h-full block"
+                    className="block h-full w-full"
                     href={`/team/${id}/game/${game.id}`}
                   >
-                    <Button className="w-full h-full">View</Button>
+                    <Button className="h-full w-full">View</Button>
                   </Link>
-                  <form className="w-full h-full" action={deleteGame}>
+                  <form className="h-full w-full" action={deleteGame}>
                     <input type="hidden" name="id" value={game.id} />
                     <Button
                       variant={"destructive"}
                       type="submit"
-                      className="w-full h-full"
+                      className="h-full w-full"
                     >
                       Delete
                     </Button>
@@ -81,7 +80,7 @@ async function Page(props: Props) {
               </div>
             ))}
         </div>
-        <div className="fixed z-10 p-4 right-0 bottom-0 m-4">
+        <div className="fixed bottom-0 right-0 z-10 m-4 p-4">
           <Link href={`/team/${id}/game/new `}>
             <Button className="" variant={"secondary"}>
               Add Game
