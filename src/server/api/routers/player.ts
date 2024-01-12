@@ -75,6 +75,67 @@ export const playerRouter = createTRPCRouter({
       }
     }),
 
+  archivePlayer: protectedProcedure
+    .input(
+      z.object({
+        id: z.number().positive(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const ratelimit = new Ratelimit({
+        redis: Redis.fromEnv(),
+        limiter: Ratelimit.slidingWindow(30, "15 s"),
+        analytics: false,
+
+        prefix: "@upstash/ratelimit",
+      });
+
+      const { success } = await ratelimit.limit(ctx.user.id);
+
+      if (!success) {
+        throw new TRPCError({
+          code: "TOO_MANY_REQUESTS",
+          message: "Too many requests",
+        });
+      }
+
+      const player = await ctx.db.player.findUnique({
+        where: {
+          id: input.id,
+        },
+      });
+
+      if (!player) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Player not found",
+        });
+      }
+
+      const team = await ctx.db.team.findUnique({
+        where: {
+          id: player.teamId,
+          users_id: ctx.user.id,
+        },
+      });
+
+      if (!team) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Team not found",
+        });
+      }
+
+      return await ctx.db.player.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          archived: true,
+        },
+      });
+    }),
+
   addShots: protectedProcedure
     .input(
       z.object({
@@ -183,7 +244,7 @@ export const playerRouter = createTRPCRouter({
           });
         }
 
-        return await ctx.db.shot.create({
+        const shot = await ctx.db.shot.create({
           data: {
             playerId: playerId.data,
             made: made.data,
@@ -194,6 +255,25 @@ export const playerRouter = createTRPCRouter({
             points: input.points,
           },
         });
+
+        if (!shot) {
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+          });
+        }
+
+        await ctx.db.player.update({
+          where: {
+            id: playerId.data,
+          },
+          data: {
+            totalPoints: {
+              increment: input.points,
+            },
+          },
+        });
+
+        return shot;
       } catch (e) {
         throw new TRPCError({
           code: "NOT_FOUND",

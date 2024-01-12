@@ -112,6 +112,7 @@ export const columns: ColumnDef<player>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       const { id, teamId } = row.original;
+      const { mutateAsync } = api.player.archivePlayer.useMutation();
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -122,7 +123,14 @@ export const columns: ColumnDef<player>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => { console.log("delete")}}>Delete</DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => {
+                console.log(`Team id: ${teamId} Player id: ${id}`);
+                void mutateAsync({ id });
+              }}
+            >
+              Delete
+            </DropdownMenuItem>
             {
               //   <DropdownMenuSeparator />
               //  <DropdownMenuItem>Delete</DropdownMenuItem>

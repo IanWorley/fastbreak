@@ -33,13 +33,14 @@ model game {
 }
 
 model player {
-    id          Int    @id @default(autoincrement())
+    id          Int     @id @default(autoincrement())
     name        String
     jersey      Int
-    team        team   @relation(fields: [teamId], references: [id])
+    team        team    @relation(fields: [teamId], references: [id])
     teamId      Int
     shots       shot[]
-    totalPoints Int    @default(0)
+    totalPoints Int     @default(0)
+    archived    Boolean @default(false)
 
     @@index([teamId])
 }
