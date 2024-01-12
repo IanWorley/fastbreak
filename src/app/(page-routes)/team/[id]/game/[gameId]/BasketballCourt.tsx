@@ -119,7 +119,7 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
   };
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center p-4">
       <div>
         <canvas
           ref={canvasRef}
@@ -131,8 +131,8 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
           onMouseMove={updateCursor}
         />
       </div>
-      <button onClick={() => recordShot(false)}>Missed Shot</button>
-      <div>
+      {/* <button onClick={() => recordShot(false)}>Missed Shot</button> */}
+      {/* <div>
         <h3>Shot Log</h3>
         <ul>
           {shots.map((shot, index) => (
@@ -141,7 +141,7 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
             }) - ${shot.made ? "Made" : "Missed"}`}</li>
           ))}
         </ul>
-      </div>
+      </div> */}
     </div>
   );
 };
