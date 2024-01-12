@@ -3,6 +3,8 @@ import { Button } from "~/app/_components/shadcn/ui/button";
 import Link from "next/link";
 import Team from "./Team";
 import { api } from "~/trpc/server";
+import { toast } from "sonner";
+import CreateTeamDenied from "./CreateTeamDenied";
 
 async function page() {
   const teams = await api.team.grabTeams.query();
@@ -18,9 +20,7 @@ async function page() {
               <Button> Create Team </Button>
             </Link>
           ) : (
-            <Button variant={"ghost"} disabled={true}>
-              Create Team
-            </Button>
+            <CreateTeamDenied />
           )}
         </div>
         <div className="flex grid-cols-2 flex-col  md:grid  ">
