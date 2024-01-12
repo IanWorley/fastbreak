@@ -108,6 +108,25 @@ export const columns: ColumnDef<player>[] = [
     ),
   },
   {
+    accessorKey: "archived",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Archived
+          <CaretSortIcon className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => (
+      <div className="lowercase ">
+        {row.getValue("archived") ? "Yes" : "No"}
+      </div>
+    ),
+  },
+  {
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
