@@ -131,7 +131,7 @@ export const playerRouter = createTRPCRouter({
           id: input.id,
         },
         data: {
-          archived: true,
+          archived: !player.archived,
         },
       });
     }),

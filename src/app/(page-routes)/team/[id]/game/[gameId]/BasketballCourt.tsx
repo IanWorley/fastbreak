@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 import { usePlayerForApp } from "~/store/PlayerForApp";
 import { shot } from "@prisma/client";
 import { api } from "~/trpc/react";
+import { z } from "zod";
 
 interface Shot {
   xPoint: number;
@@ -31,8 +32,8 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
 
   const { data, isLoading, isError } =
     api.game.grabPlayersShotsFromGame.useQuery({
-      teamId: teamId.toString(),
-      gameId: gameId.toString(),
+      teamId: teamId,
+      gameId: z.coerce.number().parse(gameId),
     });
 
   const [shots, setShots] = useState<Shot[]>([]);

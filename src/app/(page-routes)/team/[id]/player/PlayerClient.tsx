@@ -148,7 +148,7 @@ export const columns: ColumnDef<player>[] = [
                 void mutateAsync({ id });
               }}
             >
-              Delete
+              Archive
             </DropdownMenuItem>
             {
               //   <DropdownMenuSeparator />
