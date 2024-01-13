@@ -52,27 +52,27 @@ export const playerRouter = createTRPCRouter({
         });
       }
 
-      try {
-        await ctx.db.team.findUniqueOrThrow({
-          where: {
-            id: teamId.data,
-            users_id: ctx.user.id,
-          },
-        });
+      const team = await ctx.db.team.findUniqueOrThrow({
+        where: {
+          id: teamId.data,
+          users_id: ctx.user.id,
+        },
+      });
 
-        return await ctx.db.player.create({
-          data: {
-            name: input.name,
-            jersey: jerseyNumber.data,
-            teamId: teamId.data,
-          },
-        });
-      } catch (e) {
+      if (!team) {
         throw new TRPCError({
           code: "NOT_FOUND",
           message: "Team not found",
         });
       }
+
+      return await ctx.db.player.create({
+        data: {
+          name: input.name,
+          jersey: jerseyNumber.data,
+          teamId: teamId.data,
+        },
+      });
     }),
 
   archivePlayer: protectedProcedure
@@ -222,63 +222,70 @@ export const playerRouter = createTRPCRouter({
         });
       }
 
-      try {
-        const team = await ctx.db.team.findUniqueOrThrow({
-          where: {
-            id: teamId.data,
-            users_id: ctx.user.id,
-          },
-        });
+      const team = await ctx.db.team.findUnique({
+        where: {
+          id: teamId.data,
+          users_id: ctx.user.id,
+        },
+      });
 
-        const player = await ctx.db.player.findUniqueOrThrow({
-          where: {
-            id: playerId.data,
-            teamId: teamId.data,
-          },
-        });
-
-        if (player.teamId !== team.id) {
-          throw new TRPCError({
-            code: "NOT_FOUND",
-            message: "Player not found",
-          });
-        }
-
-        const shot = await ctx.db.shot.create({
-          data: {
-            playerId: playerId.data,
-            made: made.data,
-            xPoint: x.data,
-            yPoint: y.data,
-            gameId: gameId.data,
-            teamId: teamId.data, // Add the missing teamId property
-            points: input.points,
-          },
-        });
-
-        if (!shot) {
-          throw new TRPCError({
-            code: "INTERNAL_SERVER_ERROR",
-          });
-        }
-
-        await ctx.db.player.update({
-          where: {
-            id: playerId.data,
-          },
-          data: {
-            totalPoints: {
-              increment: input.points,
-            },
-          },
-        });
-
-        return shot;
-      } catch (e) {
+      if (!team) {
         throw new TRPCError({
           code: "NOT_FOUND",
           message: "Team not found",
         });
       }
+
+      const player = await ctx.db.player.findUnique({
+        where: {
+          id: playerId.data,
+          teamId: teamId.data,
+        },
+      });
+
+      if (!player) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Player not found",
+        });
+      }
+
+      if (player.teamId !== team.id) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Player not found",
+        });
+      }
+
+      const shot = await ctx.db.shot.create({
+        data: {
+          playerId: playerId.data,
+          made: made.data,
+          xPoint: x.data,
+          yPoint: y.data,
+          gameId: gameId.data,
+          teamId: teamId.data, // Add the missing teamId property
+          points: input.points,
+        },
+      });
+
+      if (!shot) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+        });
+      }
+
+      await ctx.db.player.update({
+        where: {
+          id: playerId.data,
+        },
+        data: {
+          totalPoints: {
+            increment: input.points,
+          },
+        },
+      });
+
+      return shot;
     }),
 });

@@ -34,25 +34,25 @@ export const gameRouter = createTRPCRouter({
         });
       }
 
-      try {
-        await ctx.db.team.findUniqueOrThrow({
-          where: {
-            id: teamId.data,
-            users_id: ctx.user.id,
-          },
-        });
+      const team = await ctx.db.team.findUniqueOrThrow({
+        where: {
+          id: teamId.data,
+          users_id: ctx.user.id,
+        },
+      });
 
-        return await ctx.db.game.findMany({
-          where: {
-            teamId: teamId.data,
-          },
-        });
-      } catch (e) {
+      if (!team) {
         throw new TRPCError({
           code: "NOT_FOUND",
           message: "Team not found",
         });
       }
+
+      return await ctx.db.game.findMany({
+        where: {
+          teamId: teamId.data,
+        },
+      });
     }),
 
   createGame: protectedProcedure
@@ -84,26 +84,26 @@ export const gameRouter = createTRPCRouter({
         });
       }
 
-      try {
-        await ctx.db.team.findUniqueOrThrow({
-          where: {
-            id: teamId.data,
-            users_id: ctx.user.id,
-          },
-        });
+      const team = await ctx.db.team.findUnique({
+        where: {
+          id: teamId.data,
+          users_id: ctx.user.id,
+        },
+      });
 
-        return await ctx.db.game.create({
-          data: {
-            name: input.name,
-            teamId: teamId.data,
-          },
-        });
-      } catch (e) {
+      if (!team) {
         throw new TRPCError({
           code: "NOT_FOUND",
           message: "Team not found",
         });
       }
+
+      return await ctx.db.game.create({
+        data: {
+          name: input.name,
+          teamId: teamId.data,
+        },
+      });
     }),
 
   grabGame: protectedProcedure
@@ -142,25 +142,25 @@ export const gameRouter = createTRPCRouter({
         });
       }
 
-      try {
-        await ctx.db.team.findUniqueOrThrow({
-          where: {
-            id: teamId.data,
-            users_id: ctx.user.id,
-          },
-        });
+      const team = await ctx.db.team.findUnique({
+        where: {
+          id: teamId.data,
+          users_id: ctx.user.id,
+        },
+      });
 
-        return await ctx.db.game.findUnique({
-          where: {
-            id: gameId.data,
-          },
-        });
-      } catch (e) {
+      if (!team) {
         throw new TRPCError({
           code: "NOT_FOUND",
-          message: "Game not found",
+          message: "Team not found",
         });
       }
+
+      return await ctx.db.game.findUnique({
+        where: {
+          id: gameId.data,
+        },
+      });
     }),
 
   grabPlayersShotsFromGame: protectedProcedure
@@ -183,24 +183,24 @@ export const gameRouter = createTRPCRouter({
         });
       }
 
-      try {
-        await ctx.db.team.findUniqueOrThrow({
-          where: {
-            id: input.teamId,
-            users_id: ctx.user.id,
-          },
-        });
+      const team = await ctx.db.team.findUnique({
+        where: {
+          id: input.teamId,
+          users_id: ctx.user.id,
+        },
+      });
 
-        return await ctx.db.shot.findMany({
-          where: {
-            gameId: input.gameId,
-          },
-        });
-      } catch (e) {
+      if (!team) {
         throw new TRPCError({
           code: "NOT_FOUND",
-          message: "Game not found",
+          message: "Team not found",
         });
       }
+
+      return await ctx.db.shot.findMany({
+        where: {
+          gameId: input.gameId,
+        },
+      });
     }),
 });
