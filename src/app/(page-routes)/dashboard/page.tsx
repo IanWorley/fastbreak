@@ -14,7 +14,7 @@ async function page() {
       <Navbar className="fixed" />
       <div className="">
         <div className="flex flex-col  items-center   justify-evenly p-10 sm:flex-row ">
-          <p className="text-3xl font-bold  ">Your Teams </p>
+          <p className=" p-4 text-3xl font-bold ">Your Teams </p>
           {teams.length === 0 ? (
             <Link href="/team/new">
               <Button> Create Team </Button>
