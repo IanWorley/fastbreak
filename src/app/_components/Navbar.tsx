@@ -14,7 +14,8 @@ import { ModeToggle } from "~/app/_components/ModeToggle";
 import { getBaseUrl } from "~/lib/utils";
 import { FaBars, FaXmark } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
-import { Clerk } from "@clerk/nextjs/server";
+import { Clerk, User } from "@clerk/nextjs/server";
+import { stat } from "fs";
 
 interface NavbarProps {
   className?: string;
@@ -24,12 +25,17 @@ interface NavbarProps {
 
 function Navbar({ className, viewingTeam, teamId }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isClerk, setIsClerk] = useState(false);
   const router = useRouter();
 
-  const user = useUser();
+  const { user, isLoaded, isSignedIn } = useUser();
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
+  };
+
+  const renderClerk = () => {
+    setIsClerk((state) => !state);
   };
 
   return (
@@ -44,7 +50,7 @@ function Navbar({ className, viewingTeam, teamId }: NavbarProps) {
           isOpen ? "flex" : "hidden"
         } w-full flex-col items-center justify-between gap-10 p-4 md:flex md:flex-row md:items-center md:justify-end`}
       >
-        {user.isLoaded && user.isSignedIn ? (
+        {isLoaded && isSignedIn ? (
           <>
             <Link
               href="/dashboard"
@@ -69,8 +75,13 @@ function Navbar({ className, viewingTeam, teamId }: NavbarProps) {
               </>
             )}
 
-            <button className="py-2 text-center text-2xl md:hidden">
-              <p> {user.user?.fullName} </p>
+            <button
+              className="py-2 text-center text-2xl md:hidden"
+              onClick={() => {
+                renderClerk();
+              }}
+            >
+              <p> {user.fullName} </p>
             </button>
 
             <div className="hidden  md:block">
@@ -85,6 +96,8 @@ function Navbar({ className, viewingTeam, teamId }: NavbarProps) {
           </SignInButton>
         )}
       </div>
+      {isClerk && <UserProfile />}
+
       <Button
         variant={"default"}
         onClick={handleToggle}
