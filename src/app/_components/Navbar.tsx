@@ -12,7 +12,7 @@ import React, { useState } from "react";
 import { Button } from "~/app/_components/shadcn/ui/button";
 import { ModeToggle } from "~/app/_components/ModeToggle";
 import { getBaseUrl } from "~/lib/utils";
-import { FaBars } from "react-icons/fa6";
+import { FaBars, FaXmark } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
 import { Clerk } from "@clerk/nextjs/server";
 
@@ -42,25 +42,35 @@ function Navbar({ className, viewingTeam, teamId }: NavbarProps) {
       <div
         className={`${
           isOpen ? "flex" : "hidden"
-        } w-full flex-col items-center justify-between gap-10 p-4 md:flex md:flex-row md:justify-end`}
+        } w-full flex-col items-center justify-between gap-10 p-4 md:flex md:flex-row md:items-center md:justify-end`}
       >
         {user.isLoaded && user.isSignedIn ? (
           <>
-            <Link href="/dashboard" className="">
+            <Link href="/dashboard" className="py-2 text-center text-2xl">
               Dashboard
             </Link>
             {viewingTeam && (
-              <div className="flex flex-col items-center gap-10 p-4 md:flex-row">
+              <div className="flex flex-col items-start gap-10 p-4 md:flex-row">
                 <div className="">
-                  <Link href={`/team/${teamId}/game`}>Games</Link>
+                  <Link
+                    href={`/team/${teamId}/game`}
+                    className="py-2 text-center text-2xl"
+                  >
+                    Games
+                  </Link>
                 </div>
                 <div className="">
-                  <Link href={`/team/${teamId}/player`}>Roster</Link>
+                  <Link
+                    href={`/team/${teamId}/player`}
+                    className="py-2 text-center text-2xl"
+                  >
+                    Roster
+                  </Link>
                 </div>
               </div>
             )}
 
-            <button className="md:hidden ">
+            <button className="py-2 text-center text-2xl md:hidden">
               <p> {user.user?.fullName} </p>
             </button>
 
@@ -70,7 +80,9 @@ function Navbar({ className, viewingTeam, teamId }: NavbarProps) {
           </>
         ) : (
           <SignInButton redirectUrl={`${getBaseUrl()}/dashboard`}>
-            <Button variant={"default"}>Sign In</Button>
+            <Button variant={"default"} className="py-2 text-center text-2xl">
+              Sign In
+            </Button>
           </SignInButton>
         )}
       </div>
@@ -79,7 +91,7 @@ function Navbar({ className, viewingTeam, teamId }: NavbarProps) {
         onClick={handleToggle}
         className="mb-auto ml-auto p-4 md:hidden"
       >
-        {isOpen ? "Close" : "Menu"}
+        {isOpen ? <FaXmark /> : <FaBars />}
       </Button>
     </nav>
   );
