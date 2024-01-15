@@ -46,28 +46,27 @@ function Navbar({ className, viewingTeam, teamId }: NavbarProps) {
       >
         {user.isLoaded && user.isSignedIn ? (
           <>
-            <Link href="/dashboard" className="py-2 text-center text-2xl">
+            <Link
+              href="/dashboard"
+              className="py-2 text-center text-2xl md:text-sm"
+            >
               Dashboard
             </Link>
             {viewingTeam && (
-              <div className="flex flex-col items-start gap-10 p-4 md:flex-row">
-                <div className="">
-                  <Link
-                    href={`/team/${teamId}/game`}
-                    className="py-2 text-center text-2xl"
-                  >
-                    Games
-                  </Link>
-                </div>
-                <div className="">
-                  <Link
-                    href={`/team/${teamId}/player`}
-                    className="py-2 text-center text-2xl"
-                  >
-                    Roster
-                  </Link>
-                </div>
-              </div>
+              <>
+                <Link
+                  href={`/team/${teamId}/game`}
+                  className=" text-center text-2xl md:text-sm"
+                >
+                  Games
+                </Link>
+                <Link
+                  href={`/team/${teamId}/player`}
+                  className=" text-center text-2xl md:text-sm "
+                >
+                  Roster
+                </Link>
+              </>
             )}
 
             <button className="py-2 text-center text-2xl md:hidden">
