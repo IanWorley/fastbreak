@@ -37,10 +37,12 @@ function Navbar({ className, viewingTeam, teamId }: NavbarProps) {
       }
     >
       {isSignedIn && isLoaded ? (
-        <div className="mb-auto mr-auto flex flex-col rounded bg-blue-500 px-4 py-2 text-white md:hidden">
+        <div className="mb-auto mr-auto flex flex-col  bg-blue-500 px-4 py-2 text-white md:hidden">
           <UserButton afterSignOutUrl={`${getBaseUrl()}`} />
         </div>
       ) : null}
+
+      {/* <ModeToggle /> */}
 
       <div
         className={`${
@@ -48,7 +50,7 @@ function Navbar({ className, viewingTeam, teamId }: NavbarProps) {
         } flex w-full flex-col items-center justify-center gap-10 p-4 md:flex md:flex-row md:items-center md:justify-end`}
       >
         {isLoaded && !isSignedIn ? (
-          <div className="block cursor-pointer text-2xl md:hidden">
+          <div className="block cursor-pointer text-2xl  md:hidden">
             <SignInButton redirectUrl={`${getBaseUrl()}/dashboard`}>
               <p className="">Sign In</p>
             </SignInButton>
@@ -99,10 +101,13 @@ function Navbar({ className, viewingTeam, teamId }: NavbarProps) {
       <Button
         variant={"default"}
         onClick={handleToggle}
-        className="mb-auto ml-auto h-full p-4 md:hidden"
+        className="mb-auto ml-auto h-full rounded-none p-4 md:hidden "
       >
         {isOpen ? <FaXmark /> : <FaBars />}
       </Button>
+      <div className="hidden px-4 md:block">
+        <ModeToggle />
+      </div>
     </nav>
   );
 }
