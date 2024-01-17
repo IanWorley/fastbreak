@@ -10,7 +10,7 @@ async function page() {
   const teams = await api.team.grabTeams.query();
 
   return (
-    <main className="overflow-y-scroll pt-20">
+    <main className="overflow-y-scroll">
       <Navbar className="fixed" />
       <div className="">
         <div className="flex flex-col  items-center   justify-evenly p-10 sm:flex-row ">

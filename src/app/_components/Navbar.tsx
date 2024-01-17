@@ -30,84 +30,61 @@ function Navbar({ className, viewingTeam, teamId }: NavbarProps) {
   };
 
   return (
-    <nav
-      className={
-        className +
-        " h-17 top-0 flex  w-full items-center  justify-between overflow-hidden border-b-2 bg-background md:justify-end "
-      }
-    >
-      {isSignedIn && isLoaded ? (
-        <div className=" mb-auto flex h-full items-start justify-start bg-blue-500 px-4 py-2 text-white md:hidden">
-          <UserButton afterSignOutUrl={`${getBaseUrl()}`} />
-        </div>
-      ) : null}
-
-      {/* <ModeToggle /> */}
-
-      <div
-        className={`${
-          isOpen ? "flex" : "hidden"
-        } flex w-full flex-col items-center justify-center gap-10 p-4 md:flex md:flex-row md:items-center md:justify-end`}
-      >
-        {isLoaded && !isSignedIn ? (
-          <div className="block cursor-pointer text-2xl  md:hidden">
-            <SignInButton redirectUrl={`${getBaseUrl()}/dashboard`}>
-              <p className="">Sign In</p>
-            </SignInButton>
-          </div>
-        ) : null}
-
-        {isLoaded && isSignedIn ? (
-          <>
-            <Link
-              href="/dashboard"
-              className="py-2 text-center text-2xl md:text-sm"
+    <nav className="w-full border-b  bg-white ">
+      <div className="mx-auto max-w-screen-xl items-center px-4 md:flex md:px-8">
+        <div className="flex items-center justify-between py-3 md:block md:py-5">
+          <div className="flex w-full justify-between ">
+            {isLoaded && isSignedIn ? (
+              <div className=" flex justify-end md:hidden">
+                <UserButton />
+              </div>
+            ) : (
+              <div className="flex justify-end md:hidden">
+                <SignInButton redirectUrl={`${getBaseUrl()}/dashboard`}>
+                  <Button variant={"default"}>Sign In</Button>
+                </SignInButton>
+              </div>
+            )}
+            <button
+              className="rounded-md p-2 text-gray-700 outline-none focus:border focus:border-gray-400 md:hidden"
+              onClick={handleToggle}
             >
-              Dashboard
-            </Link>
+              {isOpen ? <FaXmark /> : <FaBars />}
+            </button>
+          </div>
+        </div>
+        <div
+          className={`mt-8 flex-1 justify-self-center pb-3 md:mt-0 md:block md:pb-0 ${
+            isOpen ? "block" : "hidden"
+          }`}
+        >
+          <ul className="items-center justify-center space-y-8 md:flex  md:justify-end md:space-x-6 md:space-y-0 md:p-4">
+            <li className="text-gray-600 hover:cursor-pointer hover:text-indigo-600">
+              <Link href="/dashboard">Dashboard</Link>
+            </li>
             {viewingTeam && (
               <>
-                <Link
-                  href={`/team/${teamId}/game`}
-                  className=" text-center text-2xl md:text-sm"
-                >
-                  Games
-                </Link>
-                <Link
-                  href={`/team/${teamId}/player`}
-                  className=" text-center text-2xl md:text-sm "
-                >
-                  Roster
-                </Link>
+                <li className="text-gray-600 hover:cursor-pointer hover:text-indigo-600">
+                  <Link href={`/team/${teamId}/game`}>Games</Link>
+                </li>
+                <li className="text-gray-600 hover:cursor-pointer hover:text-indigo-600">
+                  <Link href={`/team/${teamId}/player`}>Roster</Link>
+                </li>
               </>
             )}
-
-            <div className="hidden md:block">
-              <UserButton afterSignOutUrl={`${getBaseUrl()}`} />
-            </div>
-          </>
+          </ul>
+        </div>
+        {isLoaded && isSignedIn ? (
+          <div className=" hidden justify-start md:flex">
+            <UserButton />
+          </div>
         ) : (
-          <SignInButton redirectUrl={`${getBaseUrl()}/dashboard`}>
-            <Button
-              variant={"default"}
-              className="hidden py-2 text-center text-sm md:block"
-            >
-              Sign In
-            </Button>
-          </SignInButton>
+          <div className="hidden justify-start md:flex ">
+            <SignInButton redirectUrl={`${getBaseUrl()}/dashboard`}>
+              <Button variant={"default"}>Sign In</Button>
+            </SignInButton>
+          </div>
         )}
-      </div>
-      <ModeToggle />
-
-      <Button
-        variant={"default"}
-        onClick={handleToggle}
-        className=" mb-auto h-full rounded-none  p-4  md:hidden"
-      >
-        {isOpen ? <FaXmark /> : <FaBars />}
-      </Button>
-      <div className="hidden px-4 md:block">
-        <ModeToggle />
       </div>
     </nav>
   );
