@@ -33,11 +33,11 @@ function Navbar({ className, viewingTeam, teamId }: NavbarProps) {
     <nav
       className={
         className +
-        " h-17 top-0 flex w-full  items-center  justify-between overflow-hidden border-b-2 bg-background md:justify-end "
+        " h-17 top-0 flex  w-full items-center  justify-between overflow-hidden border-b-2 bg-background md:justify-end "
       }
     >
       {isSignedIn && isLoaded ? (
-        <div className="mb-auto mr-auto flex flex-col  bg-blue-500 px-4 py-2 text-white md:hidden">
+        <div className=" mb-auto flex h-full items-start justify-start bg-blue-500 px-4 py-2 text-white md:hidden">
           <UserButton afterSignOutUrl={`${getBaseUrl()}`} />
         </div>
       ) : null}
@@ -97,11 +97,12 @@ function Navbar({ className, viewingTeam, teamId }: NavbarProps) {
           </SignInButton>
         )}
       </div>
+      <ModeToggle />
 
       <Button
         variant={"default"}
         onClick={handleToggle}
-        className="mb-auto ml-auto h-full rounded-none p-4 md:hidden "
+        className=" mb-auto h-full rounded-none  p-4  md:hidden"
       >
         {isOpen ? <FaXmark /> : <FaBars />}
       </Button>
