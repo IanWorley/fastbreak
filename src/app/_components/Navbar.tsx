@@ -1,6 +1,5 @@
 "use client";
 import {
-  ClerkProvider,
   SignInButton,
   UserButton,
   UserProfile,
@@ -14,8 +13,6 @@ import { ModeToggle } from "~/app/_components/ModeToggle";
 import { getBaseUrl } from "~/lib/utils";
 import { FaBars, FaXmark } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
-import { Clerk, User } from "@clerk/nextjs/server";
-import { stat } from "fs";
 
 interface NavbarProps {
   className?: string;
@@ -25,8 +22,6 @@ interface NavbarProps {
 
 function Navbar({ className, viewingTeam, teamId }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [isClerk, setIsClerk] = useState(false);
-  const router = useRouter();
 
   const { user, isLoaded, isSignedIn } = useUser();
 
@@ -34,22 +29,32 @@ function Navbar({ className, viewingTeam, teamId }: NavbarProps) {
     setIsOpen(!isOpen);
   };
 
-  const renderClerk = () => {
-    setIsClerk((state) => !state);
-  };
-
   return (
     <nav
       className={
         className +
-        " h-17 top-0 flex w-full items-center justify-between overflow-hidden border-b-2 bg-background md:justify-end "
+        " h-17 top-0 flex w-full  items-center  justify-between overflow-hidden border-b-2 bg-background md:justify-end "
       }
     >
+      {isSignedIn && isLoaded ? (
+        <div className="mb-auto mr-auto flex flex-col rounded bg-blue-500 px-4 py-2 text-white md:hidden">
+          <UserButton afterSignOutUrl={`${getBaseUrl()}`} />
+        </div>
+      ) : null}
+
       <div
         className={`${
           isOpen ? "flex" : "hidden"
-        } w-full flex-col items-center justify-between gap-10 p-4 md:flex md:flex-row md:items-center md:justify-end`}
+        } flex w-full flex-col items-center justify-center gap-10 p-4 md:flex md:flex-row md:items-center md:justify-end`}
       >
+        {isLoaded && !isSignedIn ? (
+          <div className="block cursor-pointer text-2xl md:hidden">
+            <SignInButton redirectUrl={`${getBaseUrl()}/dashboard`}>
+              <p className="">Sign In</p>
+            </SignInButton>
+          </div>
+        ) : null}
+
         {isLoaded && isSignedIn ? (
           <>
             <Link
@@ -75,33 +80,26 @@ function Navbar({ className, viewingTeam, teamId }: NavbarProps) {
               </>
             )}
 
-            <button
-              className="py-2 text-center text-2xl md:hidden"
-              onClick={() => {
-                renderClerk();
-              }}
-            >
-              <p> {user.fullName} </p>
-            </button>
-
-            <div className="hidden  md:block">
+            <div className="hidden md:block">
               <UserButton afterSignOutUrl={`${getBaseUrl()}`} />
             </div>
           </>
         ) : (
           <SignInButton redirectUrl={`${getBaseUrl()}/dashboard`}>
-            <Button variant={"default"} className="py-2 text-center text-2xl">
+            <Button
+              variant={"default"}
+              className="hidden py-2 text-center text-sm md:block"
+            >
               Sign In
             </Button>
           </SignInButton>
         )}
       </div>
-      {isClerk && <UserProfile />}
 
       <Button
         variant={"default"}
         onClick={handleToggle}
-        className="mb-auto ml-auto p-4 md:hidden"
+        className="mb-auto ml-auto h-full p-4 md:hidden"
       >
         {isOpen ? <FaXmark /> : <FaBars />}
       </Button>
