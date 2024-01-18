@@ -30,7 +30,7 @@ function Navbar({ className, viewingTeam, teamId }: NavbarProps) {
   };
 
   return (
-    <nav className="w-full border-b  bg-white ">
+    <nav className="w-full border-b  bg-transparent ">
       <div className="mx-auto max-w-screen-xl items-center px-4 md:flex md:px-8">
         <div className="flex items-center justify-between py-3 md:block md:py-5">
           <div className="flex w-full justify-between ">
@@ -45,6 +45,7 @@ function Navbar({ className, viewingTeam, teamId }: NavbarProps) {
                 </SignInButton>
               </div>
             )}
+            <ModeToggle />
             <button
               className="rounded-md p-2 text-gray-700 outline-none focus:border focus:border-gray-400 md:hidden"
               onClick={handleToggle}
@@ -59,15 +60,15 @@ function Navbar({ className, viewingTeam, teamId }: NavbarProps) {
           }`}
         >
           <ul className="items-center justify-center space-y-8 md:flex  md:justify-end md:space-x-6 md:space-y-0 md:p-4">
-            <li className="text-gray-600 hover:cursor-pointer hover:text-indigo-600">
+            <li className=" hover:cursor-pointer hover:text-indigo-600">
               <Link href="/dashboard">Dashboard</Link>
             </li>
             {viewingTeam && (
               <>
-                <li className="text-gray-600 hover:cursor-pointer hover:text-indigo-600">
+                <li className=" hover:cursor-pointer hover:text-indigo-600">
                   <Link href={`/team/${teamId}/game`}>Games</Link>
                 </li>
-                <li className="text-gray-600 hover:cursor-pointer hover:text-indigo-600">
+                <li className=" hover:cursor-pointer hover:text-indigo-600">
                   <Link href={`/team/${teamId}/player`}>Roster</Link>
                 </li>
               </>
