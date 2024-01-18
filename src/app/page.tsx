@@ -11,7 +11,7 @@ export default async function Home() {
   return (
     <div className="overflow-y-auto">
       <main>
-        <Navbar className="fixed top-0 " />
+        <Navbar className=" " />
         <div className="flex min-h-screen flex-col items-center justify-center space-y-4 px-4">
           <h1 className="scroll-m-20 text-center text-4xl font-extrabold tracking-tight lg:text-5xl">
             Fast Break

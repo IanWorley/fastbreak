@@ -1,6 +1,6 @@
 "use client";
-import React, { useState, useRef, useEffect, MouseEvent } from "react";
-import courtBackground from "./Design.png"; // Replace with the actual path to your image
+import React, { useState, useRef, useEffect, type MouseEvent } from "react";
+import courtBackground from "./court.png"; // Replace with the actual path to your image
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { usePlayerForApp } from "~/store/PlayerForApp";
@@ -30,6 +30,11 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
 
   const players = usePlayerForApp((state) => state.players);
 
+  const courtWidth = 549;
+  const courtHeight = 320;
+  const courtRef = useRef<SVGSVGElement>(null);
+  const imageRef = useRef(null);
+
   const { data, isLoading, isError } =
     api.game.grabPlayersShotsFromGame.useQuery({
       teamId: teamId,
@@ -41,8 +46,6 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
     x: 0,
     y: 0,
   });
-
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
     if (!data) return;
@@ -61,88 +64,79 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
     );
   }, [data, players]);
 
-  useEffect(() => {
-    const drawBasketballCourt = () => {
-      const canvas = canvasRef.current;
-      if (!canvas) return;
+  const recordShot = (
+    event: MouseEvent<SVGSVGElement, globalThis.MouseEvent>,
+  ) => {
+    if (!courtRef.current) return;
 
-      const context = canvas.getContext("2d");
-      if (!context) return;
+    const svg = event.currentTarget;
 
-      // Set background image
-      const background = new Image();
-      // COURT BACKGROUND IMAGE
-      //routetate this image
+    const rect = svg.getBoundingClientRect();
+    const x = ((event.clientX - rect.left) / rect.width) * 100; // Scale to 0-100
+    const y = ((event.clientY - rect.top) / rect.height) * 100; // Scale to 0-100
 
-      background.src = courtBackground.src;
-      context.drawImage(background, 0, 0, canvas.width, canvas.height);
-
-      // Draw recorded shots
-      shots.forEach((shot, index) => {
-        context.fillStyle = shot.made ? "#FF4500" : "#696969";
-        context.beginPath();
-        context.arc(shot.xPoint, shot.yPoint, 5, 0, 2 * Math.PI);
-        context.fill();
-      });
-
-      // Draw cursor
-      context.fillStyle = "blue";
-      context.beginPath();
-      context.arc(cursor.x, cursor.y, 5, 0, 2 * Math.PI);
-      context.fill();
-    };
-
-    drawBasketballCourt();
-  }, [shots, cursor]);
-
-  const recordShot = (made: boolean) => {
-    if (!canvasRef.current) return;
-
-    const rect = canvasRef.current.getBoundingClientRect();
-    const x = cursor.x;
-    const y = cursor.y;
-
-    // const newShot: Shot = { x, y, made };
+    // const newShot: Shot = {
+    //   xPoint: x,
+    //   yPoint: y,
+    //   made: true,
+    //   playerid: 11,
+    //   gameid: z.coerce.number().parse(gameId),
+    // };
     // setShots([...shots, newShot]);
 
     setCords(x, y);
     toggle();
   };
+  const updateCursor = (
+    event: MouseEvent<SVGSVGElement, globalThis.MouseEvent>,
+  ) => {
+    const svg = event.currentTarget;
 
-  const updateCursor = (event: MouseEvent<HTMLCanvasElement>) => {
-    if (!canvasRef.current) return;
+    // Check if the event target is the SVG element itself
 
-    const rect = canvasRef.current.getBoundingClientRect();
-    const x = event.clientX - rect.left;
-    const y = event.clientY - rect.top;
+    const rect = svg.getBoundingClientRect();
+    const x = ((event.clientX - rect.left) / rect.width) * courtWidth;
+    const y = ((event.clientY - rect.top) / rect.height) * courtHeight;
 
-    setCursor({ x, y });
+    setCursor({
+      x: x,
+      y: y,
+    });
   };
+
+  console.log(shots);
 
   return (
     <div className="flex flex-col items-center justify-center p-4">
-      <div>
-        <canvas
-          ref={canvasRef}
-          width={500}
-          height={300}
-          onClick={() => {
-            recordShot(true);
-          }} // Record made shot on click
+      <div className="w-full max-w-md">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox={`0 0 ${courtWidth} ${courtHeight}`}
+          preserveAspectRatio="xMidYMid meet"
+          className="h-auto w-full"
           onMouseMove={updateCursor}
-        />
-      </div>
-      {/* <button onClick={() => recordShot(false)}>Missed Shot</button> */}
-      {/* <div>
-        <h3>Shot Log</h3>
-        <ul>
+          ref={courtRef}
+          onClick={recordShot}
+        >
+          <image
+            href={courtBackground.src}
+            width="100%"
+            height="100%"
+            ref={imageRef}
+          />
           {shots.map((shot, index) => (
-            <li key={index}>{`Shot ${index + 1}: (${shot.xPoint}, ${
-              shot.yPoint
-            }) - ${shot.made ? "Made" : "Missed"}`}</li>
+            <circle
+              key={index}
+              cx={(shot.xPoint / 100) * courtWidth} // Scale xPoint to match courtWidth
+              cy={(shot.yPoint / 100) * courtHeight} // Scale yPoint to match courtHeight
+              r={5}
+              fill={shot.made ? "green" : "red"}
+            />
           ))}
-        </ul>
-      </div> */}
+
+          <circle cx={cursor.x} cy={cursor.y} r={5} fill="blue" />
+        </svg>
+      </div>
     </div>
   );
 };

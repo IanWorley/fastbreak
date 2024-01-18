@@ -43,7 +43,7 @@ async function Page(props: Props) {
   const data = await api.game.grabGames.query(z.coerce.number().parse(id));
 
   return (
-    <main className="pt-20">
+    <main className="">
       <Navbar className="fixed" teamId={id} viewingTeam={true} />
       <h1 className="block p-7 text-center text-5xl font-extrabold"> Games </h1>
       <div className=" ">

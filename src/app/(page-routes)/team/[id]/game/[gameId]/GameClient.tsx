@@ -50,7 +50,7 @@ function GameClient() {
         teamId={teamId}
       />
       <div className="flex justify-evenly">
-        <div className="grid grid-cols-2 gap-16">
+        <div className="  grid  grid-cols-1 gap-16 md:grid-cols-2">
           <PlayerList />
         </div>
       </div>
