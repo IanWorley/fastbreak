@@ -8,6 +8,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { api } from "~/trpc/react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Label } from "@radix-ui/react-dropdown-menu";
 
 function FormNewPlayer() {
   const { id } = useParams();
@@ -69,12 +70,14 @@ function FormNewPlayer() {
     <div>
       <form className=" p-4 " onSubmit={handleSubmit(onSubmit)}>
         <CardContent className="">
+          <Label>Name</Label>
           <Input
             type="text"
             minLength={3}
             placeholder="player name"
             {...register("name", { required: true })}
           />
+          <Label>Jersey Number</Label>
           <Input
             type="number"
             min={0}
