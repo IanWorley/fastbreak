@@ -58,6 +58,15 @@ async function Page(props: Props) {
                   {" "}
                   {game.name}
                 </h3>
+                <div className="flex flex-row justify-center p-2 text-center">
+                  <h5 className="text-md font-semibold">
+                    Total Points:
+                    {game.shots.reduce(
+                      (total, currentVal) => total + currentVal.points,
+                      0,
+                    )}
+                  </h5>
+                </div>
 
                 <div className="flex flex-row  gap-3">
                   <Link

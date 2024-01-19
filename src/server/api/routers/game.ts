@@ -52,6 +52,9 @@ export const gameRouter = createTRPCRouter({
         where: {
           teamId: teamId.data,
         },
+        include: {
+          shots: true,
+        },
       });
     }),
 
