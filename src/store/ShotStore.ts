@@ -18,9 +18,15 @@ export const useShotStore = create<ShotStore>((set) => ({
 
   // add multiple shots as an array
   addMultipleShots: (shots: shot[]) =>
-    set((state) => ({
-      shots: [...state.shots, ...shots],
-    })),
+    set((state) => {
+      const newShots = shots.filter(
+        (newShot) =>
+          !state.shots.some((existingShot) => existingShot.id === newShot.id),
+      );
+      return {
+        shots: [...state.shots, ...newShots],
+      };
+    }),
 
   removeShot: (shot_id: number) =>
     set((state) => ({
