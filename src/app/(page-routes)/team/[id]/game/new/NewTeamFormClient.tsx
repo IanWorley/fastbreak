@@ -27,7 +27,6 @@ function NewTeamFormClient() {
   // TODO FIND A WAY TO change route after mutation
   const { mutateAsync } = api.game.createGame.useMutation({
     onSuccess: () => {
-      revalidatePath(`/team/${teamId}/game`);
       router.push(`/team/${teamId}/game`);
     },
     onError: (err) => {
