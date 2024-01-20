@@ -2,6 +2,7 @@ import Navbar from "~/app/_components/Navbar";
 import React from "react";
 import GameClient from "./GameClient";
 import { api } from "~/trpc/server";
+import { notFound } from "next/navigation";
 
 interface Props {
   params: { id: number; gameId: number };
@@ -15,7 +16,7 @@ async function page({ params }: Props) {
   });
 
   if (!game) {
-    return <div>Game not found</div>;
+    notFound();
   }
 
   return (
