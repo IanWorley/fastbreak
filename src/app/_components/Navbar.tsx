@@ -46,12 +46,14 @@ function Navbar({ className, viewingTeam, teamId }: NavbarProps) {
               </div>
             )}
             <ModeToggle />
-            <button
-              className="rounded-md p-2 text-gray-700 outline-none focus:border focus:border-gray-400 md:hidden"
-              onClick={handleToggle}
-            >
-              {isOpen ? <FaXmark /> : <FaBars />}
-            </button>
+            {isLoaded && isSignedIn ? (
+              <button
+                className="rounded-md p-2 text-gray-700 outline-none focus:border focus:border-gray-400 md:hidden"
+                onClick={handleToggle}
+              >
+                {isOpen ? <FaXmark /> : <FaBars />}
+              </button>
+            ) : null}
           </div>
         </div>
         <div
@@ -60,9 +62,12 @@ function Navbar({ className, viewingTeam, teamId }: NavbarProps) {
           }`}
         >
           <ul className="items-center justify-center space-y-8 md:flex  md:justify-end md:space-x-6 md:space-y-0 md:p-4">
-            <li className=" hover:cursor-pointer hover:text-indigo-600">
-              <Link href="/dashboard">Dashboard</Link>
-            </li>
+            {isLoaded && isSignedIn ? (
+              <li className=" hover:cursor-pointer hover:text-indigo-600">
+                <Link href="/Dashboard">Dashboard</Link>
+              </li>
+            ) : null}
+
             {viewingTeam && (
               <>
                 <li className=" hover:cursor-pointer hover:text-indigo-600">
@@ -76,11 +81,11 @@ function Navbar({ className, viewingTeam, teamId }: NavbarProps) {
           </ul>
         </div>
         {isLoaded && isSignedIn ? (
-          <div className=" hidden justify-start md:flex">
+          <div className=" hidden md:flex">
             <UserButton />
           </div>
         ) : (
-          <div className="hidden justify-start md:flex ">
+          <div className="hidden  md:flex ">
             <SignInButton redirectUrl={`${getBaseUrl()}/dashboard`}>
               <Button variant={"default"}>Sign In</Button>
             </SignInButton>
