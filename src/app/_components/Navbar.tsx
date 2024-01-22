@@ -1,18 +1,11 @@
 "use client";
-import {
-  SignInButton,
-  UserButton,
-  UserProfile,
-  currentUser,
-  useUser,
-} from "@clerk/nextjs";
+import { SignInButton, UserButton, useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import React, { useState } from "react";
 import { Button } from "~/app/_components/shadcn/ui/button";
 import { ModeToggle } from "~/app/_components/ModeToggle";
 import { getBaseUrl } from "~/lib/utils";
 import { FaBars, FaXmark } from "react-icons/fa6";
-import { useRouter } from "next/navigation";
 
 interface NavbarProps {
   className?: string;
@@ -40,7 +33,7 @@ function Navbar({ className, viewingTeam, teamId }: NavbarProps) {
               </div>
             ) : (
               <div className="flex justify-end md:hidden">
-                <SignInButton redirectUrl={`${getBaseUrl()}/dashboard`}>
+                <SignInButton redirectUrl={`${getBaseUrl()}/team`}>
                   <Button variant={"default"}>Sign In</Button>
                 </SignInButton>
               </div>
@@ -64,7 +57,7 @@ function Navbar({ className, viewingTeam, teamId }: NavbarProps) {
           <ul className="items-center justify-center space-y-8 md:flex  md:justify-end md:space-x-6 md:space-y-0 md:p-4">
             {isLoaded && isSignedIn ? (
               <li className=" hover:cursor-pointer hover:text-indigo-600">
-                <Link href="/Dashboard">Dashboard</Link>
+                <Link href="/team">Team</Link>
               </li>
             ) : null}
 
@@ -86,7 +79,7 @@ function Navbar({ className, viewingTeam, teamId }: NavbarProps) {
           </div>
         ) : (
           <div className="hidden  md:flex ">
-            <SignInButton redirectUrl={`${getBaseUrl()}/dashboard`}>
+            <SignInButton redirectUrl={`${getBaseUrl()}/team`}>
               <Button variant={"default"}>Sign In</Button>
             </SignInButton>
           </div>

@@ -22,11 +22,11 @@ export default async function Home() {
           </h2>
 
           {user ? (
-            <Link href="/dashboard">
-              <Button> Dashboard </Button>
+            <Link href="/team">
+              <Button> View Teams </Button>
             </Link>
           ) : (
-            <SignInButton redirectUrl={`${getBaseUrl()}/dashboard`}>
+            <SignInButton redirectUrl={`${getBaseUrl()}/team`}>
               <Button variant={"default"}>Sign In</Button>
             </SignInButton>
           )}
