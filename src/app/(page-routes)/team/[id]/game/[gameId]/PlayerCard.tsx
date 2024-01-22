@@ -31,7 +31,7 @@ function PlayerCard(props: PlayerCardProps) {
             toggle();
           }}
         >
-          {active ? "Playing" : "Not Playing"}
+          {active ? "Click to Sub" : ""}
         </Button>
       </div>
     </div>
