@@ -7,6 +7,7 @@ import { z } from "zod";
 import { usePlayerForApp } from "~/store/PlayerForApp";
 import PlayerList from "./PlayerList";
 import { api } from "~/trpc/react";
+import PlayerSubDrawer from "./(DrawerCompoents)/PlayerSubDrawer";
 
 function GameClient() {
   const parms = useParams<{ id: string; gameId: string }>();
@@ -20,6 +21,11 @@ function GameClient() {
     setXPos(x);
     setYPos(y);
   };
+
+  const [PlayerSubDrawerState, setPlayerSubDrawerState] = useState(false);
+
+  const togglePlayerSubDrawerState = () =>
+    setPlayerSubDrawerState(!PlayerSubDrawerState);
 
   const addPlayers = usePlayerForApp((state) => state.addPlayers);
 
@@ -49,10 +55,9 @@ function GameClient() {
         gameId={gameId.toString()}
         teamId={teamId}
       />
+
       <div className="flex justify-evenly">
-        <div className="  grid  grid-cols-1 gap-16 md:grid-cols-2">
-          <PlayerList />
-        </div>
+        <PlayerList toggleForDrawer={togglePlayerSubDrawerState} />
       </div>
       <Modal
         gameId={gameId.toString()}
@@ -61,6 +66,11 @@ function GameClient() {
         toggle={toggle}
         x={xPos}
         y={yPos}
+      />
+
+      <PlayerSubDrawer
+        open={PlayerSubDrawerState}
+        onOpenChange={togglePlayerSubDrawerState}
       />
     </div>
   );
