@@ -16,9 +16,11 @@ function PlayerList(props: PlayerListProps) {
         state.players.some((player) => player.isPlaying === true),
       ) ? (
         <div className="grid grid-cols-1 gap-16 md:grid-cols-2">
-          {players.map((player) => (
-            <PlayerCard key={player.id} player={player} />
-          ))}
+          {players
+            .filter((player) => player.isPlaying === true)
+            .map((player) => (
+              <PlayerCard key={player.id} player={player} />
+            ))}
         </div>
       ) : (
         <div className="bg-primary-foreground p-10  ">
