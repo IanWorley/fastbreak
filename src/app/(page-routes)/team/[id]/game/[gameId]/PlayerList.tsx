@@ -19,7 +19,11 @@ function PlayerList(props: PlayerListProps) {
           {players
             .filter((player) => player.isPlaying === true)
             .map((player) => (
-              <PlayerCard key={player.id} player={player} />
+              <PlayerCard
+                key={player.id}
+                player={player}
+                toggleForDrawer={toggleForDrawer}
+              />
             ))}
         </div>
       ) : (

@@ -6,10 +6,11 @@ import { usePlayerForApp } from "~/store/PlayerForApp";
 
 interface PlayerCardProps {
   player: player;
+  toggleForDrawer: () => void;
 }
 
 function PlayerCard(props: PlayerCardProps) {
-  const { player } = props;
+  const { player, toggleForDrawer } = props;
   const toggleActive = usePlayerForApp((state) => state.togglePlayer);
   const sortPlayers = usePlayerForApp((state) => state.sortPlayers);
 
@@ -25,7 +26,8 @@ function PlayerCard(props: PlayerCardProps) {
         <Button
           className={"w-full  bg-green-500"}
           onClick={() => {
-            toggle();
+            // toggle();
+            toggleForDrawer();
           }}
         >
           Sub Out
