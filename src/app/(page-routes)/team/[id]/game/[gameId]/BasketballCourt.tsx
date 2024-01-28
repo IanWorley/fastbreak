@@ -75,15 +75,6 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
     const x = ((event.clientX - rect.left) / rect.width) * 100; // Scale to 0-100
     const y = ((event.clientY - rect.top) / rect.height) * 100; // Scale to 0-100
 
-    // const newShot: Shot = {
-    //   xPoint: x,
-    //   yPoint: y,
-    //   made: true,
-    //   playerid: 11,
-    //   gameid: z.coerce.number().parse(gameId),
-    // };
-    // setShots([...shots, newShot]);
-
     setCords(x, y);
     toggle();
   };
