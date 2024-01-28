@@ -2,7 +2,6 @@
 
 import { Button } from "~/app/_components/shadcn/ui/button";
 import type { player } from "@prisma/client";
-import { useState } from "react";
 import { usePlayerForApp } from "~/store/PlayerForApp";
 
 interface PlayerCardProps {

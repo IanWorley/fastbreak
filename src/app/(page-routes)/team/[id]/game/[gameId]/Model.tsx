@@ -32,10 +32,8 @@ import {
   RadioGroupItem,
 } from "~/app/_components/shadcn/ui/radio-group";
 import * as z from "zod";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { api } from "~/trpc/react";
-import { shot } from "@prisma/client";
 
 interface DialogDemoProps {
   open: boolean;
