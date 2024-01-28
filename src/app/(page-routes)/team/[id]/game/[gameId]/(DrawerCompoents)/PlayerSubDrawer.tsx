@@ -7,7 +7,7 @@ import { usePlayerForApp } from "~/store/PlayerForApp";
 import DrawerPlayerCard from "./DrawerPlayerCard";
 interface IPropsPlayerSubDrawer {
   open: boolean;
-  onOpenChange: () => void;
+  onOpenChange: (open: boolean) => void;
 }
 
 function PlayerSubDrawer(props: IPropsPlayerSubDrawer) {
@@ -15,7 +15,7 @@ function PlayerSubDrawer(props: IPropsPlayerSubDrawer) {
   const { players } = usePlayerForApp((state) => state);
 
   return (
-    <Drawer open={open}>
+    <Drawer open={open} onOpenChange={(o) => onOpenChange(o)}>
       <DrawerContent>
         <DrawerTitle>
           {" "}

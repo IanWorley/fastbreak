@@ -24,8 +24,9 @@ function GameClient() {
 
   const [PlayerSubDrawerState, setPlayerSubDrawerState] = useState(false);
 
-  const togglePlayerSubDrawerState = () =>
+  const togglePlayerSubDrawerState = () => {
     setPlayerSubDrawerState(!PlayerSubDrawerState);
+  };
 
   const addPlayers = usePlayerForApp((state) => state.addPlayers);
 
@@ -70,7 +71,7 @@ function GameClient() {
 
       <PlayerSubDrawer
         open={PlayerSubDrawerState}
-        onOpenChange={togglePlayerSubDrawerState}
+        onOpenChange={setPlayerSubDrawerState}
       />
     </div>
   );

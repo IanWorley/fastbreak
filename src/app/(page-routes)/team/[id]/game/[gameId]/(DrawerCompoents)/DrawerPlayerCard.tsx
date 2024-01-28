@@ -17,7 +17,7 @@ function DrawerPlayerCard(props: DrawerPlayerCardProps) {
         {player.name}
       </p>
       <Button
-        className="w-full bg-green-500"
+        className="w-full"
         onClick={() => {
           togglePlayer(player.id);
         }}

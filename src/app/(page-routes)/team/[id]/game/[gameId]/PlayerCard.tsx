@@ -11,12 +11,10 @@ interface PlayerCardProps {
 
 function PlayerCard(props: PlayerCardProps) {
   const { player } = props;
-  const [active, setActive] = useState(false);
   const toggleActive = usePlayerForApp((state) => state.togglePlayer);
   const sortPlayers = usePlayerForApp((state) => state.sortPlayers);
 
   const toggle = () => {
-    setActive(!active);
     toggleActive(player.id);
     sortPlayers();
   };
@@ -26,12 +24,12 @@ function PlayerCard(props: PlayerCardProps) {
       <p className="p-4 text-3xl"> {player.name} </p>
       <div className="flex space-x-4  ">
         <Button
-          className={"w-full " + `${active ? "bg-green-500" : "bg-red-600"}`}
+          className={"w-full  bg-green-500"}
           onClick={() => {
             toggle();
           }}
         >
-          {active ? "Click to Sub" : ""}
+          Sub Out
         </Button>
       </div>
     </div>
