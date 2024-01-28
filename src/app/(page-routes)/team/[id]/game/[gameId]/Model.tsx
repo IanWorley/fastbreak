@@ -74,37 +74,6 @@ function Model(props: DialogDemoProps) {
     },
   });
 
-  // const { mutateAsync } = useMutation({
-  //   mutationFn: async (data: Shot) => {
-  //     const res = await fetch(
-  //       `/api/team/${teamid}/players/${data.player_id}/shots`,
-  //       {
-  //         method: "POST",
-  //         body: JSON.stringify({
-  //           made: data.shot_attempt,
-  //           x: data.x,
-  //           y: data.y,
-  //           gameId: z.coerce.number().parse(gameId),
-  //           points: z.coerce.number().parse(data.points),
-  //         }),
-  //       }
-  //     );
-  //     if (!res.ok) {
-  //       throw new Error("Network response was not ok");
-  //     }
-  //     return res.json();
-  //   },
-  //   onSuccess: () => {
-  //     form.reset();
-  //     queryClient.invalidateQueries({ queryKey: ["players"] });
-  //     queryClient.invalidateQueries({ queryKey: ["shots"] });
-  //   },
-  //   onError: (error) => {
-  //     console.log(error);
-  //     toast("Error", { type: "error" });
-  //   },
-  // });
-
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     const player_id = z.coerce.number().safeParse(data.player_id);
 
