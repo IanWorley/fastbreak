@@ -15,6 +15,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { refreshGamePage } from "~/app/actions";
 function NewTeamFormClient() {
   const { id } = useParams();
 
@@ -52,7 +53,12 @@ function NewTeamFormClient() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        action={() => {
+          void refreshGamePage(teamId);
+        }}
+      >
         <CardContent>
           <FormField
             control={form.control}
