@@ -62,7 +62,7 @@ async function Page(props: Props) {
         <div className="flex grid-cols-2 flex-col md:grid">
           {data.length >= 0 &&
             data.map((game) => (
-              <Games key={game.id} game={game} shots={game.shots} id={id} />
+              <Game key={game.id} game={game} shots={game.shots} id={id} />
             ))}
         </div>
 
@@ -84,8 +84,7 @@ interface GameProps {
   shots: shot[];
   id: number;
 }
-
-export async function Games(props: GameProps) {
+async function Game(props: GameProps) {
   const { game, shots, id } = props;
 
   return (
