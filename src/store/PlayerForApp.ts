@@ -14,12 +14,15 @@ interface PlayerForAppState {
   updatePlayers: (players: player[]) => void;
   addPlayers: (player: player[]) => void;
   sortPlayers: () => void;
+  swapPlayersActive: (player1: number, player2: number) => void;
 }
 
 export const usePlayerForApp = create<PlayerForAppState>((set) => ({
   players: [],
   addPlayers(rawPlayerApi: player[]) {
     set((state) => {
+      const activePlayerCount = state.players.filter((p) => p.isPlaying).length;
+
       const updatedPlayers = state.players.map((player) => {
         const newPlayer = rawPlayerApi.find((p) => p.id === player.id);
         return newPlayer
@@ -33,7 +36,10 @@ export const usePlayerForApp = create<PlayerForAppState>((set) => ({
 
       const players = [
         ...updatedPlayers,
-        ...newPlayers.map((player) => ({ ...player, isPlaying: false })),
+        ...newPlayers.map((player, index) => ({
+          ...player,
+          isPlaying: activePlayerCount + index < 5,
+        })),
       ];
 
       players.sort((a, b) => {
@@ -100,6 +106,27 @@ export const usePlayerForApp = create<PlayerForAppState>((set) => ({
       });
 
       return {
+        players,
+      };
+    });
+  },
+
+  swapPlayersActive: (playerSubInId, playerSubOutId) => {
+    set((state): PlayerForAppState => {
+      const players = [...state.players];
+
+      const playerSubIn = players.find((p) => p.id === playerSubInId);
+      const playerSubOut = players.find((p) => p.id === playerSubOutId);
+
+      if (!playerSubIn || !playerSubOut) {
+        return state;
+      }
+
+      playerSubIn.isPlaying = true;
+      playerSubOut.isPlaying = false;
+      // update the players in the store but don't add any
+      return {
+        ...state,
         players,
       };
     });

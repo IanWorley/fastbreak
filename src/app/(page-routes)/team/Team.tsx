@@ -1,8 +1,8 @@
-"use client";
-
 import { Button } from "~/app/_components/shadcn/ui/button";
 import Link from "next/link";
-import { api } from "~/trpc/react";
+import { api } from "~/trpc/server";
+import { revalidatePath } from "next/cache";
+import { z } from "zod";
 
 type ITeamProps = {
   team: {
@@ -11,10 +11,25 @@ type ITeamProps = {
   };
 };
 
-function Team(props: ITeamProps) {
-  const { team } = props;
+async function deleteTeam(formData: FormData) {
+  "use server";
 
-  const { mutateAsync } = api.team.deleteTeam.useMutation();
+  const id = formData.get("id");
+  if (!id) {
+    throw new Error("id is required");
+  }
+
+  const safeIdParse = z.coerce.number().safeParse(id);
+  if (!safeIdParse.success) {
+    throw new Error("id is not a number");
+  }
+
+  await api.team.deleteTeam.mutate(safeIdParse.data.toString());
+  revalidatePath("/team");
+}
+
+async function Team(props: ITeamProps) {
+  const { team } = props;
 
   return (
     <div
@@ -26,15 +41,16 @@ function Team(props: ITeamProps) {
         <Link className="  h-full  w-full" href={`/team/${team.id}/game`}>
           <Button className="h-full w-full">View</Button>
         </Link>
-        <Button
-          className="h-full w-full"
-          variant={"destructive"}
-          onClick={() => {
-            void mutateAsync(team.id.toString());
-          }}
-        >
-          Delete
-        </Button>
+        <form className="h-full w-full" action={deleteTeam}>
+          <input type="hidden" name="id" value={team.id} />
+          <Button
+            className="h-full w-full"
+            type="submit"
+            variant={"destructive"}
+          >
+            Delete
+          </Button>
+        </form>
       </div>
     </div>
   );
