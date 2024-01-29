@@ -30,6 +30,7 @@ function PlayerSubDrawer(props: IPropsPlayerSubDrawer) {
                 key={player.id}
                 player={player}
                 playerToSwap={playerToSwap}
+                onOpenChange={onOpenChange}
               />
             ))}
         </div>

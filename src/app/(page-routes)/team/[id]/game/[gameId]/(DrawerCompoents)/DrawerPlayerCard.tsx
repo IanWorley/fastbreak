@@ -6,10 +6,11 @@ import { usePlayerForApp } from "~/store/PlayerForApp";
 interface DrawerPlayerCardProps {
   player: player;
   playerToSwap: number;
+  onOpenChange: (open: boolean) => void;
 }
 
 function DrawerPlayerCard(props: DrawerPlayerCardProps) {
-  const { player, playerToSwap } = props;
+  const { player, playerToSwap, onOpenChange } = props;
   const { swapPlayersActive } = usePlayerForApp((state) => state);
 
   return (
@@ -21,6 +22,7 @@ function DrawerPlayerCard(props: DrawerPlayerCardProps) {
         className="w-full"
         onClick={() => {
           swapPlayersActive(player.id, playerToSwap);
+          onOpenChange(false);
         }}
       >
         Sub In
