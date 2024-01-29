@@ -28,13 +28,13 @@ async function page() {
       },
     });
 
-    redirect("/dashboard");
+    redirect("/team");
   };
 
   const teams = await api.team.grabTeams.query();
 
   if (teams.length >= 1) {
-    redirect("/dashboard");
+    redirect("/team");
   }
 
   return (

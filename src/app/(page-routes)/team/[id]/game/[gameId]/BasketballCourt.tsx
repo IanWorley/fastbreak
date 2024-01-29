@@ -1,10 +1,7 @@
 "use client";
 import React, { useState, useRef, useEffect, type MouseEvent } from "react";
 import courtBackground from "./court.png"; // Replace with the actual path to your image
-import { useQuery } from "@tanstack/react-query";
-import { useParams } from "next/navigation";
 import { usePlayerForApp } from "~/store/PlayerForApp";
-import { shot } from "@prisma/client";
 import { api } from "~/trpc/react";
 import { z } from "zod";
 

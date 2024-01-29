@@ -3,21 +3,17 @@
 import { Button } from "~/app/_components/shadcn/ui/button";
 import type { player } from "@prisma/client";
 import { usePlayerForApp } from "~/store/PlayerForApp";
+import { toast } from "sonner";
 
 interface PlayerCardProps {
   player: player;
   toggleForDrawer: () => void;
+  setPlayerSwap: (playerId: number) => void;
 }
 
 function PlayerCard(props: PlayerCardProps) {
-  const { player, toggleForDrawer } = props;
-  const toggleActive = usePlayerForApp((state) => state.togglePlayer);
-  const sortPlayers = usePlayerForApp((state) => state.sortPlayers);
-
-  const toggle = () => {
-    toggleActive(player.id);
-    sortPlayers();
-  };
+  const { player, toggleForDrawer, setPlayerSwap } = props;
+  const { players } = usePlayerForApp((state) => state);
 
   return (
     <div key={player.id} className="bg-primary-foreground p-10 ">
@@ -26,7 +22,11 @@ function PlayerCard(props: PlayerCardProps) {
         <Button
           className={"w-full  bg-green-500"}
           onClick={() => {
-            // toggle();
+            if (players.length <= 5) {
+              toast.info("You need at least 6 players to sub out");
+              return;
+            }
+            setPlayerSwap(player.id);
             toggleForDrawer();
           }}
         >

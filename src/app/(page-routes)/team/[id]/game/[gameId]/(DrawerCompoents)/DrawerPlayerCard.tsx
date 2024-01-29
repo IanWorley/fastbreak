@@ -5,11 +5,12 @@ import { usePlayerForApp } from "~/store/PlayerForApp";
 
 interface DrawerPlayerCardProps {
   player: player;
+  playerToSwap: number;
 }
 
 function DrawerPlayerCard(props: DrawerPlayerCardProps) {
-  const { player } = props;
-  const { togglePlayer } = usePlayerForApp((state) => state);
+  const { player, playerToSwap } = props;
+  const { swapPlayersActive } = usePlayerForApp((state) => state);
 
   return (
     <div key={player.id} className="bg-primary-foreground md:mx-4 md:p-10 ">
@@ -19,7 +20,7 @@ function DrawerPlayerCard(props: DrawerPlayerCardProps) {
       <Button
         className="w-full"
         onClick={() => {
-          togglePlayer(player.id);
+          swapPlayersActive(player.id, playerToSwap);
         }}
       >
         Sub In

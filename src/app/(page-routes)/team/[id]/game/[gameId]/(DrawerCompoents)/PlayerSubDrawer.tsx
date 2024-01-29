@@ -8,10 +8,11 @@ import DrawerPlayerCard from "./DrawerPlayerCard";
 interface IPropsPlayerSubDrawer {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  playerToSwap: number;
 }
 
 function PlayerSubDrawer(props: IPropsPlayerSubDrawer) {
-  const { open, onOpenChange } = props;
+  const { open, onOpenChange, playerToSwap } = props;
   const { players } = usePlayerForApp((state) => state);
 
   return (
@@ -25,7 +26,11 @@ function PlayerSubDrawer(props: IPropsPlayerSubDrawer) {
           {players
             .filter((player) => player.isPlaying === false)
             .map((player) => (
-              <DrawerPlayerCard key={player.id} player={player} />
+              <DrawerPlayerCard
+                key={player.id}
+                player={player}
+                playerToSwap={playerToSwap}
+              />
             ))}
         </div>
       </DrawerContent>

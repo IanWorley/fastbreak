@@ -4,10 +4,11 @@ import { usePlayerForApp } from "~/store/PlayerForApp";
 
 interface PlayerListProps {
   toggleForDrawer: () => void;
+  setPlayerSwap: (playerId: number) => void;
 }
 
 function PlayerList(props: PlayerListProps) {
-  const { toggleForDrawer } = props;
+  const { toggleForDrawer, setPlayerSwap } = props;
   const { players } = usePlayerForApp((state) => state);
 
   return (
@@ -23,21 +24,13 @@ function PlayerList(props: PlayerListProps) {
                 key={player.id}
                 player={player}
                 toggleForDrawer={toggleForDrawer}
+                setPlayerSwap={setPlayerSwap}
               />
             ))}
         </div>
       ) : (
         <div className="bg-primary-foreground p-10  ">
-          <p className="p-4 text-3xl"> No Players Are Playing </p>
-          <Button
-            className=""
-            onClick={(event) => {
-              toggleForDrawer();
-              event.stopPropagation();
-            }}
-          >
-            Set Players Active
-          </Button>
+          <p className="p-4 text-3xl"> Add Players to team to start a game </p>
         </div>
       )}
     </>

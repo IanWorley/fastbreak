@@ -22,6 +22,8 @@ function GameClient() {
     setYPos(y);
   };
 
+  const [playerSwap, setPlayerSwap] = useState(0);
+
   const [PlayerSubDrawerState, setPlayerSubDrawerState] = useState(false);
 
   const togglePlayerSubDrawerState = () => {
@@ -58,7 +60,10 @@ function GameClient() {
       />
 
       <div className="flex justify-evenly">
-        <PlayerList toggleForDrawer={togglePlayerSubDrawerState} />
+        <PlayerList
+          toggleForDrawer={togglePlayerSubDrawerState}
+          setPlayerSwap={setPlayerSwap}
+        />
       </div>
       <Modal
         gameId={gameId.toString()}
@@ -72,6 +77,7 @@ function GameClient() {
       <PlayerSubDrawer
         open={PlayerSubDrawerState}
         onOpenChange={setPlayerSubDrawerState}
+        playerToSwap={playerSwap}
       />
     </div>
   );
