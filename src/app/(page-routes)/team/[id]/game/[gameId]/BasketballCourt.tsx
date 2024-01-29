@@ -1,10 +1,7 @@
 "use client";
 import React, { useState, useRef, useEffect, type MouseEvent } from "react";
 import courtBackground from "./court.png"; // Replace with the actual path to your image
-import { useQuery } from "@tanstack/react-query";
-import { useParams } from "next/navigation";
 import { usePlayerForApp } from "~/store/PlayerForApp";
-import { shot } from "@prisma/client";
 import { api } from "~/trpc/react";
 import { z } from "zod";
 
@@ -74,15 +71,6 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
     const rect = svg.getBoundingClientRect();
     const x = ((event.clientX - rect.left) / rect.width) * 100; // Scale to 0-100
     const y = ((event.clientY - rect.top) / rect.height) * 100; // Scale to 0-100
-
-    // const newShot: Shot = {
-    //   xPoint: x,
-    //   yPoint: y,
-    //   made: true,
-    //   playerid: 11,
-    //   gameid: z.coerce.number().parse(gameId),
-    // };
-    // setShots([...shots, newShot]);
 
     setCords(x, y);
     toggle();

@@ -15,7 +15,6 @@ import { useParams, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { revalidatePath } from "next/cache";
 
 function NewTeamFormClient() {
   const { id } = useParams();
