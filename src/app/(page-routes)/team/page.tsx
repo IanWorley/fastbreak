@@ -1,10 +1,10 @@
 import Navbar from "~/app/_components/Navbar";
 import { Button } from "~/app/_components/shadcn/ui/button";
 import Link from "next/link";
-import Team from "./Team";
+import Team from "~/app/(page-routes)/team/Team";
 import { api } from "~/trpc/server";
 import { toast } from "sonner";
-import CreateTeamDenied from "./CreateTeamDenied";
+import CreateTeamDenied from "~/app/(page-routes)/team/CreateTeamDenied";
 
 async function page() {
   const teams = await api.team.grabTeams.query();

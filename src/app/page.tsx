@@ -3,7 +3,7 @@ import { SignInButton, currentUser } from "@clerk/nextjs";
 
 import Link from "next/link";
 import Navbar from "~/app/_components/Navbar";
-import { getBaseUrl } from "../lib/utils";
+import { getBaseUrl } from "~/lib/utils";
 
 export default async function Home() {
   const user = await currentUser();
