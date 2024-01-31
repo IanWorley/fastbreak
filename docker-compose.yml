@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  app:
+    platform: "linux/amd64"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /app
+    ports:
+      - "3000:3000"
+    image: t3-app
+    environment:
+      - DATABASE_URL=database_url_goes_here
+      - NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+      - CLERK_SECRET_KEY=YOUR_CLERK_PUBLISHABLE_KEY_HERE
+      - UPSTASH_REDIS_REST_URL=YOUR_REDIS_URL_HERE
+      - UPSTASH_REDIS_REST_TOKEN=YOUR_REDIS_TOKEN_HERE
