@@ -1,6 +1,6 @@
+import NewTeamFormClient from "~/app/(page-routes)/team/[id]/game/new/NewTeamFormClient";
 import Navbar from "~/app/_components/Navbar";
 import { Card, CardHeader, CardTitle } from "~/app/_components/shadcn/ui/card";
-import NewTeamFormClient from "~/app/(page-routes)/team/[id]/game/new/NewTeamFormClient";
 
 function page() {
   return (

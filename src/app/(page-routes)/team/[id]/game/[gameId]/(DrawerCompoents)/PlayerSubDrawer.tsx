@@ -8,7 +8,7 @@ import DrawerPlayerCard from "./DrawerPlayerCard";
 interface IPropsPlayerSubDrawer {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  playerToSwap: number;
+  playerToSwap: string;
 }
 
 function PlayerSubDrawer(props: IPropsPlayerSubDrawer) {

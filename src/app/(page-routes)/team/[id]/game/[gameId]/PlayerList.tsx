@@ -1,10 +1,9 @@
-import { Button } from "~/app/_components/shadcn/ui/button";
-import PlayerCard from "./PlayerCard";
 import { usePlayerForApp } from "~/store/PlayerForApp";
+import PlayerCard from "./PlayerCard";
 
 interface PlayerListProps {
   toggleForDrawer: () => void;
-  setPlayerSwap: (playerId: number) => void;
+  setPlayerSwap: (playerId: string) => void;
 }
 
 function PlayerList(props: PlayerListProps) {

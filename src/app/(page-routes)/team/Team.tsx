@@ -1,12 +1,12 @@
-import { Button } from "~/app/_components/shadcn/ui/button";
-import Link from "next/link";
-import { api } from "~/trpc/server";
 import { revalidatePath } from "next/cache";
+import Link from "next/link";
 import { z } from "zod";
+import { Button } from "~/app/_components/shadcn/ui/button";
+import { api } from "~/trpc/server";
 
 type ITeamProps = {
   team: {
-    id: number;
+    id: string;
     name: string;
   };
 };

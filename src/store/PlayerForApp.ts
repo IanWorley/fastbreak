@@ -9,12 +9,12 @@ interface PlayerForAppState {
   players: PlayerForApp[];
   addPlayer: (player: player) => void;
   removePlayer: (player: player) => void;
-  togglePlayer: (player_id: number) => void;
+  // togglePlayer: (player_id: number) => void;
   updatePlayer: (player: player) => void;
   updatePlayers: (players: player[]) => void;
   addPlayers: (player: player[]) => void;
   sortPlayers: () => void;
-  swapPlayersActive: (player1: number, player2: number) => void;
+  swapPlayersActive: (player1: string, player2: string) => void;
 }
 
 export const usePlayerForApp = create<PlayerForAppState>((set) => ({
@@ -85,12 +85,12 @@ export const usePlayerForApp = create<PlayerForAppState>((set) => ({
       players: state.players.filter((p) => p.id !== player.id),
     })),
 
-  togglePlayer: (player_id) =>
-    set((state) => ({
-      players: state.players.map((p) =>
-        p.id === player_id ? { ...p, isPlaying: !p.isPlaying } : p,
-      ),
-    })),
+  // togglePlayer: (player_id) =>
+  //   set((state) => ({
+  //     players: state.players.map((p) =>
+  //       p.id === player_id ? { ...p, isPlaying: !p.isPlaying } : p,
+  //     ),
+  //   })),
   sortPlayers: () => {
     set((state) => {
       const players = [...state.players];

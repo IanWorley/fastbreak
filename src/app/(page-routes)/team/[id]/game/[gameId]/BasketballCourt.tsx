@@ -1,23 +1,22 @@
 "use client";
-import React, { useState, useRef, useEffect, type MouseEvent } from "react";
-import courtBackground from "./court.png"; // Replace with the actual path to your image
+import React, { useEffect, useRef, useState, type MouseEvent } from "react";
 import { usePlayerForApp } from "~/store/PlayerForApp";
 import { api } from "~/trpc/react";
-import { z } from "zod";
+import courtBackground from "./court.png"; // Replace with the actual path to your image
 
 interface Shot {
   xPoint: number;
   yPoint: number;
   made: boolean;
-  playerid: number;
-  gameid: number;
+  playerid: string;
+  gameid: string;
 }
 
 interface BasketballCourtProps {
   toggle: () => void;
   setCords: (x: number, y: number) => void;
   gameId: string;
-  teamId: number;
+  teamId: string;
 }
 
 const BasketballCourt: React.FC<BasketballCourtProps> = (
@@ -35,7 +34,7 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
   const { data, isLoading, isError } =
     api.game.grabPlayersShotsFromGame.useQuery({
       teamId: teamId,
-      gameId: z.coerce.number().parse(gameId),
+      gameId: gameId,
     });
 
   const [shots, setShots] = useState<Shot[]>([]);

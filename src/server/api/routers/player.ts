@@ -32,20 +32,12 @@ export const playerRouter = createTRPCRouter({
         });
       }
 
-      const teamId = z.coerce.number().safeParse(input.teamId);
       const jerseyNumber = z.coerce.number().safeParse(input.jerseyNumber);
 
       if (!jerseyNumber.success) {
         throw new TRPCError({
           code: "NOT_FOUND",
           message: "Jersey number not found",
-        });
-      }
-
-      if (!teamId.success) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Team not found",
         });
       }
 

@@ -1,18 +1,18 @@
 "use client";
-import React, { useState } from "react";
-import BasketballCourt from "./BasketballCourt";
-import Modal from "./Model";
 import { useParams } from "next/navigation";
+import { useState } from "react";
 import { z } from "zod";
 import { usePlayerForApp } from "~/store/PlayerForApp";
-import PlayerList from "./PlayerList";
 import { api } from "~/trpc/react";
 import PlayerSubDrawer from "./(DrawerCompoents)/PlayerSubDrawer";
+import BasketballCourt from "./BasketballCourt";
+import Modal from "./Model";
+import PlayerList from "./PlayerList";
 
 function GameClient() {
   const parms = useParams<{ id: string; gameId: string }>();
-  const teamId = z.coerce.number().parse(parms.id);
-  const gameId = z.coerce.number().parse(parms.gameId);
+  const teamId = z.string().cuid2().parse(parms.id);
+  const gameId = z.string().cuid2().parse(parms.gameId);
 
   const [xPos, setXPos] = useState(0);
   const [yPos, setYPos] = useState(0);
@@ -22,7 +22,7 @@ function GameClient() {
     setYPos(y);
   };
 
-  const [playerSwap, setPlayerSwap] = useState(0);
+  const [playerSwap, setPlayerSwap] = useState("");
 
   const [PlayerSubDrawerState, setPlayerSubDrawerState] = useState(false);
 
@@ -32,9 +32,7 @@ function GameClient() {
 
   const addPlayers = usePlayerForApp((state) => state.addPlayers);
 
-  const { data, isLoading, isError } = api.team.grabPlayers.useQuery(
-    teamId.toString(),
-  );
+  const { data, isLoading, isError } = api.team.grabPlayers.useQuery(teamId);
 
   // is open state
   const [isOpen, setIsOpen] = useState(false);
@@ -55,7 +53,7 @@ function GameClient() {
       <BasketballCourt
         toggle={toggle}
         setCords={setCords}
-        gameId={gameId.toString()}
+        gameId={gameId}
         teamId={teamId}
       />
 
@@ -66,8 +64,8 @@ function GameClient() {
         />
       </div>
       <Modal
-        gameId={gameId.toString()}
-        teamid={teamId.toString()}
+        gameId={gameId}
+        teamid={teamId}
         open={isOpen}
         toggle={toggle}
         x={xPos}

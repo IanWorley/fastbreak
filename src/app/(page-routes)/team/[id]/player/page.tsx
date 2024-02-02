@@ -1,9 +1,8 @@
 import Navbar from "~/app/_components/Navbar";
-import React from "react";
 import PlayerClient from "./PlayerClient";
 
 interface Props {
-  params: { id: number; gameId: number };
+  params: { id: string; gameId: string };
 }
 
 function page({ params }: Props) {

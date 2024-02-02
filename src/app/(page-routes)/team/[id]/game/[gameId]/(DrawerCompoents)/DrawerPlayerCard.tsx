@@ -1,11 +1,10 @@
 import { type player } from "@prisma/client";
-import React from "react";
 import { Button } from "~/app/_components/shadcn/ui/button";
 import { usePlayerForApp } from "~/store/PlayerForApp";
 
 interface DrawerPlayerCardProps {
   player: player;
-  playerToSwap: number;
+  playerToSwap: string;
   onOpenChange: (open: boolean) => void;
 }
 

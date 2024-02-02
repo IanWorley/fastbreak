@@ -1,41 +1,18 @@
 "use client";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Label } from "@radix-ui/react-dropdown-menu";
+import { useParams, useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import { Button } from "~/app/_components/shadcn/ui/button";
 import { CardContent, CardFooter } from "~/app/_components/shadcn/ui/card";
 import { Input } from "~/app/_components/shadcn/ui/input";
-import { useMutation } from "@tanstack/react-query";
-import { redirect, useParams, useRouter } from "next/navigation";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { z } from "zod";
 import { api } from "~/trpc/react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Label } from "@radix-ui/react-dropdown-menu";
 
 function FormNewPlayer() {
   const { id } = useParams();
-  const teamId = z.coerce.number().parse(id);
+  const teamId = z.string().cuid2().parse(id);
   const router = useRouter();
-
-  // const { mutateAsync } = useMutation({
-  //   mutationKey: ["playerMutation"],
-  //   mutationFn: async (data) => {
-  //     const response = await fetch(`/api/team/${id}/player`, {
-  //       method: "POST",
-  //       body: JSON.stringify(data),
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error("Network response was not ok");
-  //     }
-
-  //     return data;
-  //   },
-  //   onSuccess: async () => {
-  //     router.push(`/team/${id}/player`);
-  //   },
-  //   onError: () => {
-  //     alert("error");
-  //   },
-  // });
 
   const formSchema = z.object({
     name: z.string().min(3),
@@ -60,7 +37,7 @@ function FormNewPlayer() {
       .object({
         name: z.string().min(3),
         jerseyNumber: z.coerce.number().positive(),
-        teamId: z.string(),
+        teamId: z.string().cuid2(),
       })
       .parse({ ...data, teamId: id });
     await mutateAsync(info);

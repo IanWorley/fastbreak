@@ -2,7 +2,7 @@ import Navbar from "~/app/_components/Navbar";
 import { Card, CardHeader, CardTitle } from "~/app/_components/shadcn/ui/card";
 import FormNewPlayer from "./formNewPlayer";
 // props grab team id from url
-function page({ params }: { params: { id: number } }) {
+function page({ params }: { params: { id: string } }) {
   return (
     <main>
       <div className="flex h-screen flex-col">

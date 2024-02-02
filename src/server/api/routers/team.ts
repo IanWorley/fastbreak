@@ -112,15 +112,6 @@ export const teamsRouter = createTRPCRouter({
         });
       }
 
-      const teamId = z.coerce.number().safeParse(input);
-
-      if (!teamId.success) {
-        throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "Invalid team ID",
-        });
-      }
-
       const team = await ctx.db.team.findUnique({
         where: {
           id: input,
