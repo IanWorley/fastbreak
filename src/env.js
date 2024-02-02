@@ -14,6 +14,14 @@ export const env = createEnv({
         (str) => !str.includes("YOUR_MYSQL_URL_HERE"),
         "You forgot to change the default URL",
       ),
+
+    CUID_FINGERPRINT: z
+      .string()
+      .refine(
+        (str) => !str.includes("YOUR_CUID_FINGERPRINT_HERE"),
+        "You forgot to set your fingerprint",
+      ),
+
     UPSTASH_REDIS_REST_URL: z
       .string()
       .url()
@@ -64,6 +72,7 @@ export const env = createEnv({
     UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
     UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
     CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
+    CUID_FINGERPRINT: process.env.CUID_FINGERPRINT,
 
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:
