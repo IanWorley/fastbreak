@@ -1,12 +1,9 @@
-import {
-  createTRPCRouter,
-  publicProcedure,
-  protectedProcedure,
-} from "~/server/api/trpc";
 import { TRPCError } from "@trpc/server";
-import { z } from "zod";
 import { Ratelimit } from "@upstash/ratelimit"; // for deno: see above
 import { Redis } from "@upstash/redis"; // see below for cloudflare and fastly adapters
+import { z } from "zod";
+import { cuid2 } from "~/lib/utils";
+import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 export const playerRouter = createTRPCRouter({
   addPlayer: protectedProcedure
@@ -14,7 +11,7 @@ export const playerRouter = createTRPCRouter({
       z.object({
         name: z.string(),
         jerseyNumber: z.number().positive(),
-        teamId: z.string(),
+        teamId: z.string().cuid2(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -54,7 +51,7 @@ export const playerRouter = createTRPCRouter({
 
       const team = await ctx.db.team.findUniqueOrThrow({
         where: {
-          id: teamId.data,
+          id: input.teamId,
           users_id: ctx.user.id,
         },
       });
@@ -68,9 +65,10 @@ export const playerRouter = createTRPCRouter({
 
       return await ctx.db.player.create({
         data: {
+          id: cuid2(),
           name: input.name,
           jersey: jerseyNumber.data,
-          teamId: teamId.data,
+          teamId: input.teamId,
         },
       });
     }),
@@ -78,7 +76,7 @@ export const playerRouter = createTRPCRouter({
   archivePlayer: protectedProcedure
     .input(
       z.object({
-        id: z.number().positive(),
+        id: z.string().cuid2(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -140,12 +138,12 @@ export const playerRouter = createTRPCRouter({
     .input(
       z.object({
         points: z.number().min(0).max(3),
-        playerId: z.string(),
-        teamId: z.string(),
+        playerId: z.string().cuid2(),
+        teamId: z.string().cuid2(),
         made: z.boolean(),
         x: z.number(),
         y: z.number(),
-        gameId: z.string(),
+        gameId: z.string().cuid2(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -168,25 +166,9 @@ export const playerRouter = createTRPCRouter({
         });
       }
 
-      const playerId = z.coerce.number().safeParse(input.playerId);
-      const teamId = z.coerce.number().safeParse(input.teamId);
       const x = z.coerce.number().safeParse(input.x);
       const y = z.coerce.number().safeParse(input.y);
-      const gameId = z.coerce.number().safeParse(input.gameId);
       const made = z.coerce.boolean().safeParse(input.made);
-
-      if (!playerId.success) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Player not found",
-        });
-      }
-      if (!teamId.success) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Team not found",
-        });
-      }
 
       if (!made.success) {
         throw new TRPCError({
@@ -208,13 +190,6 @@ export const playerRouter = createTRPCRouter({
         });
       }
 
-      if (!gameId.success) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Game not found",
-        });
-      }
-
       if (!input.points) {
         throw new TRPCError({
           code: "BAD_REQUEST",
@@ -224,7 +199,7 @@ export const playerRouter = createTRPCRouter({
 
       const team = await ctx.db.team.findUnique({
         where: {
-          id: teamId.data,
+          id: input.teamId,
           users_id: ctx.user.id,
         },
       });
@@ -238,8 +213,8 @@ export const playerRouter = createTRPCRouter({
 
       const player = await ctx.db.player.findUnique({
         where: {
-          id: playerId.data,
-          teamId: teamId.data,
+          id: input.playerId,
+          teamId: input.teamId,
         },
       });
 
@@ -259,12 +234,13 @@ export const playerRouter = createTRPCRouter({
 
       const shot = await ctx.db.shot.create({
         data: {
-          playerId: playerId.data,
+          id: cuid2(),
+          playerId: input.playerId,
           made: made.data,
           xPoint: x.data,
           yPoint: y.data,
-          gameId: gameId.data,
-          teamId: teamId.data, // Add the missing teamId property
+          gameId: input.gameId,
+          teamId: input.teamId, // Add the missing teamId property
           points: input.points,
         },
       });
@@ -277,7 +253,7 @@ export const playerRouter = createTRPCRouter({
 
       await ctx.db.player.update({
         where: {
-          id: playerId.data,
+          id: input.playerId,
         },
         data: {
           totalPoints: {
