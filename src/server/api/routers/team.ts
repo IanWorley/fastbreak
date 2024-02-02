@@ -1,8 +1,9 @@
-import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { TRPCError } from "@trpc/server";
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 import { z } from "zod";
+import { cuid2 } from "~/lib/utils";
+import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 export const teamsRouter = createTRPCRouter({
   grabTeams: protectedProcedure.query(async ({ ctx, input }) => {
@@ -31,7 +32,7 @@ export const teamsRouter = createTRPCRouter({
   }),
 
   deleteTeam: protectedProcedure
-    .input(z.string())
+    .input(z.string().cuid2())
     .mutation(async ({ ctx, input }) => {
       const ratelimit = new Ratelimit({
         redis: Redis.fromEnv(),
@@ -50,18 +51,9 @@ export const teamsRouter = createTRPCRouter({
         });
       }
 
-      const teamId = z.coerce.number().safeParse(input);
-
-      if (!teamId.success) {
-        throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "Invalid team ID",
-        });
-      }
-
       const team = await ctx.db.team.findUnique({
         where: {
-          id: teamId.data,
+          id: input,
           users_id: ctx.user.id,
         },
       });
@@ -75,25 +67,25 @@ export const teamsRouter = createTRPCRouter({
 
       await ctx.db.shot.deleteMany({
         where: {
-          teamId: teamId.data,
+          teamId: input,
         },
       });
 
       await ctx.db.game.deleteMany({
         where: {
-          teamId: teamId.data,
+          teamId: input,
         },
       });
 
       await ctx.db.player.deleteMany({
         where: {
-          teamId: teamId.data,
+          teamId: input,
         },
       });
 
       await ctx.db.team.delete({
         where: {
-          id: teamId.data,
+          id: input,
         },
       });
 
@@ -101,7 +93,7 @@ export const teamsRouter = createTRPCRouter({
     }),
 
   grabPlayers: protectedProcedure
-    .input(z.string())
+    .input(z.string().cuid2())
     .query(async ({ ctx, input }) => {
       const ratelimit = new Ratelimit({
         redis: Redis.fromEnv(),
@@ -120,18 +112,9 @@ export const teamsRouter = createTRPCRouter({
         });
       }
 
-      const teamId = z.coerce.number().safeParse(input);
-
-      if (!teamId.success) {
-        throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "Invalid team ID",
-        });
-      }
-
       const team = await ctx.db.team.findUnique({
         where: {
-          id: teamId.data,
+          id: input,
           users_id: ctx.user.id,
         },
       });
@@ -145,13 +128,13 @@ export const teamsRouter = createTRPCRouter({
 
       return await ctx.db.player.findMany({
         where: {
-          teamId: teamId.data,
+          teamId: input,
         },
       });
     }),
 
   createTeam: protectedProcedure
-    .input(z.object({ name: z.string() }))
+    .input(z.object({ name: z.string().cuid2() }))
     .mutation(async ({ ctx, input }) => {
       const ratelimit = new Ratelimit({
         redis: Redis.fromEnv(),
@@ -181,6 +164,7 @@ export const teamsRouter = createTRPCRouter({
 
       const team = await ctx.db.team.create({
         data: {
+          id: cuid2(),
           name: teamName.data,
           users_id: ctx.user.id,
         },

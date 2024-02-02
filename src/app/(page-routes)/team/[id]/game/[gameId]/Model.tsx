@@ -1,6 +1,10 @@
 "use client";
-import { Button } from "~/app/_components/shadcn/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { SelectContent, SelectTrigger } from "@radix-ui/react-select";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import * as z from "zod";
+import { Button } from "~/app/_components/shadcn/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -9,7 +13,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "~/app/_components/shadcn/ui/dialog";
-import { Label } from "~/app/_components/shadcn/ui/label";
 import {
   Form,
   FormControl,
@@ -17,6 +20,11 @@ import {
   FormItem,
   FormLabel,
 } from "~/app/_components/shadcn/ui/form";
+import { Label } from "~/app/_components/shadcn/ui/label";
+import {
+  RadioGroup,
+  RadioGroupItem,
+} from "~/app/_components/shadcn/ui/radio-group";
 import {
   Select,
   SelectGroup,
@@ -24,15 +32,7 @@ import {
   SelectLabel,
   SelectValue,
 } from "~/app/_components/shadcn/ui/select";
-import { SelectContent, SelectTrigger } from "@radix-ui/react-select";
-import { useForm } from "react-hook-form";
 import { usePlayerForApp } from "~/store/PlayerForApp";
-import {
-  RadioGroup,
-  RadioGroupItem,
-} from "~/app/_components/shadcn/ui/radio-group";
-import * as z from "zod";
-import { toast } from "sonner";
 import { api } from "~/trpc/react";
 
 interface DialogDemoProps {

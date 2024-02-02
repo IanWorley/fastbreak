@@ -1,21 +1,20 @@
-import Navbar from "~/app/_components/Navbar";
-import { z } from "zod";
-import { currentUser } from "@clerk/nextjs";
 import { revalidatePath } from "next/cache";
+import Navbar from "~/app/_components/Navbar";
 // type from prisma schema
+import type { game, shot } from "@prisma/client";
+import Link from "next/link";
+import { z } from "zod";
 import { Button } from "~/app/_components/shadcn/ui/button";
 import { db } from "~/server/db";
-import Link from "next/link";
 import { api } from "~/trpc/server";
-import type { game, shot } from "@prisma/client";
 interface Props {
-  params: { id: number };
+  params: { id: string };
 }
 
 async function deleteGame(formData: FormData) {
   "use server";
 
-  const id = z.coerce.number().parse(formData.get("id"));
+  const id = z.string().cuid2().parse(formData.get("id"));
 
   const game = await db.game.findUnique({
     where: {
@@ -47,7 +46,7 @@ async function deleteGame(formData: FormData) {
 async function Page(props: Props) {
   const { id } = props.params;
 
-  const data = await api.game.grabGames.query(z.coerce.number().parse(id));
+  const data = await api.game.grabGames.query(id);
 
   return (
     <main className="overflow-y-scroll">
@@ -82,7 +81,7 @@ async function Page(props: Props) {
 interface GameProps {
   game: game;
   shots: shot[];
-  id: number;
+  id: string;
 }
 async function Game(props: GameProps) {
   const { game, shots, id } = props;

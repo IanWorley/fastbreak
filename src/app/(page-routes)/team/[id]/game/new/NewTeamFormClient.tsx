@@ -1,6 +1,9 @@
 "use client";
 
-import { api } from "~/trpc/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useParams, useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import { Button } from "~/app/_components/shadcn/ui/button";
 import { CardContent, CardFooter } from "~/app/_components/shadcn/ui/card";
 import {
@@ -11,17 +14,14 @@ import {
   FormLabel,
 } from "~/app/_components/shadcn/ui/form";
 import { Input } from "~/app/_components/shadcn/ui/input";
-import { useParams, useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { refreshGamePage } from "~/app/actions";
+import { api } from "~/trpc/react";
 function NewTeamFormClient() {
   const { id } = useParams();
 
   const router = useRouter();
 
-  const teamId = z.coerce.number().parse(id);
+  const teamId = z.string().cuid2().parse(id);
 
   // TODO FIND A WAY TO change route after mutation
   const { mutateAsync } = api.game.createGame.useMutation({

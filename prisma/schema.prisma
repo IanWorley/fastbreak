@@ -13,7 +13,7 @@ datasource db {
 }
 
 model team {
-    id       Int      @id @default(autoincrement())
+    id       String   @id @default(cuid())
     name     String
     shots    shot[]
     players  player[]
@@ -24,9 +24,9 @@ model team {
 }
 
 model game {
-    id     Int    @id @default(autoincrement())
+    id     String @id @default(cuid())
     name   String
-    teamId Int
+    teamId String
     shots  shot[]
     team   team   @relation("gameTOteam", fields: [teamId], references: [id])
 
@@ -34,11 +34,11 @@ model game {
 }
 
 model player {
-    id          Int     @id @default(autoincrement())
+    id          String  @id @default(cuid())
     name        String
     jersey      Int
     team        team    @relation(fields: [teamId], references: [id])
-    teamId      Int
+    teamId      String
     shots       shot[]
     totalPoints Int     @default(0)
     archived    Boolean @default(false)
@@ -47,13 +47,13 @@ model player {
 }
 
 model shot {
-    id        Int      @id @default(autoincrement())
+    id        String   @id @default(cuid())
     team      team     @relation(fields: [teamId], references: [id])
-    teamId    Int
+    teamId    String
     game      game     @relation(fields: [gameId], references: [id])
-    gameId    Int
+    gameId    String
     player    player   @relation(fields: [playerId], references: [id])
-    playerId  Int
+    playerId  String
     xPoint    Int
     yPoint    Int
     made      Boolean

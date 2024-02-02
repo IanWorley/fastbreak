@@ -1,14 +1,14 @@
 "use client";
 
-import { Button } from "~/app/_components/shadcn/ui/button";
 import type { player } from "@prisma/client";
-import { usePlayerForApp } from "~/store/PlayerForApp";
 import { toast } from "sonner";
+import { Button } from "~/app/_components/shadcn/ui/button";
+import { usePlayerForApp } from "~/store/PlayerForApp";
 
 interface PlayerCardProps {
   player: player;
   toggleForDrawer: () => void;
-  setPlayerSwap: (playerId: number) => void;
+  setPlayerSwap: (playerId: string) => void;
 }
 
 function PlayerCard(props: PlayerCardProps) {

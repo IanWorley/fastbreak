@@ -1,11 +1,10 @@
-import Navbar from "~/app/_components/Navbar";
-import React from "react";
-import GameClient from "./GameClient";
-import { api } from "~/trpc/server";
 import { notFound } from "next/navigation";
+import Navbar from "~/app/_components/Navbar";
+import { api } from "~/trpc/server";
+import GameClient from "./GameClient";
 
 interface Props {
-  params: { id: number; gameId: number };
+  params: { id: string; gameId: string };
 }
 
 async function page({ params }: Props) {

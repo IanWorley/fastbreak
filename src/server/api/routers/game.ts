@@ -1,12 +1,13 @@
-import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { TRPCError } from "@trpc/server";
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 import { z } from "zod";
+import { cuid2 } from "~/lib/utils";
+import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 export const gameRouter = createTRPCRouter({
   grabGames: protectedProcedure
-    .input(z.number().positive())
+    .input(z.string().cuid2())
     .query(async ({ ctx, input }) => {
       const ratelimit = new Ratelimit({
         redis: Redis.fromEnv(),
@@ -25,18 +26,9 @@ export const gameRouter = createTRPCRouter({
         });
       }
 
-      const teamId = z.coerce.number().safeParse(input);
-
-      if (!teamId.success) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Team not found",
-        });
-      }
-
       const team = await ctx.db.team.findUniqueOrThrow({
         where: {
-          id: teamId.data,
+          id: input,
           users_id: ctx.user.id,
         },
       });
@@ -50,7 +42,7 @@ export const gameRouter = createTRPCRouter({
 
       return await ctx.db.game.findMany({
         where: {
-          teamId: teamId.data,
+          teamId: input,
         },
         include: {
           shots: true,
@@ -59,7 +51,7 @@ export const gameRouter = createTRPCRouter({
     }),
 
   createGame: protectedProcedure
-    .input(z.object({ teamId: z.number().positive(), name: z.string() }))
+    .input(z.object({ teamId: z.string().cuid2(), name: z.string() }))
     .mutation(async ({ ctx, input }) => {
       const ratelimit = new Ratelimit({
         redis: Redis.fromEnv(),
@@ -78,18 +70,9 @@ export const gameRouter = createTRPCRouter({
         });
       }
 
-      const teamId = z.coerce.number().safeParse(input.teamId);
-
-      if (!teamId.success) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Team not found",
-        });
-      }
-
       const team = await ctx.db.team.findUnique({
         where: {
-          id: teamId.data,
+          id: input.teamId,
           users_id: ctx.user.id,
         },
       });
@@ -103,14 +86,15 @@ export const gameRouter = createTRPCRouter({
 
       return await ctx.db.game.create({
         data: {
+          id: cuid2(),
           name: input.name,
-          teamId: teamId.data,
+          teamId: input.teamId,
         },
       });
     }),
 
   grabGame: protectedProcedure
-    .input(z.object({ gameId: z.string(), teamId: z.string() }))
+    .input(z.object({ gameId: z.string().cuid2(), teamId: z.string().cuid2() }))
     .query(async ({ ctx, input }) => {
       const ratelimit = new Ratelimit({
         redis: Redis.fromEnv(),
@@ -129,25 +113,9 @@ export const gameRouter = createTRPCRouter({
         });
       }
 
-      const gameId = z.coerce.number().safeParse(input.gameId);
-      const teamId = z.coerce.number().safeParse(input.teamId);
-
-      if (!gameId.success) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Game not found",
-        });
-      }
-      if (!teamId.success) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Team not found",
-        });
-      }
-
       const team = await ctx.db.team.findUnique({
         where: {
-          id: teamId.data,
+          id: input.teamId,
           users_id: ctx.user.id,
         },
       });
@@ -161,13 +129,13 @@ export const gameRouter = createTRPCRouter({
 
       return await ctx.db.game.findUnique({
         where: {
-          id: gameId.data,
+          id: input.gameId,
         },
       });
     }),
 
   grabPlayersShotsFromGame: protectedProcedure
-    .input(z.object({ gameId: z.number(), teamId: z.number() }))
+    .input(z.object({ gameId: z.string().cuid2(), teamId: z.string().cuid2() }))
     .query(async ({ ctx, input }) => {
       const ratelimit = new Ratelimit({
         redis: Redis.fromEnv(),

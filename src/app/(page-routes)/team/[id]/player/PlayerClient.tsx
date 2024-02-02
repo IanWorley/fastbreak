@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import {
   CaretSortIcon,
   ChevronDownIcon,
@@ -18,7 +17,11 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import * as React from "react";
 
+import type { player } from "@prisma/client";
+import Link from "next/link";
+import { useParams } from "next/navigation";
 import { Button } from "~/app/_components/shadcn/ui/button";
 import { Checkbox } from "~/app/_components/shadcn/ui/checkbox";
 import {
@@ -27,7 +30,6 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/app/_components/shadcn/ui/dropdown-menu";
 import { Input } from "~/app/_components/shadcn/ui/input";
@@ -39,10 +41,6 @@ import {
   TableHeader,
   TableRow,
 } from "~/app/_components/shadcn/ui/table";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { useParams } from "next/navigation";
-import type { player } from "@prisma/client";
-import Link from "next/link";
 import { api } from "~/trpc/react";
 
 export const columns: ColumnDef<player>[] = [

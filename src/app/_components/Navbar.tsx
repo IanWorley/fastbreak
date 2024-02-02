@@ -1,16 +1,16 @@
 "use client";
 import { SignInButton, UserButton, useUser } from "@clerk/nextjs";
 import Link from "next/link";
-import React, { useState } from "react";
-import { Button } from "~/app/_components/shadcn/ui/button";
-import { ModeToggle } from "~/app/_components/ModeToggle";
-import { getBaseUrl } from "~/lib/utils";
+import { useState } from "react";
 import { FaBars, FaXmark } from "react-icons/fa6";
+import { ModeToggle } from "~/app/_components/ModeToggle";
+import { Button } from "~/app/_components/shadcn/ui/button";
+import { getBaseUrl } from "~/lib/utils";
 
 interface NavbarProps {
   className?: string;
   viewingTeam?: boolean; // Add the 'viewingTeam' prop to the interface definition
-  teamId?: number;
+  teamId?: string;
 }
 
 function Navbar({ className, viewingTeam, teamId }: NavbarProps) {

@@ -1,10 +1,8 @@
-import { z } from "zod";
-import Navbar from "~/app/_components/Navbar";
-import { db } from "~/server/db";
 import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
+import { z } from "zod";
+import Navbar from "~/app/_components/Navbar";
 import { Button } from "~/app/_components/shadcn/ui/button";
-import { Input } from "~/app/_components/shadcn/ui/input";
 import {
   Card,
   CardContent,
@@ -12,6 +10,9 @@ import {
   CardHeader,
   CardTitle,
 } from "~/app/_components/shadcn/ui/card";
+import { Input } from "~/app/_components/shadcn/ui/input";
+import { cuid2 } from "~/lib/utils";
+import { db } from "~/server/db";
 import { api } from "~/trpc/server";
 
 async function page() {
@@ -23,6 +24,7 @@ async function page() {
 
     const team = await db.team.create({
       data: {
+        id: cuid2(),
         name: teamName,
         users_id: user!.id, // Replace "example-user-id" with the actual user ID
       },
