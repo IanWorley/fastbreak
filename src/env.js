@@ -15,13 +15,6 @@ export const env = createEnv({
         "You forgot to change the default URL",
       ),
 
-    CUID_FINGERPRINT: z
-      .string()
-      .refine(
-        (str) => !str.includes("YOUR_CUID_FINGERPRINT_HERE"),
-        "You forgot to set your fingerprint",
-      ),
-
     UPSTASH_REDIS_REST_URL: z
       .string()
       .url()
@@ -60,6 +53,21 @@ export const env = createEnv({
         (str) => !str.includes("YOUR_CLERK_PUBLISHABLE_KEY_HERE"),
         "You forgot to set your publishable key",
       ),
+
+    NEXT_PUBLIC_POSTHOG_HOST: z
+      .string()
+      .url()
+      .refine(
+        (str) => !str.includes("YOUR_POSTHOG_HOST_HERE"),
+        "You forgot to set your posthog host",
+      ),
+
+    NEXT_PUBLIC_POSTHOG_KEY: z
+      .string()
+      .refine(
+        (str) => !str.includes("YOUR_POSTHOG_KEY_HERE"),
+        "You forgot to set your posthog key",
+      ),
   },
 
   /**
@@ -72,11 +80,11 @@ export const env = createEnv({
     UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
     UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
     CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
-    CUID_FINGERPRINT: process.env.CUID_FINGERPRINT,
-
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:
       process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
+    NEXT_PUBLIC_POSTHOG_KEY: process.env.NEXT_PUBLIC_POSTHOG_KEY,
+    NEXT_PUBLIC_POSTHOG_HOST: process.env.NEXT_PUBLIC_POSTHOG_HOST,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
