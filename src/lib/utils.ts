@@ -14,6 +14,5 @@ export function getBaseUrl() {
 }
 
 export const cuid2 = init({
-  fingerprint: env.CUID_FINGERPRINT,
   length: 25,
 });

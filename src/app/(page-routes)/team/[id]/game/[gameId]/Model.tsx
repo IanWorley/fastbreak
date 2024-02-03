@@ -75,12 +75,6 @@ function Model(props: DialogDemoProps) {
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    const player_id = z.coerce.number().safeParse(data.player_id);
-
-    if (!player_id.success) {
-      throw new Error("Invalid player id");
-    }
-
     await mutateAsync({
       teamId: teamid,
       gameId: gameId,

@@ -10,6 +10,7 @@ import { GeistSans } from "geist/font/sans";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Toaster } from "sonner";
+import { CSPostHogProvider } from "./_components/providers";
 export const metadata: Metadata = {
   title: "FastBreak Analytics ",
   description: "A revolutionary sports analytics platform for basketball.",
@@ -30,12 +31,14 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <TRPCReactProvider cookies={cookies().toString()}>
-              {children}
-              <Toaster />
-              <Analytics />
-              <SpeedInsights />
-            </TRPCReactProvider>
+            <CSPostHogProvider>
+              <TRPCReactProvider cookies={cookies().toString()}>
+                {children}
+                <Toaster />
+                <Analytics />
+                <SpeedInsights />
+              </TRPCReactProvider>
+            </CSPostHogProvider>
           </ThemeProvider>
         </body>
       </html>
