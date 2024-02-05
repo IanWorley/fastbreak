@@ -1,5 +1,5 @@
-import { Button } from "~/app/_components/shadcn/ui/button";
 import { SignInButton, currentUser } from "@clerk/nextjs";
+import { Button } from "~/app/_components/shadcn/ui/button";
 
 import Link from "next/link";
 import Navbar from "~/app/_components/Navbar";
@@ -16,11 +16,9 @@ export default async function Home() {
           <h1 className="scroll-m-20 text-center text-4xl font-extrabold tracking-tight lg:text-5xl">
             Fast Break
           </h1>
-
           <h2 className="scroll-m-20 text-center text-2xl tracking-tight text-gray-500 sm:text-3xl">
             A simple way to track your teams stats and progress
           </h2>
-
           {user ? (
             <Link href="/team">
               <Button> View Teams </Button>
