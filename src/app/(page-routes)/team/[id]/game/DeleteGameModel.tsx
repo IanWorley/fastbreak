@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { game } from "@prisma/client";
 import { DialogDescription } from "@radix-ui/react-dialog";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -24,11 +25,8 @@ import {
 import { Input } from "~/app/_components/shadcn/ui/input";
 import { api } from "~/trpc/react";
 
-type ITeamProps = {
-  game: {
-    id: string;
-    name: string;
-  };
+type IGameProps = {
+  game: game;
   children: React.ReactNode;
 };
 
@@ -36,7 +34,7 @@ const FormSchema = z.object({
   gameName: z.string(),
 });
 
-function DeleteTeamModel(props: ITeamProps) {
+function DeleteTeamModel(props: IGameProps) {
   const { game, children } = props;
   const router = useRouter();
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -46,14 +44,14 @@ function DeleteTeamModel(props: ITeamProps) {
     },
   });
 
-  const deleteGame = api.game.deleteGame(useMutation);
+  const deleteGame = api.game.deleteGame.useMutation();
 
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
     if (values.gameName === game.name) {
-      await deleteTeam.mutateAsync();
+      await deleteGame.mutateAsync({ gameId: game.id, teamId: game.teamId });
       router.refresh(); //* I am well aware that refresh the page is not a good excuse to close the dialog but I might still want React Server Components
     } else {
-      toast.warning("Input does not match team name. Please try again.");
+      toast.warning("Input does not match game name. Please try again.");
     }
   };
 
@@ -62,9 +60,9 @@ function DeleteTeamModel(props: ITeamProps) {
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} action={refreshTeamPage}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
             <DialogHeader className="">
-              <h2 className="text-2xl font-semibold">Delete Team</h2>
+              <h2 className="text-2xl font-semibold">Delete Game</h2>
             </DialogHeader>
             <DialogDescription>
               <p>
@@ -72,7 +70,7 @@ function DeleteTeamModel(props: ITeamProps) {
                 below type <code className="p-2"> {game.name} </code> to confirm
               </p>
               <FormField
-                name="teamName"
+                name="gameName"
                 control={form.control}
                 render={({ field }) => (
                   <FormItem className="">
@@ -80,7 +78,7 @@ function DeleteTeamModel(props: ITeamProps) {
                     <FormControl>
                       <Input
                         className="mb-4"
-                        placeholder={team.name}
+                        placeholder={game.name}
                         {...field}
                       />
                     </FormControl>

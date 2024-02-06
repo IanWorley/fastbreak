@@ -1,4 +1,3 @@
-import { revalidatePath } from "next/cache";
 import Navbar from "~/app/_components/Navbar";
 // type from prisma schema
 import type { game, shot } from "@prisma/client";
@@ -7,6 +6,7 @@ import { z } from "zod";
 import { Button } from "~/app/_components/shadcn/ui/button";
 import { db } from "~/server/db";
 import { api } from "~/trpc/server";
+import DeleteTeamModel from "./DeleteGameModel";
 interface Props {
   params: { id: string };
 }
@@ -39,8 +39,6 @@ async function deleteGame(formData: FormData) {
       id: id,
     },
   });
-
-  revalidatePath("/dashboard");
 }
 
 async function Page(props: Props) {
@@ -103,8 +101,7 @@ async function Game(props: GameProps) {
         >
           <Button className="h-full w-full">View</Button>
         </Link>
-        <form className="h-full w-full" action={deleteGame}>
-          <input type="hidden" name="id" value={game.id} />
+        <DeleteTeamModel game={game}>
           <Button
             variant={"destructive"}
             type="submit"
@@ -112,7 +109,7 @@ async function Game(props: GameProps) {
           >
             Delete
           </Button>
-        </form>
+        </DeleteTeamModel>
       </div>
     </div>
   );
