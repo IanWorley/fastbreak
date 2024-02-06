@@ -1,8 +1,6 @@
-import { revalidatePath } from "next/cache";
 import Link from "next/link";
-import { z } from "zod";
+import DeleteModel from "~/app/(page-routes)/team/DeleteTeamModel";
 import { Button } from "~/app/_components/shadcn/ui/button";
-import { api } from "~/trpc/server";
 
 type ITeamProps = {
   team: {
@@ -10,23 +8,6 @@ type ITeamProps = {
     name: string;
   };
 };
-
-async function deleteTeam(formData: FormData) {
-  "use server";
-
-  const id = formData.get("id");
-  if (!id) {
-    throw new Error("id is required");
-  }
-
-  const safeIdParse = z.coerce.number().safeParse(id);
-  if (!safeIdParse.success) {
-    throw new Error("id is not a number");
-  }
-
-  await api.team.deleteTeam.mutate(safeIdParse.data.toString());
-  revalidatePath("/team");
-}
 
 async function Team(props: ITeamProps) {
   const { team } = props;
@@ -41,8 +22,7 @@ async function Team(props: ITeamProps) {
         <Link className="  h-full  w-full" href={`/team/${team.id}/game`}>
           <Button className="h-full w-full">View</Button>
         </Link>
-        <form className="h-full w-full" action={deleteTeam}>
-          <input type="hidden" name="id" value={team.id} />
+        <DeleteModel team={team}>
           <Button
             className="h-full w-full"
             type="submit"
@@ -50,7 +30,7 @@ async function Team(props: ITeamProps) {
           >
             Delete
           </Button>
-        </form>
+        </DeleteModel>
       </div>
     </div>
   );

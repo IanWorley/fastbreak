@@ -50,6 +50,53 @@ export const gameRouter = createTRPCRouter({
       });
     }),
 
+  deleteGame: protectedProcedure
+    .input(z.object({ gameId: z.string().cuid2(), teamId: z.string().cuid2() }))
+    .mutation(async ({ ctx, input }) => {
+      const ratelimit = new Ratelimit({
+        redis: Redis.fromEnv(),
+        limiter: Ratelimit.slidingWindow(10, "10 s"),
+        analytics: false,
+
+        prefix: "@upstash/ratelimit",
+      });
+
+      const { success } = await ratelimit.limit(ctx.user.id);
+
+      if (!success) {
+        throw new TRPCError({
+          code: "TOO_MANY_REQUESTS",
+          message: "Too many requests",
+        });
+      }
+
+      const team = await ctx.db.team.findUnique({
+        where: {
+          id: input.teamId,
+          users_id: ctx.user.id,
+        },
+      });
+
+      if (!team) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Team not found",
+        });
+      }
+
+      await ctx.db.shot.deleteMany({
+        where: {
+          gameId: input.gameId,
+        },
+      });
+
+      return await ctx.db.game.delete({
+        where: {
+          id: input.gameId,
+        },
+      });
+    }),
+
   createGame: protectedProcedure
     .input(z.object({ teamId: z.string().cuid2(), name: z.string() }))
     .mutation(async ({ ctx, input }) => {
