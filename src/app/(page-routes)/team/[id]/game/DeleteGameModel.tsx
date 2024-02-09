@@ -46,6 +46,7 @@ function DeleteTeamModel(props: IGameProps) {
   });
 
   const { pending } = useFormStatus();
+
   const deleteGame = api.game.deleteGame.useMutation();
 
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
@@ -97,6 +98,7 @@ function DeleteTeamModel(props: IGameProps) {
                   variant="destructive"
                   aria-disabled={pending}
                 >
+
                   Delete
                 </Button>
               </div>
