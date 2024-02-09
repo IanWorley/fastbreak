@@ -1,9 +1,10 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { game } from "@prisma/client";
+import { type game } from "@prisma/client";
 import { DialogDescription } from "@radix-ui/react-dialog";
 import { useRouter } from "next/navigation";
+import { useFormStatus } from "react-dom";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -44,12 +45,14 @@ function DeleteTeamModel(props: IGameProps) {
     },
   });
 
+  const { pending } = useFormStatus();
+
   const deleteGame = api.game.deleteGame.useMutation();
 
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
     if (values.gameName === game.name) {
       await deleteGame.mutateAsync({ gameId: game.id, teamId: game.teamId });
-      router.refresh(); //* I am well aware that refresh the page is not a good excuse to close the dialog but I might still want React Server Components
+      router.refresh(); //* I Know this is not the best way to do it but it works for now
     } else {
       toast.warning("Input does not match game name. Please try again.");
     }
@@ -88,8 +91,14 @@ function DeleteTeamModel(props: IGameProps) {
             </DialogDescription>
 
             <DialogFooter className="">
-              <div className="flex items-center p-4">
-                <Button type="submit" className="" variant="destructive">
+              <div className="flex items-center justify-center p-4 md:justify-end">
+                <Button
+                  type="submit"
+                  className=""
+                  variant="destructive"
+                  aria-disabled={pending}
+                >
+
                   Delete
                 </Button>
               </div>

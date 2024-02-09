@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DialogDescription } from "@radix-ui/react-dialog";
 import { useRouter } from "next/navigation";
+import { useFormStatus } from "react-dom";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -40,6 +41,7 @@ const FormSchema = z.object({
 function DeleteTeamModel(props: ITeamProps) {
   const { team, children } = props;
   const router = useRouter();
+  const { pending } = useFormStatus();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -91,8 +93,13 @@ function DeleteTeamModel(props: ITeamProps) {
             </DialogDescription>
 
             <DialogFooter className="">
-              <div className="flex items-center p-4">
-                <Button type="submit" className="" variant="destructive">
+              <div className="flex items-center justify-center p-4 md:justify-end">
+                <Button
+                  type="submit"
+                  className=""
+                  variant="destructive"
+                  aria-disabled={pending}
+                >
                   Delete
                 </Button>
               </div>
