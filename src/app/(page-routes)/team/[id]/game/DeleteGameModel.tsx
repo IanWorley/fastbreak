@@ -45,14 +45,12 @@ function DeleteTeamModel(props: IGameProps) {
     },
   });
 
-  const { pending } = useFormStatus();
-
   const deleteGame = api.game.deleteGame.useMutation();
 
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
     if (values.gameName === game.name) {
       await deleteGame.mutateAsync({ gameId: game.id, teamId: game.teamId });
-      router.refresh(); //* I Know this is not the best way to do it but it works for now
+      form.reset();
     } else {
       toast.warning("Input does not match game name. Please try again.");
     }
@@ -96,9 +94,8 @@ function DeleteTeamModel(props: IGameProps) {
                   type="submit"
                   className=""
                   variant="destructive"
-                  aria-disabled={pending}
+                  aria-disabled={form.formState.isSubmitting}
                 >
-
                   Delete
                 </Button>
               </div>
