@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { type game } from "@prisma/client";
 import { DialogDescription } from "@radix-ui/react-dialog";
 import { useRouter } from "next/navigation";
-import { useFormStatus } from "react-dom";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -38,6 +38,7 @@ const FormSchema = z.object({
 function DeleteTeamModel(props: IGameProps) {
   const { game, children } = props;
   const router = useRouter();
+  const [openDialog, setOpenDialog] = useState(false);
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -49,7 +50,15 @@ function DeleteTeamModel(props: IGameProps) {
 
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
     if (values.gameName === game.name) {
-      await deleteGame.mutateAsync({ gameId: game.id, teamId: game.teamId });
+      const res = await deleteGame.mutateAsync({
+        gameId: game.id,
+        teamId: game.teamId,
+      });
+      if (res) {
+        form.reset();
+        router.refresh();
+      }
+
       form.reset();
     } else {
       toast.warning("Input does not match game name. Please try again.");
@@ -57,7 +66,12 @@ function DeleteTeamModel(props: IGameProps) {
   };
 
   return (
-    <Dialog>
+    <Dialog
+      open={openDialog}
+      onOpenChange={(o) => {
+        setOpenDialog(o);
+      }}
+    >
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="">
         <Form {...form}>
@@ -94,7 +108,7 @@ function DeleteTeamModel(props: IGameProps) {
                   type="submit"
                   className=""
                   variant="destructive"
-                  aria-disabled={form.formState.isSubmitting}
+                  disabled={deleteGame.isLoading}
                 >
                   Delete
                 </Button>

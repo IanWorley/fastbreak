@@ -25,9 +25,6 @@ function NewTeamFormClient() {
 
   // TODO FIND A WAY TO change route after mutation
   const { mutateAsync } = api.game.createGame.useMutation({
-    onSuccess: () => {
-      router.push(`/team/${teamId}/game`);
-    },
     onError: (err) => {
       console.log(err);
     },
@@ -49,6 +46,10 @@ function NewTeamFormClient() {
       name: data.gameName,
       teamId: teamId,
     });
+    if (res) {
+      form.reset();
+      router.push(`/team/${teamId}/game/${res.id}`);
+    }
   };
 
   return (
@@ -72,6 +73,7 @@ function NewTeamFormClient() {
                     minLength={3}
                     placeholder="name"
                     {...field}
+                    disabled={form.formState.isSubmitting}
                   />
                 </FormControl>
               </FormItem>
