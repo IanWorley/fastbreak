@@ -36,7 +36,8 @@ function DrawerPlayerCard(props: DrawerPlayerCardProps) {
     );
 
   return (
-    <div key={player.id} className=" bg-primary-foreground   md:mx-2 md:p-2 ">
+
+    <div key={player.id} className="bg-primary-foreground  md:mx-2 md:p-2 ">
       <p className="p-2 text-center text-xl md:p-4 md:text-3xl">
         {player.name}
       </p>
