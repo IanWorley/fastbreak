@@ -30,7 +30,7 @@ function PlayerSubDrawer(props: IPropsPlayerSubDrawer) {
             </Button>
           </DrawerClose>
         </DrawerHeader>
-        <div className="grid grid-cols-4 grid-rows-4 gap-5">
+        <div className="flex grid-cols-4 grid-rows-4  flex-col gap-5 overflow-y-scroll md:grid">
           {players
             .filter((player) => player.isPlaying === false)
             .map((player) => (
