@@ -1,50 +1,37 @@
+"use client";
 import Navbar from "~/app/_components/Navbar";
 // type from prisma schema
 import type { game, shot } from "@prisma/client";
 import Link from "next/link";
-import { z } from "zod";
 import { Button } from "~/app/_components/shadcn/ui/button";
-import { db } from "~/server/db";
-import { api } from "~/trpc/server";
+import { api } from "~/trpc/react";
 import DeleteTeamModel from "./DeleteGameModel";
 interface Props {
   params: { id: string };
 }
 
-async function deleteGame(formData: FormData) {
-  "use server";
-
-  const id = z.string().cuid2().parse(formData.get("id"));
-
-  const game = await db.game.findUnique({
-    where: {
-      id: id,
-    },
-  });
-
-  const team = await db.team.findUnique({
-    where: {
-      id: game!.teamId,
-    },
-  });
-
-  await db.shot.deleteMany({
-    where: {
-      gameId: id,
-    },
-  });
-
-  await db.game.delete({
-    where: {
-      id: id,
-    },
-  });
-}
-
-async function Page(props: Props) {
+function Page(props: Props) {
   const { id } = props.params;
 
-  const data = await api.game.grabGames.query(id);
+  const { data, isLoading, isError } = api.game.grabGames.useQuery(id);
+
+  if (isError) {
+    return (
+      <main>
+        <Navbar className="fixed" teamId={id} viewingTeam={true} />
+        <div>Error</div>
+      </main>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <main>
+        <Navbar className="fixed" teamId={id} viewingTeam={true} />
+        <div>Loading...</div>
+      </main>
+    );
+  }
 
   return (
     <main className="overflow-y-scroll">
@@ -56,6 +43,7 @@ async function Page(props: Props) {
             <Button className="">Add Game</Button>
           </Link>
         </div>
+
         <div className="flex grid-cols-2 flex-col md:grid">
           {data.length >= 0 &&
             data.map((game) => (
@@ -81,7 +69,7 @@ interface GameProps {
   shots: shot[];
   id: string;
 }
-async function Game(props: GameProps) {
+function Game(props: GameProps) {
   const { game, shots, id } = props;
 
   return (
