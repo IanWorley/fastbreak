@@ -23,9 +23,7 @@ function PlayerSubDrawer(props: IPropsPlayerSubDrawer) {
     <Drawer open={open} onOpenChange={(o) => onOpenChange(o)}>
       <DrawerContent>
         <DrawerHeader className="flex items-center justify-between">
-          <DrawerTitle>
-            <h3 className="p-4 text-2xl font-semibold">Player Sub In</h3>
-          </DrawerTitle>
+          <DrawerTitle className="text-2xl">Player Sub In</DrawerTitle>
           <DrawerClose className="hidden p-4 md:block">
             <Button variant={"destructive"}>
               <FaXmark />

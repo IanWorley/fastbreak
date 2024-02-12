@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState, type MouseEvent } from "react";
 import { usePlayerForApp } from "~/store/PlayerForApp";
+import { useShotStore } from "~/store/ShotStore";
 import { api } from "~/trpc/react";
 import courtBackground from "./court.png"; // Replace with the actual path to your image
 
@@ -31,6 +32,8 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
   const courtRef = useRef<SVGSVGElement>(null);
   const imageRef = useRef(null);
 
+  const shotsStore = useShotStore((state) => state);
+
   const { data, isLoading, isError } =
     api.game.grabPlayersShotsFromGame.useQuery({
       teamId: teamId,
@@ -45,6 +48,8 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
 
   useEffect(() => {
     if (!data) return;
+
+    shotsStore.addMultipleShots(data);
 
     const activeShots = data.filter((shots) => {
       const player = players.find((player) => player.id === shots.playerId);

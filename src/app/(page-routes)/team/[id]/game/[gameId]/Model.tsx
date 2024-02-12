@@ -75,6 +75,22 @@ function Model(props: DialogDemoProps) {
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
+    if (data.points === "1") {
+      await mutateAsync({
+        teamId: teamid,
+        gameId: gameId,
+        playerId: data.player_id,
+        made:
+          data.shot_attempt.toLowerCase() === "Made".toLowerCase()
+            ? true
+            : false,
+        x: x,
+        y: y,
+        points: 2,
+        isFreeThrow: true,
+      });
+    }
+
     await mutateAsync({
       teamId: teamid,
       gameId: gameId,
