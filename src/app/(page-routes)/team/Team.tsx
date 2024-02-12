@@ -9,7 +9,7 @@ type ITeamProps = {
   };
 };
 
-async function Team(props: ITeamProps) {
+function Team(props: ITeamProps) {
   const { team } = props;
 
   return (

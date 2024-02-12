@@ -85,6 +85,7 @@ function DeleteTeamModel(props: ITeamProps) {
                         className="mb-4"
                         placeholder={team.name}
                         {...field}
+                        disabled={deleteTeam.isLoading}
                       />
                     </FormControl>
                   </FormItem>

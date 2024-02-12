@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "~/app/_components/shadcn/ui/button";
@@ -14,40 +14,35 @@ import {
   FormLabel,
 } from "~/app/_components/shadcn/ui/form";
 import { Input } from "~/app/_components/shadcn/ui/input";
-import { refreshGamePage } from "~/app/actions";
+import { refreshTeamPage } from "~/app/actions";
 import { api } from "~/trpc/react";
-function NewTeamFormClient() {
-  const { id } = useParams();
-
+function FormContent() {
   const router = useRouter();
 
-  const teamId = z.string().cuid2().parse(id);
-
-  const { mutateAsync } = api.game.createGame.useMutation({
+  const { mutateAsync } = api.team.createTeam.useMutation({
     onError: (err) => {
       console.log(err);
     },
   });
 
   const formSchema = z.object({
-    gameName: z.string().min(3),
+    teamName: z.string().min(3),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      gameName: "",
+      teamName: "",
     },
   });
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     const res = await mutateAsync({
-      name: data.gameName,
-      teamId: teamId,
+      name: data.teamName,
     });
     if (res) {
       form.reset();
-      router.push(`/team/${teamId}/game/${res.id}`);
+      router.push(`/team`);
     }
   };
 
@@ -56,23 +51,22 @@ function NewTeamFormClient() {
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         action={() => {
-          void refreshGamePage(teamId);
+          void refreshTeamPage();
         }}
       >
         <CardContent>
           <FormField
             control={form.control}
-            name="gameName"
+            name="teamName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Game Name</FormLabel>
+                <FormLabel>Team Name</FormLabel>
                 <FormControl>
                   <Input
                     type="text"
                     minLength={3}
-                    placeholder="name"
+                    placeholder="Team Name"
                     {...field}
-                    disabled={form.formState.isSubmitting}
                   />
                 </FormControl>
               </FormItem>
@@ -80,11 +74,13 @@ function NewTeamFormClient() {
           />
         </CardContent>
         <CardFooter className="flex justify-end">
-          <Button type="submit">Create</Button>
+          <Button type="submit" disabled={form.formState.isSubmitting}>
+            Create
+          </Button>
         </CardFooter>
       </form>
     </Form>
   );
 }
 
-export default NewTeamFormClient;
+export default FormContent;
