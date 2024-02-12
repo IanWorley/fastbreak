@@ -134,7 +134,7 @@ export const teamsRouter = createTRPCRouter({
     }),
 
   createTeam: protectedProcedure
-    .input(z.object({ name: z.string().cuid2() }))
+    .input(z.object({ name: z.string().min(3).max(255) }))
     .mutation(async ({ ctx, input }) => {
       const ratelimit = new Ratelimit({
         redis: Redis.fromEnv(),
@@ -153,19 +153,10 @@ export const teamsRouter = createTRPCRouter({
         });
       }
 
-      const teamName = z.coerce.string().min(3).max(255).safeParse(input);
-
-      if (!teamName.success) {
-        throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "Invalid team name",
-        });
-      }
-
       const team = await ctx.db.team.create({
         data: {
           id: cuid2(),
-          name: teamName.data,
+          name: input.name,
           users_id: ctx.user.id,
         },
       });
