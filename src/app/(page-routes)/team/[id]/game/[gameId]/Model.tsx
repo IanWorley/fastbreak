@@ -61,16 +61,70 @@ function Model(props: DialogDemoProps) {
   const utils = api.useUtils();
 
   const { mutateAsync } = api.player.addShots.useMutation({
-    onSuccess: () => {
-      form.reset();
-      void utils.team.grabPlayers.invalidate();
+    // onSuccess: () => {
+    //   form.reset();
+    //   void utils.team.grabPlayers.invalidate();
+    //   void utils.game.grabPlayersShotsFromGame.invalidate();
+    // },
+
+    onMutate: async () => {
+      await utils.game.grabPlayersShotsFromGame.cancel();
+      const previousShots = utils.game.grabPlayersShotsFromGame.getData();
+      utils.game.grabPlayersShotsFromGame.setData(
+        { gameId: gameId, teamId: teamid },
+        (oldData) => {
+          return [
+            ...(oldData ?? []),
+            {
+              id: Math.random().toString(),
+              playerId: form.getValues("player_id"),
+              made:
+                form.getValues("shot_attempt").toLowerCase() ===
+                "Made".toLowerCase()
+                  ? true
+                  : false,
+              xPoint: x,
+              yPoint: y,
+              points: z.coerce.number().parse(form.getValues("points")),
+              isFreeThrow: form.getValues("points") === "1" ? true : false,
+              createdAt: new Date(),
+              teamId: teamid,
+              gameId: gameId,
+              updatedAt: new Date(),
+            },
+          ] as {
+            // Co pilot is saving typeSafty
+            id: string;
+            teamId: string;
+            gameId: string;
+            playerId: string;
+            xPoint: number;
+            yPoint: number;
+            made: boolean;
+            createdAt: Date;
+            updatedAt: Date;
+            points: number;
+            isFreeThrow: boolean;
+          }[];
+        },
+      );
+      toggle();
+      return { previousShots };
+    },
+
+    onSettled: () => {
       void utils.game.grabPlayersShotsFromGame.invalidate();
     },
 
-    onError: (error) => {
-      console.log(error);
-      // eslint-disable-next-line
-      toast.error(error.message ?? "An error occurred");
+    onError: (error, shot, context) => {
+      toast.error("An error occurred");
+      console.error(error);
+      if (context) {
+        utils.game.grabPlayersShotsFromGame.setData(
+          { gameId: gameId, teamId: teamid },
+          context.previousShots,
+        );
+      }
     },
   });
 
@@ -89,20 +143,22 @@ function Model(props: DialogDemoProps) {
         points: 2,
         isFreeThrow: true,
       });
+    } else {
+      await mutateAsync({
+        teamId: teamid,
+        gameId: gameId,
+        playerId: data.player_id,
+        made:
+          data.shot_attempt.toLowerCase() === "Made".toLowerCase()
+            ? true
+            : false,
+        x: x,
+        y: y,
+        points: z.coerce.number().parse(data.points),
+      });
     }
 
-    await mutateAsync({
-      teamId: teamid,
-      gameId: gameId,
-      playerId: data.player_id,
-      made:
-        data.shot_attempt.toLowerCase() === "Made".toLowerCase() ? true : false,
-      x: x,
-      y: y,
-      points: z.coerce.number().parse(data.points),
-    });
-
-    toggle();
+    form.reset();
   }
 
   return (
