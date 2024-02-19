@@ -1,8 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState, type MouseEvent } from "react";
+import { useShotsForGame } from "~/hooks/ShotHooks";
 import { usePlayerForApp } from "~/store/PlayerForApp";
-import { useShotStore } from "~/store/ShotStore";
-import { api } from "~/trpc/react";
 import courtBackground from "./court.png"; // Replace with the actual path to your image
 
 interface Shot {
@@ -32,13 +31,13 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
   const courtRef = useRef<SVGSVGElement>(null);
   const imageRef = useRef(null);
 
-  const shotsStore = useShotStore((state) => state);
+  // const { data, isLoading, isError } =
+  //   api.game.grabPlayersShotsFromGame.useQuery({
+  //     teamId: teamId,
+  //     gameId: gameId,
+  //   });
 
-  const { data, isLoading, isError } =
-    api.game.grabPlayersShotsFromGame.useQuery({
-      teamId: teamId,
-      gameId: gameId,
-    });
+  const fetchShots = useShotsForGame(gameId, teamId);
 
   const [shots, setShots] = useState<Shot[]>([]);
   const [cursor, setCursor] = useState<{ x: number; y: number }>({
@@ -47,11 +46,9 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
   });
 
   useEffect(() => {
-    if (!data) return;
+    if (!fetchShots || fetchShots.length == 0) return;
 
-    shotsStore.addMultipleShots(data);
-
-    const activeShots = data.filter((shots) => {
+    const activeShots = fetchShots.filter((shots) => {
       const player = players.find((player) => player.id === shots.playerId);
       return player && player.isPlaying;
     });
@@ -63,7 +60,7 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
         gameid: shot.gameId,
       })),
     );
-  }, [data, players]);
+  }, [fetchShots, players]);
 
   const recordShot = (
     event: MouseEvent<SVGSVGElement, globalThis.MouseEvent>,

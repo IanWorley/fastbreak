@@ -109,6 +109,8 @@ function Model(props: DialogDemoProps) {
         },
       );
       toggle();
+      form.reset();
+
       return { previousShots };
     },
 
@@ -157,8 +159,6 @@ function Model(props: DialogDemoProps) {
         points: z.coerce.number().parse(data.points),
       });
     }
-
-    form.reset();
   }
 
   return (

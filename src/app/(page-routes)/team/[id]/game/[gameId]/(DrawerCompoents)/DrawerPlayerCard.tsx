@@ -1,7 +1,9 @@
 import { type player } from "@prisma/client";
+import { useParams } from "next/navigation";
+import { z } from "zod";
 import { Button } from "~/app/_components/shadcn/ui/button";
+import { useShotsForGame } from "~/hooks/ShotHooks";
 import { usePlayerForApp } from "~/store/PlayerForApp";
-import { useShotStore } from "~/store/ShotStore";
 
 interface DrawerPlayerCardProps {
   player: player;
@@ -10,13 +12,18 @@ interface DrawerPlayerCardProps {
 }
 
 function DrawerPlayerCard(props: DrawerPlayerCardProps) {
+  const parms = useParams<{ id: string; gameId: string }>();
+
+  const teamId = z.string().cuid2().parse(parms.id);
+  const gameId = z.string().cuid2().parse(parms.gameId);
+
   const { player, playerToSwap, onOpenChange } = props;
   const { swapPlayersActive } = usePlayerForApp((state) => state);
 
-  const shotStore = useShotStore((state) => state);
+  const shots = useShotsForGame(gameId, teamId);
 
-  const { freethrow, twopoint, threepoint } = shotStore.shots
-    .filter((shot) => shot.playerId === player.id)
+  const { freethrow, twopoint, threepoint } = shots
+    .filter((shot) => shot.playerId === player.id && shot.gameId === gameId)
     .reduce(
       (acc, shot) => {
         if (shot.made) {
@@ -36,7 +43,6 @@ function DrawerPlayerCard(props: DrawerPlayerCardProps) {
     );
 
   return (
-
     <div key={player.id} className="bg-primary-foreground  md:mx-2 md:p-2 ">
       <p className="p-2 text-center text-xl md:p-4 md:text-3xl">
         {player.name}
