@@ -1,5 +1,4 @@
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
-import { NextRequest } from "next/server";
 
 import { appRouter, createTRPCContext } from "@acme/api";
 
@@ -24,16 +23,15 @@ export function OPTIONS() {
   return response;
 }
 
-const createContext = async (req: NextRequest) => {
-  return createTRPCContext({headers: req.headers});
-};
-
-const handler = async (req: NextRequest) => {
+const handler = async (req: Request) => {
   const response = await fetchRequestHandler({
     endpoint: "/api/trpc",
     router: appRouter,
     req,
-    createContext: () => createContext(req),
+    createContext: () =>
+      createTRPCContext({
+        headers: req.headers,
+      }),
     onError({ error, path }) {
       console.error(`>>> tRPC Error on '${path}'`, error);
     },
@@ -44,38 +42,3 @@ const handler = async (req: NextRequest) => {
 };
 
 export { handler as GET, handler as POST };
-
-// import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
-// import { type NextRequest } from "next/server";
-
-// import { env } from "~/env";
-// import { appRouter } from "~/server/api/root";
-// import { createTRPCContext } from "~/server/api/trpc";
-
-// /**
-//  * This wraps the `createTRPCContext` helper and provides the required context for the tRPC API when
-//  * handling a HTTP request (e.g. when you make requests from Client Components).
-//  */
-// const createContext = async (req: NextRequest) => {
-//   return createTRPCContext({
-//     headers: req.headers,
-//   });
-// };
-
-// const handler = (req: NextRequest) =>
-//   fetchRequestHandler({
-//     endpoint: "/api/trpc",
-//     req,
-//     router: appRouter,
-//     createContext: () => createContext(req),
-//     onError:
-//       env.NODE_ENV === "development"
-//         ? ({ path, error }) => {
-//             console.error(
-//               `❌ tRPC failed on ${path ?? "<no-path>"}: ${error.message}`
-//             );
-//           }
-//         : undefined,
-//   });
-
-// export { handler as GET, handler as POST };
