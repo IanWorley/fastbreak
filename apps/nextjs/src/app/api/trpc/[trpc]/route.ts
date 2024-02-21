@@ -1,5 +1,5 @@
-import { NextRequest } from "next/server";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
+import { NextRequest } from "next/server";
 
 import { appRouter, createTRPCContext } from "@acme/api";
 
@@ -25,7 +25,7 @@ export function OPTIONS() {
 }
 
 const createContext = async (req: NextRequest) => {
-  return createTRPCContext(req);
+  return createTRPCContext({headers: req.headers});
 };
 
 const handler = async (req: NextRequest) => {
