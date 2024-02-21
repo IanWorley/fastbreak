@@ -25,9 +25,7 @@ export function OPTIONS() {
 }
 
 const createContext = async (req: NextRequest) => {
-  return createTRPCContext({
-    req,
-  });
+  return createTRPCContext(req);
 };
 
 const handler = async (req: NextRequest) => {
