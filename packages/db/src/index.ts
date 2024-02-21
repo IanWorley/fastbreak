@@ -1,10 +1,13 @@
 import { connect } from "@planetscale/database";
 import { drizzle } from "drizzle-orm/planetscale-serverless";
 
-import * as auth from "./schema/auth";
+import * as game from "./schema/game";
+import * as player from "./schema/player";
 import * as post from "./schema/post";
+import * as shot from "./schema/shot";
+import * as team from "./schema/team";
 
-export const schema = { ...auth, ...post };
+export const schema = { ...post, ...shot, ...game, ...player, ...team };
 
 export { mySqlTable as tableCreator } from "./schema/_table";
 
