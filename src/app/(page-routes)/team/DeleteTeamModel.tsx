@@ -62,6 +62,7 @@ function DeleteTeamModel(props: ITeamProps) {
 
   return (
     <Dialog>
+     
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="">
         <Form {...form}>
