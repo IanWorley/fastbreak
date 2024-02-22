@@ -2,8 +2,11 @@ import { TRPCError } from "@trpc/server";
 import { Ratelimit } from "@upstash/ratelimit"; // for deno: see above
 import { Redis } from "@upstash/redis"; // see below for cloudflare and fastly adapters
 import { z } from "zod";
-import { cuid2 } from "~/lib/utils";
-import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
+
+import { schema } from "@acme/db";
+
+import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { cuid2 } from "../utils";
 
 export const playerRouter = createTRPCRouter({
   addPlayer: protectedProcedure
@@ -41,11 +44,9 @@ export const playerRouter = createTRPCRouter({
         });
       }
 
-      const team = await ctx.db.team.findUniqueOrThrow({
-        where: {
-          id: input.teamId,
-          users_id: ctx.user.id,
-        },
+      const team = await ctx.db.query.team.findFirst({
+        where: (team, { and, eq }) =>
+          and(eq(team.id, input.teamId), eq(team.user_id, ctx.user.id)),
       });
 
       if (!team) {
@@ -55,13 +56,17 @@ export const playerRouter = createTRPCRouter({
         });
       }
 
-      return await ctx.db.player.create({
-        data: {
-          id: cuid2(),
-          name: input.name,
-          jersey: jerseyNumber.data,
-          teamId: input.teamId,
-        },
+      const id = cuid2();
+
+      await ctx.db.insert(schema.player).values({
+        id: id,
+        name: input.name,
+        jerseyNumber: jerseyNumber.data,
+        team_id: input.teamId,
+      });
+
+      return await ctx.db.query.player.findFirst({
+        where: (player, { eq }) => eq(player.id, id),
       });
     }),
 
@@ -89,10 +94,8 @@ export const playerRouter = createTRPCRouter({
         });
       }
 
-      const player = await ctx.db.player.findUnique({
-        where: {
-          id: input.id,
-        },
+      const player = await ctx.db.query.player.findFirst({
+        where: (player, { eq }) => eq(player.id, input.id),
       });
 
       if (!player) {
@@ -102,11 +105,9 @@ export const playerRouter = createTRPCRouter({
         });
       }
 
-      const team = await ctx.db.team.findUnique({
-        where: {
-          id: player.teamId,
-          users_id: ctx.user.id,
-        },
+      const team = await ctx.db.query.team.findFirst({
+        where: (team, { and, eq }) =>
+          and(eq(team.id, player.team_id), eq(team.user_id, ctx.user.id)),
       });
 
       if (!team) {
@@ -116,13 +117,12 @@ export const playerRouter = createTRPCRouter({
         });
       }
 
-      return await ctx.db.player.update({
-        where: {
-          id: input.id,
-        },
-        data: {
-          archived: !player.archived,
-        },
+      await ctx.db.update(schema.player).set({
+        archived: !player.archived,
+      });
+
+      return await ctx.db.query.player.findFirst({
+        where: (player, { eq }) => eq(player.id, input.id),
       });
     }),
 
@@ -190,11 +190,9 @@ export const playerRouter = createTRPCRouter({
         });
       }
 
-      const team = await ctx.db.team.findUnique({
-        where: {
-          id: input.teamId,
-          users_id: ctx.user.id,
-        },
+      const team = await ctx.db.query.team.findFirst({
+        where: (team, { and, eq }) =>
+          and(eq(team.id, input.teamId), eq(team.user_id, ctx.user.id)),
       });
 
       if (!team) {
@@ -204,11 +202,9 @@ export const playerRouter = createTRPCRouter({
         });
       }
 
-      const player = await ctx.db.player.findUnique({
-        where: {
-          id: input.playerId,
-          teamId: input.teamId,
-        },
+      const player = await ctx.db.query.player.findFirst({
+        where: (player, { and, eq }) =>
+          and(eq(player.id, input.playerId), eq(player.team_id, input.teamId)),
       });
 
       if (!player) {
@@ -218,25 +214,29 @@ export const playerRouter = createTRPCRouter({
         });
       }
 
-      if (player.teamId !== team.id) {
+      if (player.team_id !== team.id) {
         throw new TRPCError({
           code: "NOT_FOUND",
           message: "Player not found",
         });
       }
 
-      const shot = await ctx.db.shot.create({
-        data: {
-          id: cuid2(),
-          playerId: input.playerId,
-          made: made.data,
-          xPoint: x.data,
-          yPoint: y.data,
-          gameId: input.gameId,
-          teamId: input.teamId, // Add the missing teamId property
-          points: input.points,
-          isFreeThrow: input.isFreeThrow ?? false,
-        },
+      const id = cuid2();
+
+      await ctx.db.insert(schema.shot).values({
+        id: id,
+        player_Id: input.playerId,
+        made: made.data,
+        xPoint: x.data,
+        yPoint: y.data,
+        game_Id: input.gameId,
+        team_Id: input.teamId, // Add the missing teamId property
+        points: input.points,
+        isFreeThrow: input.isFreeThrow ?? false,
+      });
+
+      const shot = await ctx.db.query.shot.findFirst({
+        where: (shot, { eq }) => eq(shot.id, id),
       });
 
       if (!shot) {
@@ -244,17 +244,6 @@ export const playerRouter = createTRPCRouter({
           code: "INTERNAL_SERVER_ERROR",
         });
       }
-
-      await ctx.db.player.update({
-        where: {
-          id: input.playerId,
-        },
-        data: {
-          totalPoints: {
-            increment: input.points,
-          },
-        },
-      });
 
       return shot;
     }),

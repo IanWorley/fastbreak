@@ -20,6 +20,7 @@ export const shot = mySqlTable("shot", {
   team_Id: varchar("team_id", { length: 25 }).notNull(),
   xPoint: int("x_point").notNull(),
   yPoint: int("y_point").notNull(),
+  isFreeThrow: boolean("is_free_throw").notNull(),
 });
 
 export const playerRelations = relations(shot, ({ one }) => ({

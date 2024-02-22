@@ -1,5 +1,5 @@
 import { relations, sql } from "drizzle-orm";
-import { boolean, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { boolean, int, timestamp, varchar } from "drizzle-orm/mysql-core";
 
 import { mySqlTable } from "./_table";
 import { team } from "./team";
@@ -13,6 +13,7 @@ export const player = mySqlTable("player", {
     .notNull(),
   updatedAt: timestamp("updatedAt").onUpdateNow(),
   archived: boolean("archived").default(false).notNull(),
+  jerseyNumber: int("jersey_number").notNull(),
 });
 
 export const teamRelations = relations(player, ({ one }) => ({
