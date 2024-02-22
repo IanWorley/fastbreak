@@ -2,11 +2,14 @@ import { TRPCError } from "@trpc/server";
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 import { z } from "zod";
-import { cuid2 } from "~/lib/utils";
-import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
+
+import { eq, schema } from "@acme/db";
+
+import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { cuid2 } from "../utils";
 
 export const teamsRouter = createTRPCRouter({
-  grabTeams: protectedProcedure.query(async ({ ctx, input }) => {
+  grabTeams: protectedProcedure.query(async ({ ctx }) => {
     const ratelimit = new Ratelimit({
       redis: Redis.fromEnv(),
       limiter: Ratelimit.slidingWindow(10, "10 s"),
@@ -24,11 +27,11 @@ export const teamsRouter = createTRPCRouter({
       });
     }
 
-    return await ctx.db.team.findMany({
-      where: {
-        users_id: ctx.user.id,
-      },
+    const teams = await ctx.db.query.team.findMany({
+      where: (team, { eq }) => eq(team.user_id, ctx.user.id),
     });
+
+    return teams || [];
   }),
 
   deleteTeam: protectedProcedure
@@ -51,11 +54,9 @@ export const teamsRouter = createTRPCRouter({
         });
       }
 
-      const team = await ctx.db.team.findUnique({
-        where: {
-          id: input,
-          users_id: ctx.user.id,
-        },
+      const team = await ctx.db.query.team.findFirst({
+        where: (team, { and, eq }) =>
+          and(eq(team.id, input), eq(team.user_id, ctx.user.id)),
       });
 
       if (!team) {
@@ -65,29 +66,15 @@ export const teamsRouter = createTRPCRouter({
         });
       }
 
-      await ctx.db.shot.deleteMany({
-        where: {
-          teamId: input,
-        },
-      });
+      await ctx.db.delete(schema.shot).where(eq(schema.shot.team_Id, input));
 
-      await ctx.db.game.deleteMany({
-        where: {
-          teamId: input,
-        },
-      });
+      await ctx.db.delete(schema.game).where(eq(schema.game.teamId, input));
 
-      await ctx.db.player.deleteMany({
-        where: {
-          teamId: input,
-        },
-      });
+      await ctx.db
+        .delete(schema.player)
+        .where(eq(schema.player.team_id, input));
 
-      await ctx.db.team.delete({
-        where: {
-          id: input,
-        },
-      });
+      await ctx.db.delete(schema.team).where(eq(schema.team.id, input));
 
       return true;
     }),
@@ -112,11 +99,9 @@ export const teamsRouter = createTRPCRouter({
         });
       }
 
-      const team = await ctx.db.team.findUnique({
-        where: {
-          id: input,
-          users_id: ctx.user.id,
-        },
+      const team = await ctx.db.query.team.findFirst({
+        where: (team, { and, eq }) =>
+          and(eq(team.id, input), eq(team.user_id, ctx.user.id)),
       });
 
       if (!team) {
@@ -126,10 +111,8 @@ export const teamsRouter = createTRPCRouter({
         });
       }
 
-      return await ctx.db.player.findMany({
-        where: {
-          teamId: input,
-        },
+      return await ctx.db.query.player.findMany({
+        where: (player, { eq }) => eq(player.team_id, input),
       });
     }),
 
@@ -153,14 +136,22 @@ export const teamsRouter = createTRPCRouter({
         });
       }
 
-      const team = await ctx.db.team.create({
-        data: {
-          id: cuid2(),
-          name: input.name,
-          users_id: ctx.user.id,
-        },
-      });
+      const id = cuid2();
 
-      return team;
+      await ctx.db
+        .insert(schema.team)
+        .values({ id, name: input.name, user_id: ctx.user.id });
+
+      // const team = await ctx.db.team.create({
+      //   data: {
+      //     id: cuid2(),
+      //     name: input.name,
+      //     users_id: ctx.user.id,
+      //   },
+      // });
+
+      return await ctx.db.query.team.findFirst({
+        where: eq(schema.team.id, id),
+      });
     }),
 });
