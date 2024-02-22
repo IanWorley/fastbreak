@@ -3,12 +3,10 @@ import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 import { z } from "zod";
 
-import { eq } from "@acme/db";
+import { eq, schema } from "@acme/db";
 
-import { cuid2 } from "~/lib/utils";
-import { game } from "../../../db/src/schema/game";
-import { shot } from "../../../db/src/schema/shot";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { cuid2 } from "../utils";
 
 export const gameRouter = createTRPCRouter({
   grabGames: protectedProcedure
@@ -60,15 +58,6 @@ export const gameRouter = createTRPCRouter({
           shots: true,
         },
       });
-
-      // return await ctx.db.game.findMany({
-      //   where: {
-      //     teamId: input,
-      //   },
-      //   include: {
-      //     shots: true,
-      //   },
-      // });
     }),
 
   deleteGame: protectedProcedure
@@ -106,9 +95,11 @@ export const gameRouter = createTRPCRouter({
         });
       }
 
-      await ctx.db.delete(shot).where(eq(shot.game_Id, input.gameId));
+      await ctx.db
+        .delete(schema.shot)
+        .where(eq(schema.shot.game_Id, input.gameId));
 
-      await ctx.db.delete(game).where(eq(game.id, input.gameId));
+      await ctx.db.delete(schema.game).where(eq(schema.game.id, input.gameId));
 
       return { status: "success" };
     }),
@@ -154,12 +145,16 @@ export const gameRouter = createTRPCRouter({
         });
       }
 
-      return await ctx.db.game.create({
-        data: {
-          id: cuid2(),
-          name: input.name,
-          teamId: input.teamId,
-        },
+      const id = cuid2();
+
+      await ctx.db.insert(schema.game).values({
+        id: id,
+        name: input.name,
+        teamId: input.teamId,
+      });
+
+      return await ctx.db.query.game.findFirst({
+        where: eq(schema.game.id, id),
       });
     }),
 
