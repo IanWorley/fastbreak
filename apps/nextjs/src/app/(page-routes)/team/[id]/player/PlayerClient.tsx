@@ -43,6 +43,7 @@ import {
 } from "@acme/ui/table";
 
 import { api } from "~/trpc/react";
+import Navbar from "~/app/_components/Navbar";
 
 export const columns: ColumnDef<playerType>[] = [
   {

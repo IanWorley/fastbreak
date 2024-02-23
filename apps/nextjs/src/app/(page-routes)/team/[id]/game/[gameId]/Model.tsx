@@ -73,12 +73,20 @@ function Model(props: DialogDemoProps) {
       const previousShots = utils.game.grabPlayersShotsFromGame.getData();
       utils.game.grabPlayersShotsFromGame.setData(
         { gameId: gameId, teamId: teamid },
+<<<<<<< HEAD:apps/nextjs/src/app/(page-routes)/team/[id]/game/[gameId]/Model.tsx
         (oldData: shotType[] | undefined) => {
+=======
+        (oldData) => {
+>>>>>>> main:src/app/(page-routes)/team/[id]/game/[gameId]/Model.tsx
           return [
             ...(oldData ?? []),
             {
               id: Math.random().toString(),
+<<<<<<< HEAD:apps/nextjs/src/app/(page-routes)/team/[id]/game/[gameId]/Model.tsx
               player_Id: form.getValues("player_id"),
+=======
+              playerId: form.getValues("player_id"),
+>>>>>>> main:src/app/(page-routes)/team/[id]/game/[gameId]/Model.tsx
               made:
                 form.getValues("shot_attempt").toLowerCase() ===
                 "Made".toLowerCase()
@@ -89,11 +97,32 @@ function Model(props: DialogDemoProps) {
               points: z.coerce.number().parse(form.getValues("points")),
               isFreeThrow: form.getValues("points") === "1" ? true : false,
               createdAt: new Date(),
+<<<<<<< HEAD:apps/nextjs/src/app/(page-routes)/team/[id]/game/[gameId]/Model.tsx
               team_Id: teamid,
               game_Id: gameId,
               updatedAt: new Date(),
             },
           ];
+=======
+              teamId: teamid,
+              gameId: gameId,
+              updatedAt: new Date(),
+            },
+          ] as {
+            // Co pilot is saving typeSafty
+            id: string;
+            teamId: string;
+            gameId: string;
+            playerId: string;
+            xPoint: number;
+            yPoint: number;
+            made: boolean;
+            createdAt: Date;
+            updatedAt: Date;
+            points: number;
+            isFreeThrow: boolean;
+          }[];
+>>>>>>> main:src/app/(page-routes)/team/[id]/game/[gameId]/Model.tsx
         },
       );
       toggle();
