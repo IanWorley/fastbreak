@@ -1,15 +1,18 @@
 import type { Metadata, Viewport } from "next";
+import { ClerkProvider } from "@clerk/nextjs";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 
 import { cn } from "@acme/ui";
-import { ThemeProvider, ThemeToggle } from "@acme/ui/theme";
+import { ThemeProvider } from "@acme/ui/theme";
 import { Toaster } from "@acme/ui/toast";
 
 import { env } from "~/env";
 import { TRPCReactProvider } from "~/trpc/react";
 
 import "~/app/globals.css";
+
+import { CSPostHogProvider } from "./_components/providers";
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -25,11 +28,11 @@ export const metadata: Metadata = {
     url: "https://create-t3-turbo.vercel.app",
     siteName: "Create T3 Turbo",
   },
-  twitter: {
-    card: "summary_large_image",
-    site: "@jullerino",
-    creator: "@jullerino",
-  },
+  // twitter: {
+  //   card: "summary_large_image",
+  //   site: "@jullerino",
+  //   creator: "@jullerino",
+  // },
 };
 
 export const viewport: Viewport = {
@@ -49,13 +52,14 @@ export default function RootLayout(props: { children: React.ReactNode }) {
           GeistMono.variable,
         )}
       >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <TRPCReactProvider>{props.children}</TRPCReactProvider>
-          <div className="absolute bottom-4 right-4">
-            <ThemeToggle />
-          </div>
-          <Toaster />
-        </ThemeProvider>
+        <ClerkProvider>
+          <CSPostHogProvider>
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+              <TRPCReactProvider>{props.children}</TRPCReactProvider>
+              <Toaster />
+            </ThemeProvider>
+          </CSPostHogProvider>
+        </ClerkProvider>
       </body>
     </html>
   );

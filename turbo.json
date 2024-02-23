@@ -39,5 +39,10 @@
       "cache": false
     }
   },
-  "globalEnv": ["DATABASE_URL", "CLERK_SECRET_KEY"]
+  "globalEnv": [
+    "DATABASE_URL",
+    "CLERK_SECRET_KEY",
+    "UPSTASH_REDIS_REST_URL",
+    "UPSTASH_REDIS_REST_TOKEN"
+  ]
 }

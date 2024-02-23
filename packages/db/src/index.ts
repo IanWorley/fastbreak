@@ -9,6 +9,12 @@ import * as team from "./schema/team";
 
 export const schema = { ...post, ...shot, ...game, ...player, ...team };
 
+// allow me to export the type of the table
+export type gameType = game.Game;
+export type playerType = player.Player;
+export type shotType = shot.Shot;
+export type teamType = team.Team;
+
 export { mySqlTable as tableCreator } from "./schema/_table";
 
 export * from "drizzle-orm";

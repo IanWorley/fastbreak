@@ -1,5 +1,7 @@
+import type { z } from "zod";
 import { relations, sql } from "drizzle-orm";
 import { text, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { createSelectSchema } from "drizzle-zod";
 
 import { mySqlTable } from "./_table";
 import { game } from "./game";
@@ -26,3 +28,6 @@ export const playerRelations = relations(team, ({ many }) => ({
 }));
 
 // index the user_id column drizzle orm
+
+export const SelectTeam = createSelectSchema(team);
+export type Team = z.infer<typeof SelectTeam>;
