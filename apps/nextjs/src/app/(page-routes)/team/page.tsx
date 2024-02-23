@@ -51,7 +51,7 @@ function page() {
   }
 
   return (
-    <main className="overflow-y-scroll pt-16">
+    <main className="overflow-y-scroll pt-20">
       <Navbar className="fixed top-0 " />
 
       <div className="">

@@ -20,6 +20,15 @@ function Page(props: Props) {
 
   const { data, isLoading, isError } = api.game.grabGames.useQuery(id);
 
+  if (data === undefined) {
+    return (
+      <main>
+        <Navbar className="fixed" teamId={id} viewingTeam={true} />
+        <div>Error</div>
+      </main>
+    );
+  }
+
   if (isError) {
     return (
       <main>
@@ -31,7 +40,7 @@ function Page(props: Props) {
 
   if (isLoading) {
     return (
-      <main>
+      <main className="">
         <Navbar className="fixed" teamId={id} viewingTeam={true} />
         <div className="flex min-h-screen flex-col items-center justify-center ">
           <div role="status">
@@ -60,8 +69,8 @@ function Page(props: Props) {
 
   return (
     <main className="overflow-y-scroll">
-      <Navbar className="fixed" teamId={id} viewingTeam={true} />
-      <div>
+      <Navbar className="sticky top-0" teamId={id} viewingTeam={true} />
+      <div className="pt-20">
         <div className="flex flex-col  items-center   justify-evenly p-10 sm:flex-row ">
           <h1 className="p-4 text-3xl font-bold "> Games </h1>
           <Link href={`/team/${id}/game/new `}>

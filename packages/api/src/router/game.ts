@@ -36,13 +36,6 @@ export const gameRouter = createTRPCRouter({
         },
       });
 
-      // const team = await ctx.db.team.findUniqueOrThrow({
-      //   where: {
-      //     id: input,
-      //     users_id: ctx.user.id,
-      //   },
-      // });
-
       if (!team) {
         throw new TRPCError({
           code: "NOT_FOUND",
@@ -50,14 +43,22 @@ export const gameRouter = createTRPCRouter({
         });
       }
 
-      return await ctx.db.query.game.findMany({
-        where: (game, { eq }) => {
-          return eq(game.teamId, input);
-        },
-        with: {
-          shots: true,
-        },
-      });
+      console.log("team", team);
+
+      try {
+        const gameData = await ctx.db.query.game.findMany({
+          where: (game, { eq }) => {
+            return eq(game.teamId, input);
+          },
+          with: {
+            shots: true,
+          },
+        });
+
+        return gameData;
+      } catch (error) {
+        return [];
+      }
     }),
 
   deleteGame: protectedProcedure
