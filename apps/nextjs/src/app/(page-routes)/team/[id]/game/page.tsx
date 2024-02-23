@@ -11,6 +11,8 @@ import Navbar from "~/app/_components/Navbar";
 import { api } from "~/trpc/react";
 import DeleteTeamModel from "./DeleteGameModel";
 
+export const runtime = "edge";
+
 interface Props {
   params: { id: string };
 }
@@ -70,7 +72,7 @@ function Page(props: Props) {
   return (
     <main className="overflow-y-scroll">
       <Navbar className="sticky top-0" teamId={id} viewingTeam={true} />
-      <div className="pt-20">
+      <div className="">
         <div className="flex flex-col  items-center   justify-evenly p-10 sm:flex-row ">
           <h1 className="p-4 text-3xl font-bold "> Games </h1>
           <Link href={`/team/${id}/game/new `}>
