@@ -9,6 +9,8 @@ import CreateTeamDenied from "~/app/(page-routes)/team/CreateTeamDenied";
 import Team from "~/app/(page-routes)/team/Team";
 import { api } from "~/trpc/react";
 
+export const runtime = "edge";
+
 function page() {
   const { data, isLoading, isError } = api.team.grabTeams.useQuery();
 
