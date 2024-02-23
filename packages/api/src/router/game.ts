@@ -43,8 +43,6 @@ export const gameRouter = createTRPCRouter({
         });
       }
 
-      console.log("team", team);
-
       try {
         const gameData = await ctx.db.query.game.findMany({
           where: (game, { eq }) => {
@@ -54,6 +52,8 @@ export const gameRouter = createTRPCRouter({
             shots: true,
           },
         });
+
+        console.log(gameData);
 
         return gameData;
       } catch (error) {

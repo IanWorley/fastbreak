@@ -20,15 +20,6 @@ function Page(props: Props) {
 
   const { data, isLoading, isError } = api.game.grabGames.useQuery(id);
 
-  if (data === undefined) {
-    return (
-      <main>
-        <Navbar className="fixed" teamId={id} viewingTeam={true} />
-        <div>Error</div>
-      </main>
-    );
-  }
-
   if (isError) {
     return (
       <main>
@@ -79,13 +70,13 @@ function Page(props: Props) {
         </div>
 
         <div className="flex grid-cols-2 flex-col md:grid">
-          {data.length >= 0 &&
-            data.map((game) => (
-              <Game key={game.id} game={game} shots={game.shots} id={id} />
+          {data!.length >= 0 &&
+            data!.map((game: gameType) => (
+              <Game key={game.id} game={game} shots={game.shot} id={id} />
             ))}
         </div>
 
-        {data.length === 0 && (
+        {data!.length === 0 && (
           <div className="flex flex-col items-center justify-center">
             <h3 className="text-center text-2xl font-bold">
               {" "}
