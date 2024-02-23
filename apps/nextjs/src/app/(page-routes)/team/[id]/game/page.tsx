@@ -1,7 +1,5 @@
 "use client";
 
-// type from prisma schema
-// import type { game, shot } from "@prisma/client";
 import Link from "next/link";
 
 import type { gameType, shotType } from "@acme/db";
