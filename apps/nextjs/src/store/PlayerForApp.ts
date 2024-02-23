@@ -1,25 +1,26 @@
-import { type player } from "@prisma/client";
 import { create } from "zustand";
 
-export interface PlayerForApp extends player {
+import type { playerType } from "@acme/db";
+
+export interface PlayerForApp extends playerType {
   isPlaying: boolean;
 }
 
 interface PlayerForAppState {
   players: PlayerForApp[];
-  addPlayer: (player: player) => void;
-  removePlayer: (player: player) => void;
+  addPlayer: (player: playerType) => void;
+  removePlayer: (player: playerType) => void;
   // togglePlayer: (player_id: number) => void;
-  updatePlayer: (player: player) => void;
-  updatePlayers: (players: player[]) => void;
-  addPlayers: (player: player[]) => void;
+  updatePlayer: (player: playerType) => void;
+  updatePlayers: (players: playerType[]) => void;
+  addPlayers: (player: playerType[]) => void;
   sortPlayers: () => void;
   swapPlayersActive: (player1: string, player2: string) => void;
 }
 
 export const usePlayerForApp = create<PlayerForAppState>((set) => ({
   players: [],
-  addPlayers(rawPlayerApi: player[]) {
+  addPlayers(rawPlayerApi: playerType[]) {
     set((state) => {
       const activePlayerCount = state.players.filter((p) => p.isPlaying).length;
 

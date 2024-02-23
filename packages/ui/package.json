@@ -18,7 +18,8 @@
     "./radio-group": "./src/radio-group.tsx",
     "./dropdown": "./src/dropdown.tsx",
     "./card": "./src/card.tsx",
-    "./dropdown-menu": "./src/dropdown-menu.tsx"
+    "./dropdown-menu": "./src/dropdown-menu.tsx",
+    "./drawer": "./src/drawer.tsx"
   },
   "license": "MIT",
   "scripts": {

@@ -1,7 +1,10 @@
 import { notFound } from "next/navigation";
+
 import Navbar from "~/app/_components/Navbar";
 import { api } from "~/trpc/server";
 import GameClient from "./GameClient";
+
+export const runtime = "edge";
 
 interface Props {
   params: { id: string; gameId: string };
@@ -9,7 +12,7 @@ interface Props {
 
 async function page({ params }: Props) {
   const { id, gameId } = params;
-  const game = await api.game.grabGame.query({
+  const game = await api.game.grabGame({
     teamId: id.toString(),
     gameId: gameId.toString(),
   });

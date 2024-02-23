@@ -1,15 +1,17 @@
 "use client";
 
-import type { player } from "@prisma/client";
 import { useParams } from "next/navigation";
 import { toast } from "sonner";
 import { z } from "zod";
-import { Button } from "~/app/_components/shadcn/ui/button";
+
+import type { playerType } from "@acme/db";
+import { Button } from "@acme/ui/button";
+
 import { useShotsForGame } from "~/hooks/ShotHooks";
 import { usePlayerForApp } from "~/store/PlayerForApp";
 
 interface PlayerCardProps {
-  player: player;
+  player: playerType;
   toggleForDrawer: () => void;
   setPlayerSwap: (playerId: string) => void;
 }
@@ -26,7 +28,7 @@ function PlayerCard(props: PlayerCardProps) {
   // Return three values for each player card  free throw, 2 point, 3 point
 
   const { freethrow, twopoint, threepoint } = shots
-    .filter((shot) => shot.playerId === player.id && shot.gameId === gameId)
+    .filter((shot) => shot.player_Id === player.id && shot.game_Id === gameId)
     .reduce(
       (acc, shot) => {
         if (shot.made) {

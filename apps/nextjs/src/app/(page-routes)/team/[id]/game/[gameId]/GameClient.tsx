@@ -1,7 +1,9 @@
 "use client";
-import { useParams } from "next/navigation";
+
 import { useState } from "react";
+import { useParams } from "next/navigation";
 import { z } from "zod";
+
 import { usePlayerForApp } from "~/store/PlayerForApp";
 import { api } from "~/trpc/react";
 import PlayerSubDrawer from "./(DrawerCompoents)/PlayerSubDrawer";
@@ -68,7 +70,7 @@ function GameClient() {
     return <div>Error</div>;
   }
 
-  addPlayers(data);
+  addPlayers(data ?? []);
 
   return (
     <div className="">

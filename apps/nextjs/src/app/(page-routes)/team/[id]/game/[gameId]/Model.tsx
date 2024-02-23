@@ -1,10 +1,13 @@
 "use client";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SelectContent, SelectTrigger } from "@radix-ui/react-select";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
-import { Button } from "~/app/_components/shadcn/ui/button";
+
+import type { shotType } from "@acme/db";
+import { Button } from "@acme/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -12,26 +15,24 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "~/app/_components/shadcn/ui/dialog";
+} from "@acme/ui/dialog";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-} from "~/app/_components/shadcn/ui/form";
-import { Label } from "~/app/_components/shadcn/ui/label";
-import {
-  RadioGroup,
-  RadioGroupItem,
-} from "~/app/_components/shadcn/ui/radio-group";
+} from "@acme/ui/form";
+import { Label } from "@acme/ui/label";
+import { RadioGroup, RadioGroupItem } from "@acme/ui/radio-group";
 import {
   Select,
   SelectGroup,
   SelectItem,
   SelectLabel,
   SelectValue,
-} from "~/app/_components/shadcn/ui/select";
+} from "@acme/ui/select";
+
 import { usePlayerForApp } from "~/store/PlayerForApp";
 import { api } from "~/trpc/react";
 
@@ -72,12 +73,12 @@ function Model(props: DialogDemoProps) {
       const previousShots = utils.game.grabPlayersShotsFromGame.getData();
       utils.game.grabPlayersShotsFromGame.setData(
         { gameId: gameId, teamId: teamid },
-        (oldData) => {
+        (oldData: shotType[] | undefined) => {
           return [
             ...(oldData ?? []),
             {
               id: Math.random().toString(),
-              playerId: form.getValues("player_id"),
+              player_Id: form.getValues("player_id"),
               made:
                 form.getValues("shot_attempt").toLowerCase() ===
                 "Made".toLowerCase()
@@ -88,24 +89,11 @@ function Model(props: DialogDemoProps) {
               points: z.coerce.number().parse(form.getValues("points")),
               isFreeThrow: form.getValues("points") === "1" ? true : false,
               createdAt: new Date(),
-              teamId: teamid,
-              gameId: gameId,
+              team_Id: teamid,
+              game_Id: gameId,
               updatedAt: new Date(),
             },
-          ] as {
-            // Co pilot is saving typeSafty
-            id: string;
-            teamId: string;
-            gameId: string;
-            playerId: string;
-            xPoint: number;
-            yPoint: number;
-            made: boolean;
-            createdAt: Date;
-            updatedAt: Date;
-            points: number;
-            isFreeThrow: boolean;
-          }[];
+          ];
         },
       );
       toggle();
