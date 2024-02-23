@@ -3,7 +3,7 @@ import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 import { z } from "zod";
 
-import { eq, schema } from "@acme/db";
+import { eq, schema } from "@acme/db"; // Import the missing type
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { cuid2 } from "../utils";
@@ -12,7 +12,6 @@ export const gameRouter = createTRPCRouter({
   grabGames: protectedProcedure
     .input(z.string().cuid2())
     .query(async ({ ctx, input }) => {
-      //! Ignore this error this is code runs fine and should not be changed vscode is just being dumb and not recognizing the code
       const ratelimit = new Ratelimit({
         redis: Redis.fromEnv(),
         limiter: Ratelimit.slidingWindow(10, "10 s"),
@@ -43,29 +42,36 @@ export const gameRouter = createTRPCRouter({
         });
       }
 
-      try {
-        const gameData = await ctx.db.query.game.findMany({
-          where: (game, { eq }) => {
-            return eq(game.teamId, input);
-          },
-          with: {
-            shots: true,
-          },
-        });
+      console.log("team found: ", team);
 
-        console.log(gameData);
+      // grab all games and all shots associated with the games
+      // join would this require a join?
+      //
+      const gameData = await ctx.db.query.game.findMany({
+        where: eq(schema.game.teamId, input),
+      });
 
-        return gameData;
-      } catch (error) {
-        return [];
-      }
+      // package games with shots from that game together
+
+      const games = await Promise.all(
+        gameData.map(async (game) => {
+          const shots = await ctx.db.query.shot.findMany({
+            where: eq(schema.shot.game_Id, game.id),
+          });
+
+          return {
+            ...game,
+            shots: shots ? shots : [],
+          };
+        }),
+      );
+
+      return games;
     }),
 
   deleteGame: protectedProcedure
     .input(z.object({ gameId: z.string().cuid2(), teamId: z.string().cuid2() }))
     .mutation(async ({ ctx, input }) => {
-      //! Ignore this error this is code runs fine and should not be changed vscode is just being dumb and not recognizing the code
-
       const ratelimit = new Ratelimit({
         redis: Redis.fromEnv(),
         limiter: Ratelimit.slidingWindow(10, "10 s"),
@@ -108,7 +114,6 @@ export const gameRouter = createTRPCRouter({
   createGame: protectedProcedure
     .input(z.object({ teamId: z.string().cuid2(), name: z.string() }))
     .mutation(async ({ ctx, input }) => {
-      //! Ignore this error this is code runs fine and should not be changed vscode is just being dumb and not recognizing the code
       const ratelimit = new Ratelimit({
         redis: Redis.fromEnv(),
         limiter: Ratelimit.slidingWindow(10, "10 s"),
@@ -132,13 +137,6 @@ export const gameRouter = createTRPCRouter({
         },
       });
 
-      // const team = await ctx.db.team.findUnique({
-      //   where: {
-      //     id: input.teamId,
-      //     users_id: ctx.user.id,
-      //   },
-      // });
-
       if (!team) {
         throw new TRPCError({
           code: "NOT_FOUND",
@@ -153,6 +151,8 @@ export const gameRouter = createTRPCRouter({
         name: input.name,
         teamId: input.teamId,
       });
+
+      console.log("game created with id: ", id);
 
       return await ctx.db.query.game.findFirst({
         where: eq(schema.game.id, id),
@@ -202,7 +202,6 @@ export const gameRouter = createTRPCRouter({
   grabPlayersShotsFromGame: protectedProcedure
     .input(z.object({ gameId: z.string().cuid2(), teamId: z.string().cuid2() }))
     .query(async ({ ctx, input }) => {
-      //! Ignore this error this is code runs fine and should not be changed vscode is just being dumb and not recognizing the code
       const ratelimit = new Ratelimit({
         redis: Redis.fromEnv(),
         limiter: Ratelimit.slidingWindow(10, "10 s"),

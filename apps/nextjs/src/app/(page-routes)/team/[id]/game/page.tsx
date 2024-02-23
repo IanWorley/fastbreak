@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-import type { gameType, shotType } from "@acme/db";
+import type { gameType, GameWithRelationsShots, shotType } from "@acme/db";
 import { Button } from "@acme/ui/button";
 
 import Navbar from "~/app/_components/Navbar";
@@ -71,8 +71,8 @@ function Page(props: Props) {
 
         <div className="flex grid-cols-2 flex-col md:grid">
           {data!.length >= 0 &&
-            data!.map((game: gameType) => (
-              <Game key={game.id} game={game} shots={game.shot} id={id} />
+            data!.map((game: GameWithRelationsShots) => (
+              <Game key={game.id} game={game} shots={game.shots} id={id} />
             ))}
         </div>
 

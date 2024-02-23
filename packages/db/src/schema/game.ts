@@ -3,6 +3,7 @@ import { relations, sql } from "drizzle-orm";
 import { timestamp, varchar } from "drizzle-orm/mysql-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
+import type { Shot } from "./shot";
 import { mySqlTable } from "./_table";
 import { team } from "./team";
 
@@ -30,3 +31,9 @@ export const shotRelations = relations(game, ({ many }) => ({
 export const InsertGame = createInsertSchema(game);
 export const SelectGame = createSelectSchema(game);
 export type Game = z.infer<typeof SelectGame>;
+
+// extend the Game type to include the shots relation for use in the nextjs app page
+
+export interface GameWithRelationsShots extends Game {
+  shots: Shot[];
+}

@@ -7,13 +7,21 @@ import * as post from "./schema/post";
 import * as shot from "./schema/shot";
 import * as team from "./schema/team";
 
-export const schema = { ...post, ...shot, ...game, ...player, ...team };
+export const schema = {
+  ...post,
+  ...shot,
+  ...game,
+  ...player,
+  ...team,
+  ...game.shotRelations,
+};
 
 // allow me to export the type of the table
 export type gameType = game.Game;
 export type playerType = player.Player;
 export type shotType = shot.Shot;
 export type teamType = team.Team;
+export type GameWithRelationsShots = game.GameWithRelationsShots;
 
 export { mySqlTable as tableCreator } from "./schema/_table";
 

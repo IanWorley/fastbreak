@@ -9,5 +9,5 @@ export const useShotsForGame = (gameId: string, teamId: string) => {
     },
   );
 
-  return shots.data ?? [];
+  return shots.data;
 };

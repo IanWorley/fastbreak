@@ -1,5 +1,8 @@
 "use client";
-import React, { useEffect, useRef, useState, type MouseEvent } from "react";
+
+import type { MouseEvent } from "react";
+import React, { useEffect, useRef, useState } from "react";
+
 import { useShotsForGame } from "~/hooks/ShotHooks";
 import { usePlayerForApp } from "~/store/PlayerForApp";
 import courtBackground from "./court.png"; // Replace with the actual path to your image
@@ -49,15 +52,15 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
     if (!fetchShots || fetchShots.length == 0) return;
 
     const activeShots = fetchShots.filter((shots) => {
-      const player = players.find((player) => player.id === shots.playerId);
+      const player = players.find((player) => player.id === shots.player_Id);
       return player && player.isPlaying;
     });
 
     setShots(
       activeShots.map((shot) => ({
         ...shot,
-        playerid: shot.playerId,
-        gameid: shot.gameId,
+        playerid: shot.player_Id,
+        gameid: shot.game_Id,
       })),
     );
   }, [fetchShots, players]);
