@@ -1,7 +1,8 @@
-"use client"; // Error components must be Client Components
+"use client";
 
-import { notFound } from "next/navigation";
+// Error components must be Client Components
 import { useEffect } from "react";
+import { notFound } from "next/navigation";
 
 export default function Error({
   error,
