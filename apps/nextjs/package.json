@@ -57,5 +57,8 @@
       "@acme/eslint-config/react"
     ]
   },
+  "resolutions": {
+    "string-width": "4.2.3"
+  },
   "prettier": "@acme/prettier-config"
 }
