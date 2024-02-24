@@ -4,8 +4,7 @@ import type { MouseEvent } from "react";
 import React, { useEffect, useRef, useState } from "react";
 
 import { useShotsForGame } from "~/hooks/ShotHooks";
-import { usePlayerForApp } from "~/store/PlayerForApp";
-import courtBackground from "./court.png"; // Replace with the actual path to your image
+import { usePlayerForApp } from "~/store/PlayerForApp"; // Replace with the actual path to your image
 
 interface Shot {
   xPoint: number;
@@ -110,12 +109,7 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
           ref={courtRef}
           onClick={recordShot}
         >
-          <image
-            href={courtBackground.src}
-            width="100%"
-            height="100%"
-            ref={imageRef}
-          />
+          <image href="/court.png" width="100%" height="100%" ref={imageRef} />
           {shots.map((shot, index) => (
             <circle
               key={index}
