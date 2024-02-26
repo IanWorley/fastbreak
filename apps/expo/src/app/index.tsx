@@ -7,8 +7,6 @@ import { api } from "~/utils/api";
 export default function Index() {
   const utils = api.useUtils();
 
-  const { data, isLoading, isError } = api.test.all.useQuery();
-
   return (
     <SafeAreaView className=" bg-background">
       {/* Changes page title visible on the header */}
