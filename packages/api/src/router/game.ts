@@ -20,7 +20,7 @@ export const gameRouter = createTRPCRouter({
         prefix: "@upstash/ratelimit",
       });
 
-      const { success } = await ratelimit.limit(ctx.user.id);
+      const { success } = await ratelimit.limit(ctx.userId);
 
       if (!success) {
         throw new TRPCError({
@@ -31,7 +31,7 @@ export const gameRouter = createTRPCRouter({
 
       const team = await ctx.db.query.team.findFirst({
         where: (team, { and, eq }) => {
-          return and(eq(team.id, input), eq(team.user_id, ctx.user.id));
+          return and(eq(team.id, input), eq(team.user_id, ctx.userId));
         },
       });
 
@@ -80,7 +80,7 @@ export const gameRouter = createTRPCRouter({
         prefix: "@upstash/ratelimit",
       });
 
-      const { success } = await ratelimit.limit(ctx.user.id);
+      const { success } = await ratelimit.limit(ctx.userId);
 
       if (!success) {
         throw new TRPCError({
@@ -91,7 +91,7 @@ export const gameRouter = createTRPCRouter({
 
       const team = await ctx.db.query.team.findFirst({
         where: (team, { and, eq }) => {
-          return and(eq(team.id, input.teamId), eq(team.user_id, ctx.user.id));
+          return and(eq(team.id, input.teamId), eq(team.user_id, ctx.userId));
         },
       });
 
@@ -122,7 +122,7 @@ export const gameRouter = createTRPCRouter({
         prefix: "@upstash/ratelimit",
       });
 
-      const { success } = await ratelimit.limit(ctx.user.id);
+      const { success } = await ratelimit.limit(ctx.userId);
 
       if (!success) {
         throw new TRPCError({
@@ -133,7 +133,7 @@ export const gameRouter = createTRPCRouter({
 
       const team = await ctx.db.query.team.findFirst({
         where: (team, { and, eq }) => {
-          return and(eq(team.id, input.teamId), eq(team.user_id, ctx.user.id));
+          return and(eq(team.id, input.teamId), eq(team.user_id, ctx.userId));
         },
       });
 
@@ -170,7 +170,7 @@ export const gameRouter = createTRPCRouter({
         prefix: "@upstash/ratelimit",
       });
 
-      const { success } = await ratelimit.limit(ctx.user.id);
+      const { success } = await ratelimit.limit(ctx.userId);
 
       if (!success) {
         throw new TRPCError({
@@ -181,7 +181,7 @@ export const gameRouter = createTRPCRouter({
 
       const team = await ctx.db.query.team.findFirst({
         where: (team, { and, eq }) => {
-          return and(eq(team.id, input.teamId), eq(team.user_id, ctx.user.id));
+          return and(eq(team.id, input.teamId), eq(team.user_id, ctx.userId));
         },
       });
 
@@ -210,7 +210,7 @@ export const gameRouter = createTRPCRouter({
         prefix: "@upstash/ratelimit",
       });
 
-      const { success } = await ratelimit.limit(ctx.user.id);
+      const { success } = await ratelimit.limit(ctx.userId);
 
       if (!success) {
         throw new TRPCError({
@@ -221,7 +221,7 @@ export const gameRouter = createTRPCRouter({
 
       const team = await ctx.db.query.team.findFirst({
         where: (team, { and, eq }) => {
-          return and(eq(team.id, input.teamId), eq(team.user_id, ctx.user.id));
+          return and(eq(team.id, input.teamId), eq(team.user_id, ctx.userId));
         },
       });
 

@@ -26,7 +26,7 @@ export const playerRouter = createTRPCRouter({
         prefix: "@upstash/ratelimit",
       });
 
-      const { success } = await ratelimit.limit(ctx.user.id);
+      const { success } = await ratelimit.limit(ctx.userId);
 
       if (!success) {
         throw new TRPCError({
@@ -46,7 +46,7 @@ export const playerRouter = createTRPCRouter({
 
       const team = await ctx.db.query.team.findFirst({
         where: (team, { and, eq }) =>
-          and(eq(team.id, input.teamId), eq(team.user_id, ctx.user.id)),
+          and(eq(team.id, input.teamId), eq(team.user_id, ctx.userId)),
       });
 
       if (!team) {
@@ -85,7 +85,7 @@ export const playerRouter = createTRPCRouter({
         prefix: "@upstash/ratelimit",
       });
 
-      const { success } = await ratelimit.limit(ctx.user.id);
+      const { success } = await ratelimit.limit(ctx.userId);
 
       if (!success) {
         throw new TRPCError({
@@ -107,7 +107,7 @@ export const playerRouter = createTRPCRouter({
 
       const team = await ctx.db.query.team.findFirst({
         where: (team, { and, eq }) =>
-          and(eq(team.id, player.team_id), eq(team.user_id, ctx.user.id)),
+          and(eq(team.id, player.team_id), eq(team.user_id, ctx.userId)),
       });
 
       if (!team) {
@@ -148,7 +148,7 @@ export const playerRouter = createTRPCRouter({
         prefix: "@upstash/ratelimit",
       });
 
-      const ratelimitKey = `addShots:${ctx.user.id}`;
+      const ratelimitKey = `addShots:${ctx.userId}`;
 
       const { success } = await ratelimit.limit(ratelimitKey);
 
@@ -192,7 +192,7 @@ export const playerRouter = createTRPCRouter({
 
       const team = await ctx.db.query.team.findFirst({
         where: (team, { and, eq }) =>
-          and(eq(team.id, input.teamId), eq(team.user_id, ctx.user.id)),
+          and(eq(team.id, input.teamId), eq(team.user_id, ctx.userId)),
       });
 
       if (!team) {

@@ -18,7 +18,7 @@ export const teamsRouter = createTRPCRouter({
       prefix: "@upstash/ratelimit",
     });
 
-    const { success } = await ratelimit.limit(ctx.user.id);
+    const { success } = await ratelimit.limit(ctx.userId);
 
     if (!success) {
       throw new TRPCError({
@@ -28,7 +28,7 @@ export const teamsRouter = createTRPCRouter({
     }
 
     const teams = await ctx.db.query.team.findMany({
-      where: (team, { eq }) => eq(team.user_id, ctx.user.id),
+      where: (team, { eq }) => eq(team.user_id, ctx.userId),
     });
 
     return teams ?? [];
@@ -45,7 +45,7 @@ export const teamsRouter = createTRPCRouter({
         prefix: "@upstash/ratelimit",
       });
 
-      const { success } = await ratelimit.limit(ctx.user.id);
+      const { success } = await ratelimit.limit(ctx.userId);
 
       if (!success) {
         throw new TRPCError({
@@ -56,7 +56,7 @@ export const teamsRouter = createTRPCRouter({
 
       const team = await ctx.db.query.team.findFirst({
         where: (team, { and, eq }) =>
-          and(eq(team.id, input), eq(team.user_id, ctx.user.id)),
+          and(eq(team.id, input), eq(team.user_id, ctx.userId)),
       });
 
       if (!team) {
@@ -90,7 +90,7 @@ export const teamsRouter = createTRPCRouter({
         prefix: "@upstash/ratelimit",
       });
 
-      const { success } = await ratelimit.limit(ctx.user.id);
+      const { success } = await ratelimit.limit(ctx.userId);
 
       if (!success) {
         throw new TRPCError({
@@ -101,7 +101,7 @@ export const teamsRouter = createTRPCRouter({
 
       const team = await ctx.db.query.team.findFirst({
         where: (team, { and, eq }) =>
-          and(eq(team.id, input), eq(team.user_id, ctx.user.id)),
+          and(eq(team.id, input), eq(team.user_id, ctx.userId)),
       });
 
       if (!team) {
@@ -127,7 +127,7 @@ export const teamsRouter = createTRPCRouter({
         prefix: "@upstash/ratelimit",
       });
 
-      const { success } = await ratelimit.limit(ctx.user.id);
+      const { success } = await ratelimit.limit(ctx.userId);
 
       if (!success) {
         throw new TRPCError({
@@ -140,13 +140,13 @@ export const teamsRouter = createTRPCRouter({
 
       await ctx.db
         .insert(schema.team)
-        .values({ id, name: input.name, user_id: ctx.user.id });
+        .values({ id, name: input.name, user_id: ctx.userId });
 
       // const team = await ctx.db.team.create({
       //   data: {
       //     id: cuid2(),
       //     name: input.name,
-      //     users_id: ctx.user.id,
+      //     users_id: ctx.userId,
       //   },
       // });
 

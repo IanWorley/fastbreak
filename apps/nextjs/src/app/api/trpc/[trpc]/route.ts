@@ -1,3 +1,4 @@
+import { NextRequest } from "next/server";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 
 import { appRouter, createTRPCContext } from "@acme/api";
@@ -23,15 +24,12 @@ export function OPTIONS() {
   return response;
 }
 
-const handler = async (req: Request) => {
+const handler = async (req: NextRequest) => {
   const response = await fetchRequestHandler({
     endpoint: "/api/trpc",
     router: appRouter,
     req,
-    createContext: () =>
-      createTRPCContext({
-        headers: req.headers,
-      }),
+    createContext: () => createTRPCContext(),
     onError({ error, path }) {
       console.error(`>>> tRPC Error on '${path}'`, error);
     },

@@ -1,5 +1,4 @@
 import { cache } from "react";
-import { headers } from "next/headers";
 
 import { createCaller, createTRPCContext } from "@acme/api";
 
@@ -8,13 +7,7 @@ import { createCaller, createTRPCContext } from "@acme/api";
  * handling a tRPC call from a React Server Component.
  */
 const createContext = cache(async () => {
-  const heads = new Headers(headers());
-  heads.set("x-trpc-source", "rsc");
-
-  return createTRPCContext({
-    // clerk server action
-    headers: heads,
-  });
+  return createTRPCContext();
 });
 
 export const api = createCaller(createContext);

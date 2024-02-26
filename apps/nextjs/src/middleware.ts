@@ -5,11 +5,25 @@ import { authMiddleware, redirectToSignIn } from "@clerk/nextjs";
 // Please edit this to allow other routes to be public as needed.
 // See https://clerk.com/docs/references/nextjs/auth-middleware for more information about configuring your Middleware
 
+// if /api/trpc/* is public write a functio with isPublic to use regex to match the routes and only /apt/trpc/* will be public
+
+const isPublic = (path: string) => {
+  return path.startsWith("/api/trpc/");
+};
+
 export default authMiddleware({
-  publicRoutes: ["/"],
+  // make a regular expression to match all routes /api/trpc/*
+  // using Path-to-RegExp
+
+  publicRoutes: ["/", ""],
 
   async afterAuth(auth, req, _evt) {
     // Handle users who aren't authenticated
+
+    if (isPublic(req.nextUrl.pathname)) {
+      return NextResponse.next();
+    }
+
     if (!auth.userId && !auth.isPublicRoute) {
       return redirectToSignIn({ returnBackUrl: req.url }) as NextResponse;
     }
@@ -20,6 +34,7 @@ export default authMiddleware({
 
     // }
     // If the user is logged in and trying to access a protected route, allow them to access route
+
     if (auth.userId && !auth.isPublicRoute) {
       // const teamId = req.nextUrl.pathname.split("/")[2];
 
