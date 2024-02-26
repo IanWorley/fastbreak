@@ -29,16 +29,6 @@ export default function Index() {
           </Text>
         </View>
         {/* <CreatePost /> */}
-        <View>
-          <Text className="text-foreground">Posts</Text>
-          {isLoading && <Text className="text-primary">Loading...</Text>}
-          {isError && <Text className="text-primary">Error: {isError}</Text>}
-          {data && (
-            <View>
-              <Text className="text-primary">{data}</Text>
-            </View>
-          )}
-        </View>
       </View>
     </SafeAreaView>
   );
