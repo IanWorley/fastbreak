@@ -28,11 +28,12 @@ const defineConfig = (): ExpoConfig => ({
       backgroundColor: "#1F104A",
     },
   },
-  // extra: {
-  //   eas: {
-  //     projectId: "your-eas-project-id",
-  //   },
-  // },
+  extra: {
+    clerkPublishableKey: process.env.CLERK_PUBLISHABLE_KEY,
+    //   eas: {
+    //     projectId: "your-eas-project-id",
+    //   },
+  },
   experiments: {
     tsconfigPaths: true,
     typedRoutes: true,
