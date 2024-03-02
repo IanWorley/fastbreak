@@ -28,7 +28,9 @@ export default function Index() {
           </Pressable>
         </SignedIn>
         <SignedOut>
-          <SignInWithOAuth />
+          <View className="pt-4">
+            <SignInWithOAuth />
+          </View>
         </SignedOut>
       </View>
     </SafeAreaView>

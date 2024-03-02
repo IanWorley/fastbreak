@@ -20,13 +20,13 @@ export const metadata: Metadata = {
       ? "https://turbo.t3.gg"
       : "http://localhost:3000",
   ),
-  title: "Create T3 Turbo",
-  description: "Simple monorepo with shared backend for web & mobile apps",
+  title: "Fastbreak Analytics",
+  description: "Fastbreak Analytics a modern sports analytics platform",
   openGraph: {
-    title: "Create T3 Turbo",
-    description: "Simple monorepo with shared backend for web & mobile apps",
-    url: "https://create-t3-turbo.vercel.app",
-    siteName: "Create T3 Turbo",
+    title: "Fastbreak Analytics",
+    description: "Fastbreak Analytics a modern sports analytics platform",
+    url: "https://fastbreak.vercel.app",
+    siteName: "Fastbreak Analytics",
   },
   // twitter: {
   //   card: "summary_large_image",
