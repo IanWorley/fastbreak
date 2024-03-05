@@ -1,21 +1,22 @@
-import { Stack } from "expo-router";
+import { Slot, Stack, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 
 import { TRPCProvider } from "~/utils/api";
 
 import "../styles.css";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Constants from "expo-constants";
-import { ClerkProvider } from "@clerk/clerk-expo";
-import { useColorScheme } from "nativewind";
+import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
+
+// import { useColorScheme } from "nativewind";
 
 import { tokenCache } from "~/utils/StoreLoginInfo";
 
 // This is the main layout of the app
 // It wraps your pages with the providers they need
 export default function RootLayout() {
-  const { colorScheme } = useColorScheme();
+  // const { colorScheme } = useColorScheme();
 
   return (
     <ClerkProvider
@@ -28,7 +29,7 @@ export default function RootLayout() {
           The Stack component displays the current page.
           It also allows you to configure your screens 
         */}
-        <Stack
+        {/* <Stack
           screenOptions={{
             headerStyle: {
               backgroundColor: "#f472b6",
@@ -39,9 +40,26 @@ export default function RootLayout() {
             // headerShown: process.env.NODE_ENV === "development" ? true : false,
             headerShown: false,
           }}
-        />
+        /> */}
+        <Init />
         <StatusBar />
       </TRPCProvider>
     </ClerkProvider>
   );
 }
+
+const Init = () => {
+  const { isLoaded, isSignedIn } = useAuth();
+  const router = useRouter();
+  useEffect(() => {
+    if (isLoaded) return;
+
+    if (isSignedIn) {
+      router.push(`/Dashboard`);
+    } else {
+      router.push(`/login`);
+    }
+  }, [isSignedIn]);
+
+  return <Slot />;
+};
