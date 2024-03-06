@@ -1,4 +1,4 @@
-import { Slot, Stack, useRouter } from "expo-router";
+import { Slot, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 
 import { TRPCProvider } from "~/utils/api";

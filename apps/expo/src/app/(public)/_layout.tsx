@@ -11,7 +11,7 @@ const PublicLayout = () => {
           backgroundColor: "#f472b6",
         },
         contentStyle: {
-          backgroundColor: colorScheme == "dark" ? "#09090B" : "#FFFFFF",
+          backgroundColor: colorScheme == "dark" ? "#0c0d33" : "#FFFFFF",
         },
         // headerShown: process.env.NODE_ENV === "development" ? true : false,
         headerShown: false,
