@@ -1,20 +1,22 @@
 import type { z } from "zod";
 import { relations, sql } from "drizzle-orm";
-import { timestamp, varchar } from "drizzle-orm/mysql-core";
+import { integer, text } from "drizzle-orm/sqlite-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
 import type { Shot } from "./shot";
-import { mySqlTable } from "./_table";
+import { sqlLiteTable } from "./_table";
 import { team } from "./team";
 
-export const game = mySqlTable("game", {
-  id: varchar("id", { length: 26 }).primaryKey(),
-  name: varchar("name", { length: 256 }).notNull(),
-  createdAt: timestamp("created_at")
-    .default(sql`CURRENT_TIMESTAMP`)
+export const game = sqlLiteTable("game", {
+  id: text("id", { length: 26 }).primaryKey(),
+  name: text("name", { length: 256 }).notNull(),
+  createdAt: integer("created_at", { mode: "timestamp" })
+    .default(sql`(strftime('%s', 'now'))`)
     .notNull(),
-  updatedAt: timestamp("updatedAt").onUpdateNow(),
-  teamId: varchar("teamid", { length: 26 }).notNull(),
+  updatedAt: integer("updatedAt", { mode: "timestamp" })
+    .default(sql`(strftime('%s', 'now'))`)
+    .notNull(),
+  teamId: text("teamid", { length: 26 }).notNull(),
 });
 
 export const teamRelations = relations(game, ({ one }) => ({

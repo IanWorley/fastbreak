@@ -200,7 +200,13 @@ export const gameRouter = createTRPCRouter({
     }),
 
   grabPlayersShotsFromGame: protectedProcedure
-    .input(z.object({ gameId: z.string().cuid2(), teamId: z.string().cuid2() }))
+    .input(
+      z.object({
+        gameId: z.string().cuid2(),
+        teamId: z.string().cuid2(),
+        quarter: z.number().min(1).max(5),
+      }),
+    )
     .query(async ({ ctx, input }) => {
       const ratelimit = new Ratelimit({
         redis: Redis.fromEnv(),
@@ -231,10 +237,14 @@ export const gameRouter = createTRPCRouter({
           message: "Team not found",
         });
       }
-
+      // quater for a shot is not a required field
       return await ctx.db.query.shot.findMany({
         where: (shot, { eq }) => {
-          return eq(shot.game_Id, input.gameId);
+          return (
+            eq(shot.game_Id, input.gameId) &&
+            eq(shot.team_Id, input.teamId) &&
+            eq(shot.quarter, input.quarter)
+          );
         },
       });
     }),

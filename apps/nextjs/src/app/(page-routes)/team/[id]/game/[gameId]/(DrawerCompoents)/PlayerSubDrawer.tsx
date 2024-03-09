@@ -16,10 +16,11 @@ interface IPropsPlayerSubDrawer {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   playerToSwap: string;
+  quarter: number;
 }
 
 function PlayerSubDrawer(props: IPropsPlayerSubDrawer) {
-  const { open, onOpenChange, playerToSwap } = props;
+  const { open, onOpenChange, playerToSwap, quarter } = props;
   const { players } = usePlayerForApp((state) => state);
 
   return (
@@ -42,6 +43,7 @@ function PlayerSubDrawer(props: IPropsPlayerSubDrawer) {
                 player={player}
                 playerToSwap={playerToSwap}
                 onOpenChange={onOpenChange}
+                quarter={quarter}
               />
             ))}
         </div>

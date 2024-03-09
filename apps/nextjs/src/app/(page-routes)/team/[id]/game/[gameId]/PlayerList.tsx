@@ -4,10 +4,11 @@ import PlayerCard from "./PlayerCard";
 interface PlayerListProps {
   toggleForDrawer: () => void;
   setPlayerSwap: (playerId: string) => void;
+  quarter: number;
 }
 
 function PlayerList(props: PlayerListProps) {
-  const { toggleForDrawer, setPlayerSwap } = props;
+  const { toggleForDrawer, setPlayerSwap, quarter } = props;
   const { players } = usePlayerForApp((state) => state);
 
   return (
@@ -24,6 +25,7 @@ function PlayerList(props: PlayerListProps) {
                 player={player}
                 toggleForDrawer={toggleForDrawer}
                 setPlayerSwap={setPlayerSwap}
+                quarter={quarter}
               />
             ))}
         </div>

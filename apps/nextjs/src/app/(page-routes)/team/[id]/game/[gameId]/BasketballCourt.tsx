@@ -19,12 +19,13 @@ interface BasketballCourtProps {
   setCords: (x: number, y: number) => void;
   gameId: string;
   teamId: string;
+  quarter: number;
 }
 
 const BasketballCourt: React.FC<BasketballCourtProps> = (
   props: BasketballCourtProps,
 ) => {
-  const { toggle, setCords, teamId, gameId } = props;
+  const { toggle, setCords, teamId, gameId, quarter } = props;
 
   const players = usePlayerForApp((state) => state.players);
 
@@ -39,7 +40,7 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
   //     gameId: gameId,
   //   });
 
-  const fetchShots = useShotsForGame(gameId, teamId);
+  const fetchShots = useShotsForGame(gameId, teamId, quarter);
 
   const [shots, setShots] = useState<Shot[]>([]);
   const [cursor, setCursor] = useState<{ x: number; y: number }>({

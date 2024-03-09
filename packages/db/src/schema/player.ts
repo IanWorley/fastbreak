@@ -1,21 +1,23 @@
 import type { z } from "zod";
 import { relations, sql } from "drizzle-orm";
-import { boolean, int, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { integer, text } from "drizzle-orm/sqlite-core";
 import { createSelectSchema } from "drizzle-zod";
 
-import { mySqlTable } from "./_table";
+import { sqlLiteTable } from "./_table";
 import { team } from "./team";
 
-export const player = mySqlTable("player", {
-  id: varchar("id", { length: 26 }).primaryKey(),
-  name: varchar("name", { length: 256 }).notNull(),
-  team_id: varchar("team_id", { length: 26 }).notNull(),
-  createdAt: timestamp("created_at")
-    .default(sql`CURRENT_TIMESTAMP`)
+export const player = sqlLiteTable("player", {
+  id: text("id", { length: 26 }).primaryKey(),
+  name: text("name", { length: 256 }).notNull(),
+  team_id: text("team_id", { length: 26 }).notNull(),
+  createdAt: integer("created_at", { mode: "timestamp" })
+    .default(sql`(strftime('%s', 'now'))`)
     .notNull(),
-  updatedAt: timestamp("updatedAt").onUpdateNow(),
-  archived: boolean("archived").default(false).notNull(),
-  jerseyNumber: int("jersey_number").notNull(),
+  updatedAt: integer("updatedAt", { mode: "timestamp" })
+    .default(sql`(strftime('%s', 'now'))`)
+    .notNull(),
+  archived: integer("archived", { mode: "boolean" }).notNull().default(false),
+  jerseyNumber: integer("jersey_number").notNull(),
 });
 
 export const teamRelations = relations(player, ({ one }) => ({

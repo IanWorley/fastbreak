@@ -14,6 +14,7 @@ interface PlayerCardProps {
   player: playerType;
   toggleForDrawer: () => void;
   setPlayerSwap: (playerId: string) => void;
+  quarter: number;
 }
 
 function PlayerCard(props: PlayerCardProps) {
@@ -21,9 +22,9 @@ function PlayerCard(props: PlayerCardProps) {
   const teamId = z.string().cuid2().parse(parms.id);
   const gameId = z.string().cuid2().parse(parms.gameId);
 
-  const { player, toggleForDrawer, setPlayerSwap } = props;
+  const { player, toggleForDrawer, setPlayerSwap, quarter } = props;
   const { players } = usePlayerForApp((state) => state);
-  const shots = useShotsForGame(gameId, teamId);
+  const shots = useShotsForGame(gameId, teamId, quarter);
 
   // Return three values for each player card  free throw, 2 point, 3 point
 

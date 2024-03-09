@@ -43,6 +43,7 @@ interface DialogDemoProps {
   y: number;
   gameId: string;
   teamid: string;
+  quarter: number;
 }
 
 const FormSchema = z.object({
@@ -52,7 +53,7 @@ const FormSchema = z.object({
 });
 
 function Model(props: DialogDemoProps) {
-  const { open, toggle, x, y, teamid, gameId } = props;
+  const { open, toggle, x, y, teamid, gameId, quarter } = props;
   const { players } = usePlayerForApp((state) => state);
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -72,13 +73,14 @@ function Model(props: DialogDemoProps) {
       await utils.game.grabPlayersShotsFromGame.cancel();
       const previousShots = utils.game.grabPlayersShotsFromGame.getData();
       utils.game.grabPlayersShotsFromGame.setData(
-        { gameId: gameId, teamId: teamid },
+        { gameId: gameId, teamId: teamid, quarter: 1 },
         (oldData: shotType[] | undefined) => {
           return [
             ...(oldData ?? []),
             {
               id: Math.random().toString(),
               player_Id: form.getValues("player_id"),
+              quarter: quarter,
               made:
                 form.getValues("shot_attempt").toLowerCase() ===
                 "Made".toLowerCase()
@@ -111,7 +113,11 @@ function Model(props: DialogDemoProps) {
       console.error(error);
       if (context) {
         utils.game.grabPlayersShotsFromGame.setData(
-          { gameId: gameId, teamId: teamid },
+          {
+            gameId: gameId,
+            teamId: teamid,
+            quarter: quarter,
+          },
           context.previousShots,
         );
       }
@@ -132,6 +138,7 @@ function Model(props: DialogDemoProps) {
         y: y,
         points: 2,
         isFreeThrow: true,
+        quarter: quarter,
       });
     } else {
       await mutateAsync({
@@ -145,6 +152,7 @@ function Model(props: DialogDemoProps) {
         x: x,
         y: y,
         points: z.coerce.number().parse(data.points),
+        quarter: quarter,
       });
     }
   }

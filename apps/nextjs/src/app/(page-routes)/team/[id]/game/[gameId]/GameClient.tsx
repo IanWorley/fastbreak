@@ -4,6 +4,16 @@ import { useState } from "react";
 import { useParams } from "next/navigation";
 import { z } from "zod";
 
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@acme/ui/select";
+
 import { usePlayerForApp } from "~/store/PlayerForApp";
 import { api } from "~/trpc/react";
 import PlayerSubDrawer from "./(DrawerCompoents)/PlayerSubDrawer";
@@ -38,6 +48,7 @@ function GameClient() {
 
   // is open state
   const [isOpen, setIsOpen] = useState(false);
+  const [QTR, setQTR] = useState("1");
 
   const toggle = () => setIsOpen(!isOpen);
 
@@ -79,12 +90,38 @@ function GameClient() {
         setCords={setCords}
         gameId={gameId}
         teamId={teamId}
+        quarter={z.coerce.number().parse(QTR)}
       />
+      <div className="flex items-center justify-center p-4">
+        <div>
+          <Select
+            value={QTR}
+            defaultValue={QTR}
+            onValueChange={(o) => setQTR(o)}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Select a QTR" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>QTR</SelectLabel>
+                <SelectItem value="1">1 QTR</SelectItem>
+                <SelectItem value="2">2 QTR</SelectItem>
+                <SelectItem value="3">3 QTR</SelectItem>
+                <SelectItem value="4">4 QTR</SelectItem>
+                <SelectItem value="5">OT</SelectItem>
+                {/*! Value five is OT */}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
 
       <div className="flex justify-evenly">
         <PlayerList
           toggleForDrawer={togglePlayerSubDrawerState}
           setPlayerSwap={setPlayerSwap}
+          quarter={z.coerce.number().parse(QTR)}
         />
       </div>
       <Modal
@@ -94,12 +131,14 @@ function GameClient() {
         toggle={toggle}
         x={xPos}
         y={yPos}
+        quarter={z.coerce.number().parse(QTR)}
       />
 
       <PlayerSubDrawer
         open={PlayerSubDrawerState}
         onOpenChange={setPlayerSubDrawerState}
         playerToSwap={playerSwap}
+        quarter={z.coerce.number().parse(QTR)}
       />
     </div>
   );

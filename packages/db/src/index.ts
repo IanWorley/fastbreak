@@ -1,14 +1,12 @@
-import { connect } from "@planetscale/database";
-import { drizzle } from "drizzle-orm/planetscale-serverless";
+import { createClient } from "@libsql/client";
+import { drizzle } from "drizzle-orm/libsql";
 
 import * as game from "./schema/game";
 import * as player from "./schema/player";
-import * as post from "./schema/post";
 import * as shot from "./schema/shot";
 import * as team from "./schema/team";
 
 export const schema = {
-  ...post,
   ...shot,
   ...game,
   ...player,
@@ -23,14 +21,14 @@ export type shotType = shot.Shot;
 export type teamType = team.Team;
 export type GameWithRelationsShots = game.GameWithRelationsShots;
 
-export { mySqlTable as tableCreator } from "./schema/_table";
+export { sqlLiteTable } from "./schema/_table";
 
 export * from "drizzle-orm";
 
-const connection = connect({
-  host: process.env.DB_HOST!,
-  username: process.env.DB_USERNAME!,
-  password: process.env.DB_PASSWORD!,
+const connection = createClient({
+  // Specify the type of the connection object
+  url: process.env.TURSO_DATABASE_URL!,
+  authToken: process.env.TURSO_AUTH_TOKEN,
 });
 
 export const db = drizzle(connection, { schema });

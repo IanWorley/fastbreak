@@ -137,6 +137,7 @@ export const playerRouter = createTRPCRouter({
         y: z.number(),
         gameId: z.string().cuid2(),
         isFreeThrow: z.optional(z.boolean()),
+        quarter: z.number().min(1).max(5),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -231,6 +232,7 @@ export const playerRouter = createTRPCRouter({
         yPoint: y.data,
         game_Id: input.gameId,
         team_Id: input.teamId, // Add the missing teamId property
+        quarter: input.quarter,
         points: input.points,
         isFreeThrow: input.isFreeThrow ?? false,
       });

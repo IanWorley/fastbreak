@@ -10,6 +10,7 @@ import { usePlayerForApp } from "~/store/PlayerForApp";
 interface DrawerPlayerCardProps {
   player: playerType;
   playerToSwap: string;
+  quarter: number;
   onOpenChange: (open: boolean) => void;
 }
 
@@ -19,10 +20,10 @@ function DrawerPlayerCard(props: DrawerPlayerCardProps) {
   const teamId = z.string().cuid2().parse(parms.id);
   const gameId = z.string().cuid2().parse(parms.gameId);
 
-  const { player, playerToSwap, onOpenChange } = props;
+  const { player, playerToSwap, onOpenChange, quarter } = props;
   const { swapPlayersActive } = usePlayerForApp((state) => state);
 
-  const shots = useShotsForGame(gameId, teamId);
+  const shots = useShotsForGame(gameId, teamId, quarter);
 
   const { freethrow, twopoint, threepoint } = shots
     .filter((shot) => shot.player_Id === player.id && shot.game_Id === gameId)
