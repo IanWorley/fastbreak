@@ -29,24 +29,49 @@ function PlayerCard(props: PlayerCardProps) {
 
   // Return three values for each player card  free throw, 2 point, 3 point
 
-  const { freethrow, twopoint, threepoint } = shots
+  const {
+    freethrowMade,
+    twopointMade,
+    threepointMade,
+    freethrowTotal,
+    twopointTotal,
+    threepointTotal,
+  } = shots
     .filter((shot) => shot.player_Id === player.id && shot.game_Id === gameId)
     .reduce(
       (acc, shot) => {
         if (shot.made) {
           if (shot.isFreeThrow) {
-            acc.freethrow++;
+            acc.freethrowMade++;
           }
           if (shot.isFreeThrow === false && shot.points === 2) {
-            acc.twopoint++;
+            acc.twopointMade++;
           }
           if (shot.points === 3) {
-            acc.threepoint++;
+            acc.threepointMade++;
           }
         }
+
+        if (shot.isFreeThrow) {
+          acc.freethrowTotal++;
+        }
+        if (shot.isFreeThrow === false && shot.points === 2) {
+          acc.twopointTotal++;
+        }
+        if (shot.points === 3) {
+          acc.threepointTotal++;
+        }
+
         return acc;
       },
-      { freethrow: 0, twopoint: 0, threepoint: 0 },
+      {
+        freethrowMade: 0,
+        twopointMade: 0,
+        threepointMade: 0,
+        freethrowTotal: 0,
+        twopointTotal: 0,
+        threepointTotal: 0,
+      },
     );
 
   return (
@@ -69,15 +94,21 @@ function PlayerCard(props: PlayerCardProps) {
       </div>
       <div className=" text-md flex place-items-center justify-evenly space-x-4 ">
         <div>
-          <p className=" text-center"> {freethrow} </p>
+          <p className=" text-center">
+            {freethrowMade} / {freethrowTotal}
+          </p>
           <p className=" text-center"> Free Throw </p>
         </div>
         <div>
-          <p className=" text-center"> {twopoint} </p>
+          <p className=" text-center">
+            {twopointMade} / {twopointTotal}
+          </p>
           <p className="text-center"> 2 Point </p>
         </div>
         <div>
-          <p className=" text-center"> {threepoint} </p>
+          <p className=" text-center">
+            {threepointMade} / {threepointTotal}
+          </p>
           <p className="text-center"> 3 Point </p>
         </div>
       </div>
