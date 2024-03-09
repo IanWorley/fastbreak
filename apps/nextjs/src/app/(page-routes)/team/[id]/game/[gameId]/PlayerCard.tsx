@@ -1,6 +1,5 @@
 "use client";
 
-import { unwatchFile } from "fs";
 import { useParams } from "next/navigation";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -23,7 +22,7 @@ function PlayerCard(props: PlayerCardProps) {
   const teamId = z.string().cuid2().parse(parms.id);
   const gameId = z.string().cuid2().parse(parms.gameId);
 
-  const { player, toggleForDrawer, setPlayerSwap, quarter } = props;
+  const { player, toggleForDrawer, setPlayerSwap } = props;
   const { players } = usePlayerForApp((state) => state);
   const shots = useShotsForGame(gameId, teamId, undefined);
 
