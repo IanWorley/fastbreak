@@ -3,7 +3,7 @@ import { api } from "~/trpc/react";
 export const useShotsForGame = (
   gameId: string,
   teamId: string,
-  quarter: number,
+  quarter: number | undefined,
 ) => {
   const shots = api.game.grabPlayersShotsFromGame.useQuery(
     { gameId, teamId, quarter },

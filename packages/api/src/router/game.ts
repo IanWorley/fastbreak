@@ -200,11 +200,19 @@ export const gameRouter = createTRPCRouter({
     }),
 
   grabPlayersShotsFromGame: protectedProcedure
+    /***
+     * @typedef {Object} grabPlayersShotsFromGameInput
+     * @property {string} gameId - The id of the game
+     * @property {string} teamId - The id of the team
+     * @property {number| undefined} quarter - The quarter of the game
+     * * NOTE: The undefine option is used to get all the shots from the game
+     */
+
     .input(
       z.object({
         gameId: z.string().cuid2(),
         teamId: z.string().cuid2(),
-        quarter: z.number().min(1).max(5),
+        quarter: z.number().min(1).max(5).optional(),
       }),
     )
     .query(async ({ ctx, input }) => {
@@ -237,15 +245,26 @@ export const gameRouter = createTRPCRouter({
           message: "Team not found",
         });
       }
-      // quater for a shot is not a required field
-      return await ctx.db.query.shot.findMany({
-        where: (shot, { eq }) => {
-          return (
-            eq(shot.game_Id, input.gameId) &&
-            eq(shot.team_Id, input.teamId) &&
-            eq(shot.quarter, input.quarter)
-          );
-        },
-      });
+
+      if (!input.quarter) {
+        return await ctx.db.query.shot.findMany({
+          where: (shot, { eq }) => {
+            return (
+              eq(shot.game_Id, input.gameId) && eq(shot.team_Id, input.teamId)
+            );
+          },
+        });
+      } else {
+        // quater for a shot is not a required field
+        return await ctx.db.query.shot.findMany({
+          where: (shot, { eq }) => {
+            return (
+              eq(shot.game_Id, input.gameId) &&
+              eq(shot.team_Id, input.teamId) &&
+              eq(shot.quarter ?? 0, input.quarter ?? 0)
+            );
+          },
+        });
+      }
     }),
 });

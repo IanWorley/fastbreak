@@ -49,7 +49,7 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
   });
 
   useEffect(() => {
-    if (!fetchShots || fetchShots.length == 0) return;
+    if (!fetchShots) return;
 
     const activeShots = fetchShots.filter((shots) => {
       const player = players.find((player) => player.id === shots.player_Id);

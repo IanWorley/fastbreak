@@ -20,10 +20,10 @@ function DrawerPlayerCard(props: DrawerPlayerCardProps) {
   const teamId = z.string().cuid2().parse(parms.id);
   const gameId = z.string().cuid2().parse(parms.gameId);
 
-  const { player, playerToSwap, onOpenChange, quarter } = props;
+  const { player, playerToSwap, onOpenChange } = props;
   const { swapPlayersActive } = usePlayerForApp((state) => state);
 
-  const shots = useShotsForGame(gameId, teamId, quarter);
+  const shots = useShotsForGame(gameId, teamId, undefined); //! Heads up this is getting all the shots from that game
 
   const { freethrow, twopoint, threepoint } = shots
     .filter((shot) => shot.player_Id === player.id && shot.game_Id === gameId)

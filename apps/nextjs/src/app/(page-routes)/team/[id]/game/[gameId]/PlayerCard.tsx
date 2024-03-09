@@ -1,5 +1,6 @@
 "use client";
 
+import { unwatchFile } from "fs";
 import { useParams } from "next/navigation";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -24,7 +25,7 @@ function PlayerCard(props: PlayerCardProps) {
 
   const { player, toggleForDrawer, setPlayerSwap, quarter } = props;
   const { players } = usePlayerForApp((state) => state);
-  const shots = useShotsForGame(gameId, teamId, quarter);
+  const shots = useShotsForGame(gameId, teamId, undefined);
 
   // Return three values for each player card  free throw, 2 point, 3 point
 
