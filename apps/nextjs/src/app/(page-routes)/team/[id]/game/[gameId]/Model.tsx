@@ -73,7 +73,7 @@ function Model(props: DialogDemoProps) {
       await utils.game.grabPlayersShotsFromGame.cancel();
       const previousShots = utils.game.grabPlayersShotsFromGame.getData();
       utils.game.grabPlayersShotsFromGame.setData(
-        { gameId: gameId, teamId: teamid, quarter: 1 },
+        { gameId: gameId, teamId: teamid, quarter: quarter },
         (oldData: shotType[] | undefined) => {
           return [
             ...(oldData ?? []),
@@ -98,6 +98,33 @@ function Model(props: DialogDemoProps) {
           ];
         },
       );
+      utils.game.grabPlayersShotsFromGame.setData(
+        { gameId: gameId, teamId: teamid, quarter: undefined },
+        (oldData: shotType[] | undefined) => {
+          return [
+            ...(oldData ?? []),
+            {
+              id: Math.random().toString(),
+              player_Id: form.getValues("player_id"),
+              quarter: quarter,
+              made:
+                form.getValues("shot_attempt").toLowerCase() ===
+                "Made".toLowerCase()
+                  ? true
+                  : false,
+              xPoint: x,
+              yPoint: y,
+              points: z.coerce.number().parse(form.getValues("points")),
+              isFreeThrow: form.getValues("points") === "1" ? true : false,
+              createdAt: new Date(),
+              team_Id: teamid,
+              game_Id: gameId,
+              updatedAt: new Date(),
+            },
+          ];
+        },
+      );
+
       toggle();
       form.reset();
 
@@ -118,6 +145,10 @@ function Model(props: DialogDemoProps) {
             teamId: teamid,
             quarter: quarter,
           },
+          context.previousShots,
+        );
+        utils.game.grabPlayersShotsFromGame.setData(
+          { gameId: gameId, teamId: teamid, quarter: undefined },
           context.previousShots,
         );
       }

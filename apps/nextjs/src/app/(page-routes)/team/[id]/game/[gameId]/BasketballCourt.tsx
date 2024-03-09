@@ -34,12 +34,6 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
   const courtRef = useRef<SVGSVGElement>(null);
   const imageRef = useRef(null);
 
-  // const { data, isLoading, isError } =
-  //   api.game.grabPlayersShotsFromGame.useQuery({
-  //     teamId: teamId,
-  //     gameId: gameId,
-  //   });
-
   const fetchShots = useShotsForGame(gameId, teamId, quarter);
 
   const [shots, setShots] = useState<Shot[]>([]);
@@ -96,7 +90,7 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
     });
   };
 
-  console.log(shots);
+  // console.log(shots);
 
   return (
     <div className="flex flex-col items-center justify-center p-4">
