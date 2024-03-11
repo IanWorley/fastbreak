@@ -1,9 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
-// import { type game } from "@prisma/client";
 import { DialogDescription } from "@radix-ui/react-dialog";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -40,7 +38,7 @@ const FormSchema = z.object({
 
 function DeleteTeamModel(props: IGameProps) {
   const { game, children } = props;
-  const router = useRouter();
+  const utils = api.useUtils();
   const [openDialog, setOpenDialog] = useState(false);
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -49,20 +47,22 @@ function DeleteTeamModel(props: IGameProps) {
     },
   });
 
-  const deleteGame = api.game.deleteGame.useMutation();
+  const deleteGame = api.game.deleteGame.useMutation({
+    onSuccess: () => {
+      toast.success("Game Deleted Successfully");
+      void utils.game.grabGames.invalidate();
+    },
+    onSettled: () => {
+      setOpenDialog(false);
+    },
+  });
 
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
     if (values.gameName === game.name) {
-      const res = await deleteGame.mutateAsync({
+      await deleteGame.mutateAsync({
         gameId: game.id,
         teamId: game.teamId,
       });
-      if (res) {
-        form.reset();
-        router.refresh();
-      }
-
-      form.reset();
     } else {
       toast.warning("Input does not match game name. Please try again.");
     }

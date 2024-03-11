@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DialogDescription } from "@radix-ui/react-dialog";
 import { useFormStatus } from "react-dom";
@@ -42,7 +42,8 @@ const FormSchema = z.object({
 
 function DeleteTeamModel(props: ITeamProps) {
   const { team, children } = props;
-  const router = useRouter();
+  const [dialog, setOpenDialog] = useState(false);
+  const utils = api.useUtils();
   const { pending } = useFormStatus();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -51,19 +52,32 @@ function DeleteTeamModel(props: ITeamProps) {
     },
   });
 
-  const deleteTeam = api.team.deleteTeam.useMutation();
+  const deleteTeam = api.team.deleteTeam.useMutation({
+    onSuccess: () => {
+      toast.success("Team Deleted Successfully");
+      void utils.team.grabTeams.invalidate();
+    },
+
+    onSettled: () => {
+      setOpenDialog(false);
+    },
+  });
 
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
     if (values.teamName === team.name) {
       await deleteTeam.mutateAsync(team.id);
-      router.refresh(); //* I am well aware that refresh the page is not a good excuse to close the dialog but I might still want React Server Components
     } else {
       toast.warning("Input does not match team name. Please try again.");
     }
   };
 
   return (
-    <Dialog>
+    <Dialog
+      open={dialog}
+      onOpenChange={(o) => {
+        setOpenDialog(o);
+      }}
+    >
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="">
         <Form {...form}>
