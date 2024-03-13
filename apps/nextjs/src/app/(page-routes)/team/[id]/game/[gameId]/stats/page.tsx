@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@acme/ui/button";
 
 import Navbar from "~/app/_components/Navbar";
@@ -28,7 +30,7 @@ async function page(props: Props) {
     );
   }
 
-  const shots = await api.game.grabPlayersShotsFromGame({
+  const _shots = await api.game.grabPlayersShotsFromGame({
     teamId: id,
     gameId: gameId.toString(),
   });
@@ -39,14 +41,7 @@ async function page(props: Props) {
       <h1 className="p-2 pt-5 text-center text-4xl font-extrabold">
         {game!.name}
       </h1>
-      <StatsInfo
-        freeThrows={0}
-        twoPts={0}
-        threePts={0}
-        totalShots={0}
-        missedShots={0}
-        shotPercentage={0}
-      />
+      <StatsInfo />
       <div className="flex items-center justify-center">
         <Button className="fixed bottom-5"> Select Player</Button>
       </div>
@@ -56,7 +51,7 @@ async function page(props: Props) {
 
 export default page;
 
-interface IStatsInfoProps {
+interface _IStatsInfoProps {
   freeThrows: number;
   twoPts: number;
   threePts: number;
@@ -65,7 +60,7 @@ interface IStatsInfoProps {
   shotPercentage: number;
 }
 
-export function StatsInfo(props: IStatsInfoProps) {
+export function StatsInfo() {
   return (
     <div className="grid grid-cols-3 grid-rows-2 items-center gap-2 bg-primary-foreground p-5">
       <div className="h-full w-full ">
