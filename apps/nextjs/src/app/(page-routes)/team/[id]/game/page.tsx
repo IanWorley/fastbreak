@@ -107,13 +107,22 @@ function Game(props: GameProps) {
         </h5>
       </div>
 
-      <div className="flex flex-row  gap-3">
+      <div className="flex flex-row  gap-2">
         <Link
           className="block h-full w-full"
           href={`/team/${id}/game/${game.id}`}
         >
           <Button className="h-full w-full">View</Button>
         </Link>
+        <Link
+          href={`/team/${id}/game/${game.id}/stats`}
+          className="block h-full w-full "
+        >
+          <Button className="h-full w-full" variant={"secondary"}>
+            Stats
+          </Button>
+        </Link>
+
         <DeleteTeamModel game={game}>
           <Button
             variant={"destructive"}
