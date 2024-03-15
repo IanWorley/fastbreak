@@ -174,7 +174,7 @@ export function StatsInfo(props: IPropsStatsInfo) {
     );
 
   return (
-    <div className="grid grid-cols-3 grid-rows-2 items-center gap-2 bg-primary-foreground p-5">
+    <div className="grid grid-cols-3 grid-rows-2 items-center gap-2 bg-primary-foreground p-5 lg:mx-60 ">
       <div className="h-full w-full ">
         <h4 className="text-center text-sm font-semibold">Free Throws</h4>
         <p className="text-center">{freethrowMade}</p>
