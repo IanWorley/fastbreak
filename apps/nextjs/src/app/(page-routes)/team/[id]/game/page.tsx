@@ -18,7 +18,10 @@ interface Props {
 function Page(props: Props) {
   const { id } = props.params;
 
-  const { data, isLoading, isError } = api.game.grabGames.useQuery(id);
+  const { data, isLoading, isError, isFetching } = api.game.grabGames.useQuery(
+    id,
+    { refetchOnWindowFocus: false },
+  );
 
   if (isError) {
     return (
@@ -29,7 +32,7 @@ function Page(props: Props) {
     );
   }
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return (
       <main className="">
         <Navbar className="fixed" teamId={id} viewingTeam={true} />

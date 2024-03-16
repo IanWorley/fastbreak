@@ -22,7 +22,7 @@ import { api } from "~/trpc/react";
 function FormContent() {
   const router = useRouter();
 
-  const { mutateAsync } = api.team.createTeam.useMutation({
+  const { mutateAsync, isPending } = api.team.createTeam.useMutation({
     onError: (err) => {
       console.log(err);
     },
@@ -77,7 +77,7 @@ function FormContent() {
           />
         </CardContent>
         <CardFooter className="flex justify-end">
-          <Button type="submit" disabled={form.formState.isSubmitting}>
+          <Button type="submit" disabled={isPending}>
             Create
           </Button>
         </CardFooter>

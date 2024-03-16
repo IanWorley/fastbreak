@@ -26,7 +26,7 @@ function NewTeamFormClient() {
 
   const teamId = z.string().cuid2().parse(id);
 
-  const { mutateAsync } = api.game.createGame.useMutation({
+  const { mutateAsync, isPending } = api.game.createGame.useMutation({
     onError: (err) => {
       console.log(err);
     },
@@ -75,7 +75,6 @@ function NewTeamFormClient() {
                     minLength={3}
                     placeholder="name"
                     {...field}
-                    disabled={form.formState.isSubmitting}
                   />
                 </FormControl>
               </FormItem>
@@ -83,7 +82,9 @@ function NewTeamFormClient() {
           />
         </CardContent>
         <CardFooter className="flex justify-end">
-          <Button type="submit">Create</Button>
+          <Button type="submit" disabled={isPending}>
+            Create
+          </Button>
         </CardFooter>
       </form>
     </Form>
