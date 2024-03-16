@@ -98,7 +98,7 @@ function Game(props: GameProps) {
   const { game, shots, id } = props;
 
   return (
-    <div className="mx-8   my-4  bg-primary-foreground  md:mx-32" key={game.id}>
+    <div className="mx-8   my-4  bg-primary-foreground  lg:mx-32" key={game.id}>
       <h3 className="p-4 text-center text-4xl font-semibold">{game.name}</h3>
       <div className="flex flex-row justify-center p-2 text-center">
         <h5 className="text-md font-semibold">
