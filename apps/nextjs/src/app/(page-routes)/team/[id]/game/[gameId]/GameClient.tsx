@@ -88,8 +88,6 @@ function GameClient() {
       <BasketballCourt
         toggle={toggle}
         setCords={setCords}
-        gameId={gameId}
-        teamId={teamId}
         quarter={z.coerce.number().parse(QTR)}
       />
       <div className="flex items-center justify-center p-4">

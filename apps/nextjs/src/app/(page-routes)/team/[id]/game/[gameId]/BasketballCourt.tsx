@@ -2,6 +2,8 @@
 
 import type { MouseEvent } from "react";
 import React, { useEffect, useRef, useState } from "react";
+import { useParams } from "next/navigation";
+import { z } from "zod";
 
 import { useShotsForGame } from "~/hooks/ShotHooks";
 import { usePlayerForApp } from "~/store/PlayerForApp"; // Replace with the actual path to your image
@@ -17,15 +19,14 @@ interface Shot {
 interface BasketballCourtProps {
   toggle: () => void;
   setCords: (x: number, y: number) => void;
-  gameId: string;
-  teamId: string;
+
   quarter: number;
 }
 
 const BasketballCourt: React.FC<BasketballCourtProps> = (
   props: BasketballCourtProps,
 ) => {
-  const { toggle, setCords, teamId, gameId, quarter } = props;
+  const { toggle, setCords, quarter } = props;
 
   const players = usePlayerForApp((state) => state.players);
 
@@ -33,6 +34,10 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
   const courtHeight = 320;
   const courtRef = useRef<SVGSVGElement>(null);
   const imageRef = useRef(null);
+
+  const parms = useParams<{ id: string; gameId: string }>();
+  const teamId = z.string().cuid2().parse(parms.id);
+  const gameId = z.string().cuid2().parse(parms.gameId);
 
   const fetchShots = useShotsForGame(gameId, teamId, quarter);
 
@@ -44,9 +49,10 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
 
   useEffect(() => {
     if (!fetchShots) return;
-
     const activeShots = fetchShots.filter((shots) => {
-      const player = players.find((player) => player.id === shots.player_Id);
+      const player = players.find(
+        (player) => player.id === shots.player_Id && shots.game_Id === gameId,
+      );
       return player && player.isPlaying;
     });
 
