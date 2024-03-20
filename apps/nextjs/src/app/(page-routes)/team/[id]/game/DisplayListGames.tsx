@@ -21,7 +21,11 @@ function DisplayListGames(props: Props) {
 
   const { data, isLoading, isError, isFetching } = api.game.grabGames.useQuery(
     id,
-    { refetchOnWindowFocus: false, initialData: initialData },
+    {
+      refetchOnWindowFocus: false,
+      initialData: initialData,
+      refetchOnMount: false,
+    },
   );
 
   if (isError) {
