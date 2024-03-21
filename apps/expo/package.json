@@ -22,7 +22,7 @@
     "@trpc/client": "11.0.0-next-beta.318",
     "@trpc/react-query": "11.0.0-next-beta.318",
     "@trpc/server": "11.0.0-next-beta.318",
-    "expo": "~50.0.13",
+    "expo": "~50.0.14",
     "expo-constants": "~15.4.5",
     "expo-linking": "~6.2.2",
     "expo-router": "~3.4.8",
