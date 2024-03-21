@@ -16,7 +16,6 @@ import {
 } from "@acme/ui/form";
 import { Input } from "@acme/ui/input";
 
-import { refreshTeamPage } from "~/app/actions";
 import { api } from "~/trpc/react";
 
 function FormContent() {
@@ -51,12 +50,7 @@ function FormContent() {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        action={() => {
-          void refreshTeamPage();
-        }}
-      >
+      <form onSubmit={form.handleSubmit(onSubmit)}>
         <CardContent>
           <FormField
             control={form.control}
