@@ -111,7 +111,9 @@ function Game(props: GameProps) {
       <div className="flex flex-row justify-center p-2 text-center">
         <h5 className="text-md font-semibold">
           Total Points:
-          {shots.reduce((total, currentVal) => total + currentVal.points, 0)}
+          {shots
+            .filter((shot) => shot.made)
+            .reduce((total, currentVal) => total + currentVal.points, 0)}{" "}
         </h5>
       </div>
 
