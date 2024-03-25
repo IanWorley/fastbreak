@@ -16,7 +16,7 @@ export const teamsRouter = createTRPCRouter({
       analytics: false,
 
       prefix: "@upstash/ratelimit",
-     });
+    });
 
     const { success } = await ratelimit.limit(ctx.userId);
 
