@@ -25,7 +25,6 @@ import {
 } from "@acme/ui/form";
 import { Input } from "@acme/ui/input";
 
-import { refreshTeamPage } from "~/app/actions";
 import { api } from "~/trpc/react";
 
 interface ITeamProps {
@@ -81,7 +80,7 @@ function DeleteTeamModel(props: ITeamProps) {
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} action={refreshTeamPage}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
             <DialogHeader className="">
               <h2 className="text-2xl font-semibold">Delete Team</h2>
             </DialogHeader>

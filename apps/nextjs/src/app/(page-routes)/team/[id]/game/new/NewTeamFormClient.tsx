@@ -16,7 +16,6 @@ import {
 } from "@acme/ui/form";
 import { Input } from "@acme/ui/input";
 
-import { refreshGamePage } from "~/app/actions";
 import { api } from "~/trpc/react";
 
 function NewTeamFormClient() {
@@ -25,6 +24,8 @@ function NewTeamFormClient() {
   const router = useRouter();
 
   const teamId = z.string().cuid2().parse(id);
+
+  const utils = api.useUtils();
 
   const { mutateAsync, isPending } = api.game.createGame.useMutation({
     onError: (err) => {
@@ -49,6 +50,7 @@ function NewTeamFormClient() {
       teamId: teamId,
     });
     if (res) {
+      void utils.game.grabGames.refetch(teamId);
       form.reset();
       router.push(`/team/${teamId}/game/${res.id}`);
     }
@@ -56,12 +58,7 @@ function NewTeamFormClient() {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        action={() => {
-          void refreshGamePage(teamId);
-        }}
-      >
+      <form onSubmit={form.handleSubmit(onSubmit)}>
         <CardContent>
           <FormField
             control={form.control}

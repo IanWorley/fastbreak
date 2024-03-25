@@ -133,6 +133,7 @@ function Model(props: DialogDemoProps) {
 
     onSettled: () => {
       void utils.game.grabPlayersShotsFromGame.invalidate();
+      void utils.game.grabGames.refetch(teamid);
     },
 
     onError: (error, shot, context) => {
