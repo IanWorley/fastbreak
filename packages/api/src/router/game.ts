@@ -1,3 +1,4 @@
+import * as process from "process";
 import { TRPCError } from "@trpc/server";
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
@@ -6,29 +7,13 @@ import { z } from "zod";
 import { eq, schema } from "@acme/db"; // Import the missing type
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
-import { cuid2 } from "../utils";
+import { cuid2, rateLimiter } from "../utils";
 
 export const gameRouter = createTRPCRouter({
   grabGames: protectedProcedure
     .input(z.string().cuid2())
     .query(async ({ ctx, input }) => {
-      const ratelimit = new Ratelimit({
-        redis: Redis.fromEnv(),
-        limiter: Ratelimit.slidingWindow(10, "10 s"),
-        analytics: false,
-
-        prefix: "@upstash/ratelimit",
-      });
-
-      const { success } = await ratelimit.limit(ctx.userId);
-
-      if (!success) {
-        throw new TRPCError({
-          code: "TOO_MANY_REQUESTS",
-          message: "Too many requests",
-        });
-      }
-
+      await rateLimiter(ctx.userId, 10);
       const team = await ctx.db.query.team.findFirst({
         where: (team, { and, eq }) => {
           return and(eq(team.id, input), eq(team.user_id, ctx.userId));
@@ -72,22 +57,7 @@ export const gameRouter = createTRPCRouter({
   deleteGame: protectedProcedure
     .input(z.object({ gameId: z.string().cuid2(), teamId: z.string().cuid2() }))
     .mutation(async ({ ctx, input }) => {
-      const ratelimit = new Ratelimit({
-        redis: Redis.fromEnv(),
-        limiter: Ratelimit.slidingWindow(10, "10 s"),
-        analytics: false,
-
-        prefix: "@upstash/ratelimit",
-      });
-
-      const { success } = await ratelimit.limit(ctx.userId);
-
-      if (!success) {
-        throw new TRPCError({
-          code: "TOO_MANY_REQUESTS",
-          message: "Too many requests",
-        });
-      }
+      await rateLimiter(ctx.userId, 10);
 
       const team = await ctx.db.query.team.findFirst({
         where: (team, { and, eq }) => {
@@ -114,22 +84,7 @@ export const gameRouter = createTRPCRouter({
   createGame: protectedProcedure
     .input(z.object({ teamId: z.string().cuid2(), name: z.string() }))
     .mutation(async ({ ctx, input }) => {
-      const ratelimit = new Ratelimit({
-        redis: Redis.fromEnv(),
-        limiter: Ratelimit.slidingWindow(10, "10 s"),
-        analytics: false,
-
-        prefix: "@upstash/ratelimit",
-      });
-
-      const { success } = await ratelimit.limit(ctx.userId);
-
-      if (!success) {
-        throw new TRPCError({
-          code: "TOO_MANY_REQUESTS",
-          message: "Too many requests",
-        });
-      }
+      await rateLimiter(ctx.userId, 10);
 
       const team = await ctx.db.query.team.findFirst({
         where: (team, { and, eq }) => {
@@ -162,22 +117,7 @@ export const gameRouter = createTRPCRouter({
   grabGame: protectedProcedure
     .input(z.object({ gameId: z.string().cuid2(), teamId: z.string().cuid2() }))
     .query(async ({ ctx, input }) => {
-      const ratelimit = new Ratelimit({
-        redis: Redis.fromEnv(),
-        limiter: Ratelimit.slidingWindow(10, "10 s"),
-        analytics: false,
-
-        prefix: "@upstash/ratelimit",
-      });
-
-      const { success } = await ratelimit.limit(ctx.userId);
-
-      if (!success) {
-        throw new TRPCError({
-          code: "TOO_MANY_REQUESTS",
-          message: "Too many requests",
-        });
-      }
+      await rateLimiter(ctx.userId, 10);
 
       const team = await ctx.db.query.team.findFirst({
         where: (team, { and, eq }) => {
@@ -216,22 +156,7 @@ export const gameRouter = createTRPCRouter({
       }),
     )
     .query(async ({ ctx, input }) => {
-      const ratelimit = new Ratelimit({
-        redis: Redis.fromEnv(),
-        limiter: Ratelimit.slidingWindow(10, "10 s"),
-        analytics: false,
-
-        prefix: "@upstash/ratelimit",
-      });
-
-      const { success } = await ratelimit.limit(ctx.userId);
-
-      if (!success) {
-        throw new TRPCError({
-          code: "TOO_MANY_REQUESTS",
-          message: "Too many requests",
-        });
-      }
+      await rateLimiter(ctx.userId, 10);
 
       const team = await ctx.db.query.team.findFirst({
         where: (team, { and, eq }) => {
