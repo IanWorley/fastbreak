@@ -27,8 +27,8 @@ importers:
   apps/expo:
     dependencies:
       '@clerk/clerk-expo':
-        specifier: ^0.20.10
-        version: 0.20.10(@types/react@18.2.73)(expo-application@5.8.3)(expo-auth-session@5.4.0)(expo-constants@15.4.5)(expo-web-browser@12.8.2)(react-dom@18.2.0)(react-native@0.73.6)(react@18.2.0)
+        specifier: ^0.20.11
+        version: 0.20.11(@types/react@18.2.73)(expo-application@5.8.3)(expo-auth-session@5.4.0)(expo-constants@15.4.5)(expo-web-browser@12.8.2)(react-dom@18.2.0)(react-native@0.73.6)(react@18.2.0)
       '@expo/metro-config':
         specifier: ^0.17.6
         version: 0.17.6(@react-native/babel-preset@0.73.21)
@@ -2152,8 +2152,8 @@ packages:
       - react
     dev: false
 
-  /@clerk/clerk-expo@0.20.10(@types/react@18.2.73)(expo-application@5.8.3)(expo-auth-session@5.4.0)(expo-constants@15.4.5)(expo-web-browser@12.8.2)(react-dom@18.2.0)(react-native@0.73.6)(react@18.2.0):
-    resolution: {integrity: sha512-RHjIpQPEB8gs0YnPVRCHYzObIyxocsXycRHDQGEP60Rn32pF1lbPvJOfRxU13734w+OXs06cEtsoJLA8H3ECtQ==}
+  /@clerk/clerk-expo@0.20.11(@types/react@18.2.73)(expo-application@5.8.3)(expo-auth-session@5.4.0)(expo-constants@15.4.5)(expo-web-browser@12.8.2)(react-dom@18.2.0)(react-native@0.73.6)(react@18.2.0):
+    resolution: {integrity: sha512-MUjH8S7/tV6Gt1klIp+cF/ZfGLHZIbNDXXrji50BB6IRL3NSJgbMUAIsHcR+/ld4qFo0/uf1ZqSj0EvWk4//xQ==}
     engines: {node: '>=14'}
     peerDependencies:
       expo-application: '>=5'
@@ -2162,7 +2162,7 @@ packages:
       expo-web-browser: '>=12'
       react: '>=16'
     dependencies:
-      '@clerk/clerk-js': 4.70.5(@types/react@18.2.73)(react-dom@18.2.0)(react@18.2.0)
+      '@clerk/clerk-js': 4.70.6(@types/react@18.2.73)(react-dom@18.2.0)(react@18.2.0)
       '@clerk/clerk-react': 4.30.7(react@18.2.0)
       '@clerk/shared': 1.3.3(react@18.2.0)
       base-64: 1.0.0
@@ -2178,8 +2178,8 @@ packages:
       - react-native
     dev: false
 
-  /@clerk/clerk-js@4.70.5(@types/react@18.2.73)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-rB1V0VjFh4JVgj+/Yjdjjz4YmlGp7ao0i5KZQDLYknGxOJyHScKpmIqmyeKMz8wXfza1kcT9q9m1nSBQpR1KlA==}
+  /@clerk/clerk-js@4.70.6(@types/react@18.2.73)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-j86I5IIC0XscrN+yHM7SpDxvsQ0kaAP7EDXkiJfEjVWt3mcJdtLr2ekxFXvSBtK2B2fCBcwp8PS6YsJ2Fp81Kg==}
     peerDependencies:
       react: '>=18'
     dependencies:
