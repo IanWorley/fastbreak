@@ -17,7 +17,7 @@
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
-    "@libsql/client": "^0.5.6",
+    "@libsql/client": "^0.6.0",
     "@planetscale/database": "^1.16.0",
     "drizzle-orm": "^0.30.5",
     "drizzle-zod": "^0.5.1",
