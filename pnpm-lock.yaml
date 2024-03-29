@@ -300,11 +300,11 @@ importers:
         specifier: ^1.16.0
         version: 1.16.0
       drizzle-orm:
-        specifier: ^0.30.5
-        version: 0.30.5(@libsql/client@0.6.0)(@planetscale/database@1.16.0)
+        specifier: ^0.30.6
+        version: 0.30.6(@libsql/client@0.6.0)(@planetscale/database@1.16.0)
       drizzle-zod:
         specifier: ^0.5.1
-        version: 0.5.1(drizzle-orm@0.30.5)(zod@3.22.4)
+        version: 0.5.1(drizzle-orm@0.30.6)(zod@3.22.4)
       zod:
         specifier: ^3.22.4
         version: 3.22.4
@@ -7111,11 +7111,12 @@ packages:
       - supports-color
     dev: true
 
-  /drizzle-orm@0.30.5(@libsql/client@0.6.0)(@planetscale/database@1.16.0):
-    resolution: {integrity: sha512-oImmwGpe1jTWvhPkpsnramZA8m/lE8krTj7Ws7KHSFCMshMXmcZWX2g2Ki793PQOBmwI50KYzWJ9yNKKhWYLyA==}
+  /drizzle-orm@0.30.6(@libsql/client@0.6.0)(@planetscale/database@1.16.0):
+    resolution: {integrity: sha512-8RgNUmY7J03GRuRgBV5SaJNbYgLVPjdSWNS/bRkIMIHt2TFCA439lJsNpqYX8asyKMqkw8ceBiamUnCIXZIt9w==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
       '@cloudflare/workers-types': '>=3'
+      '@electric-sql/pglite': '>=0.1.1'
       '@libsql/client': '*'
       '@neondatabase/serverless': '>=0.1'
       '@op-engineering/op-sqlite': '>=2'
@@ -7142,6 +7143,8 @@ packages:
       '@aws-sdk/client-rds-data':
         optional: true
       '@cloudflare/workers-types':
+        optional: true
+      '@electric-sql/pglite':
         optional: true
       '@libsql/client':
         optional: true
@@ -7192,13 +7195,13 @@ packages:
       '@planetscale/database': 1.16.0
     dev: false
 
-  /drizzle-zod@0.5.1(drizzle-orm@0.30.5)(zod@3.22.4):
+  /drizzle-zod@0.5.1(drizzle-orm@0.30.6)(zod@3.22.4):
     resolution: {integrity: sha512-C/8bvzUH/zSnVfwdSibOgFjLhtDtbKYmkbPbUCq46QZyZCH6kODIMSOgZ8R7rVjoI+tCj3k06MRJMDqsIeoS4A==}
     peerDependencies:
       drizzle-orm: '>=0.23.13'
       zod: '*'
     dependencies:
-      drizzle-orm: 0.30.5(@libsql/client@0.6.0)(@planetscale/database@1.16.0)
+      drizzle-orm: 0.30.6(@libsql/client@0.6.0)(@planetscale/database@1.16.0)
       zod: 3.22.4
     dev: false
 
