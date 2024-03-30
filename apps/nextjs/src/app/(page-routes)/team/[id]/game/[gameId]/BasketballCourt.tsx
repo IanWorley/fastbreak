@@ -51,8 +51,9 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
     if (!fetchShots) return;
     const activeShots = fetchShots.filter((shots) => {
       const player = players.find(
-        (player) => player.id === shots.player_Id && shots.game_Id === gameId,
+        (player) => player.id === shots?.player_Id && shots?.game_Id === gameId,
       );
+      // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
       return player && player.isPlaying;
     });
 
