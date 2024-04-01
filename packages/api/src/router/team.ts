@@ -1,6 +1,4 @@
 import { TRPCError } from "@trpc/server";
-import { Ratelimit } from "@upstash/ratelimit";
-import { Redis } from "@upstash/redis";
 import { z } from "zod";
 
 import { eq, schema } from "@acme/db";
@@ -10,7 +8,7 @@ import { cuid2, rateLimiter } from "../utils";
 
 export const teamsRouter = createTRPCRouter({
   grabTeams: protectedProcedure.query(async ({ ctx }) => {
-    rateLimiter(ctx.userId, 10);
+    await rateLimiter(ctx.userId, 10);
 
     const teams = await ctx.db.query.team.findMany({
       where: (team, { eq }) => eq(team.user_id, ctx.userId),
