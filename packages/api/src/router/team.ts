@@ -1,31 +1,14 @@
 import { TRPCError } from "@trpc/server";
-import { Ratelimit } from "@upstash/ratelimit";
-import { Redis } from "@upstash/redis";
 import { z } from "zod";
 
 import { eq, schema } from "@acme/db";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
-import { cuid2 } from "../utils";
+import { cuid2, rateLimiter } from "../utils";
 
 export const teamsRouter = createTRPCRouter({
   grabTeams: protectedProcedure.query(async ({ ctx }) => {
-    const ratelimit = new Ratelimit({
-      redis: Redis.fromEnv(),
-      limiter: Ratelimit.slidingWindow(10, "10 s"),
-      analytics: false,
-
-      prefix: "@upstash/ratelimit",
-    });
-
-    const { success } = await ratelimit.limit(ctx.userId);
-
-    if (!success) {
-      throw new TRPCError({
-        code: "TOO_MANY_REQUESTS",
-        message: "Too many requests",
-      });
-    }
+    await rateLimiter(ctx.userId, 10);
 
     const teams = await ctx.db.query.team.findMany({
       where: (team, { eq }) => eq(team.user_id, ctx.userId),
@@ -37,22 +20,7 @@ export const teamsRouter = createTRPCRouter({
   deleteTeam: protectedProcedure
     .input(z.string().cuid2())
     .mutation(async ({ ctx, input }) => {
-      const ratelimit = new Ratelimit({
-        redis: Redis.fromEnv(),
-        limiter: Ratelimit.slidingWindow(10, "10 s"),
-        analytics: false,
-
-        prefix: "@upstash/ratelimit",
-      });
-
-      const { success } = await ratelimit.limit(ctx.userId);
-
-      if (!success) {
-        throw new TRPCError({
-          code: "TOO_MANY_REQUESTS",
-          message: "Too many requests",
-        });
-      }
+      await rateLimiter(ctx.userId, 10);
 
       const team = await ctx.db.query.team.findFirst({
         where: (team, { and, eq }) =>
@@ -82,22 +50,7 @@ export const teamsRouter = createTRPCRouter({
   grabPlayers: protectedProcedure
     .input(z.string().cuid2())
     .query(async ({ ctx, input }) => {
-      const ratelimit = new Ratelimit({
-        redis: Redis.fromEnv(),
-        limiter: Ratelimit.slidingWindow(10, "10 s"),
-        analytics: false,
-
-        prefix: "@upstash/ratelimit",
-      });
-
-      const { success } = await ratelimit.limit(ctx.userId);
-
-      if (!success) {
-        throw new TRPCError({
-          code: "TOO_MANY_REQUESTS",
-          message: "Too many requests",
-        });
-      }
+      await rateLimiter(ctx.userId, 10);
 
       const team = await ctx.db.query.team.findFirst({
         where: (team, { and, eq }) =>
@@ -119,22 +72,7 @@ export const teamsRouter = createTRPCRouter({
   createTeam: protectedProcedure
     .input(z.object({ name: z.string().min(3).max(255) }))
     .mutation(async ({ ctx, input }) => {
-      const ratelimit = new Ratelimit({
-        redis: Redis.fromEnv(),
-        limiter: Ratelimit.slidingWindow(10, "10 s"),
-        analytics: false,
-
-        prefix: "@upstash/ratelimit",
-      });
-
-      const { success } = await ratelimit.limit(ctx.userId);
-
-      if (!success) {
-        throw new TRPCError({
-          code: "TOO_MANY_REQUESTS",
-          message: "Too many requests",
-        });
-      }
+      await rateLimiter(ctx.userId, 10);
 
       const id = cuid2();
 

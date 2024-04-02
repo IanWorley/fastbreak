@@ -1,12 +1,10 @@
 import { TRPCError } from "@trpc/server";
-import { Ratelimit } from "@upstash/ratelimit"; // for deno: see above
-import { Redis } from "@upstash/redis"; // see below for cloudflare and fastly adapters
 import { z } from "zod";
 
 import { schema } from "@acme/db";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
-import { cuid2 } from "../utils";
+import { cuid2, rateLimiter } from "../utils";
 
 export const playerRouter = createTRPCRouter({
   addPlayer: protectedProcedure
@@ -18,23 +16,7 @@ export const playerRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const ratelimit = new Ratelimit({
-        redis: Redis.fromEnv(),
-        limiter: Ratelimit.slidingWindow(10, "10 s"),
-        analytics: false,
-
-        prefix: "@upstash/ratelimit",
-      });
-
-      const { success } = await ratelimit.limit(ctx.userId);
-
-      if (!success) {
-        throw new TRPCError({
-          code: "TOO_MANY_REQUESTS",
-          message: "Too many requests",
-        });
-      }
-
+      await rateLimiter(ctx.userId, 10);
       const jerseyNumber = z.coerce.number().safeParse(input.jerseyNumber);
 
       if (!jerseyNumber.success) {
@@ -77,23 +59,7 @@ export const playerRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const ratelimit = new Ratelimit({
-        redis: Redis.fromEnv(),
-        limiter: Ratelimit.slidingWindow(30, "15 s"),
-        analytics: false,
-
-        prefix: "@upstash/ratelimit",
-      });
-
-      const { success } = await ratelimit.limit(ctx.userId);
-
-      if (!success) {
-        throw new TRPCError({
-          code: "TOO_MANY_REQUESTS",
-          message: "Too many requests",
-        });
-      }
-
+      await rateLimiter(ctx.userId, 30);
       const player = await ctx.db.query.player.findFirst({
         where: (player, { eq }) => eq(player.id, input.id),
       });
@@ -141,25 +107,7 @@ export const playerRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const ratelimit = new Ratelimit({
-        redis: Redis.fromEnv(),
-        limiter: Ratelimit.slidingWindow(30, "15 s"),
-        analytics: false,
-
-        prefix: "@upstash/ratelimit",
-      });
-
-      const ratelimitKey = `addShots:${ctx.userId}`;
-
-      const { success } = await ratelimit.limit(ratelimitKey);
-
-      if (!success) {
-        throw new TRPCError({
-          code: "TOO_MANY_REQUESTS",
-          message: "Too many requests",
-        });
-      }
-
+      await rateLimiter(`addShots:${ctx.userId}`, 30, "15s");
       const x = z.coerce.number().safeParse(input.x);
       const y = z.coerce.number().safeParse(input.y);
       const made = z.coerce.boolean().safeParse(input.made);
