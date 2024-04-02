@@ -59,7 +59,7 @@ export const playerRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      await rateLimiter(ctx.userId, 10);
+      await rateLimiter(ctx.userId, 30);
       const player = await ctx.db.query.player.findFirst({
         where: (player, { eq }) => eq(player.id, input.id),
       });
@@ -107,7 +107,7 @@ export const playerRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      await rateLimiter(ctx.userId, 10);
+      await rateLimiter(`addShots:${ctx.userId}`, 30, "15s");
       const x = z.coerce.number().safeParse(input.x);
       const y = z.coerce.number().safeParse(input.y);
       const made = z.coerce.boolean().safeParse(input.made);
