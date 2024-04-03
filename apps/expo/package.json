@@ -15,7 +15,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@clerk/clerk-expo": "^0.20.12",
+    "@clerk/clerk-expo": "^0.20.13",
     "@expo/metro-config": "^0.17.6",
     "@shopify/flash-list": "1.6.4",
     "@tanstack/react-query": "^5.28.14",
