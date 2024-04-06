@@ -27,8 +27,8 @@ importers:
   apps/expo:
     dependencies:
       '@clerk/clerk-expo':
-        specifier: ^0.20.14
-        version: 0.20.14(@types/react@18.2.74)(expo-application@5.8.3)(expo-auth-session@5.4.0)(expo-constants@15.4.5)(expo-web-browser@12.8.2)(react-dom@18.2.0)(react-native@0.73.6)(react@18.2.0)
+        specifier: ^0.20.16
+        version: 0.20.16(@types/react@18.2.74)(expo-application@5.8.3)(expo-auth-session@5.4.0)(expo-constants@15.4.5)(expo-web-browser@12.8.2)(react-dom@18.2.0)(react-native@0.73.6)(react@18.2.0)
       '@expo/metro-config':
         specifier: ^0.17.6
         version: 0.17.6(@react-native/babel-preset@0.73.21)
@@ -2193,8 +2193,8 @@ packages:
       - react
     dev: false
 
-  /@clerk/clerk-expo@0.20.14(@types/react@18.2.74)(expo-application@5.8.3)(expo-auth-session@5.4.0)(expo-constants@15.4.5)(expo-web-browser@12.8.2)(react-dom@18.2.0)(react-native@0.73.6)(react@18.2.0):
-    resolution: {integrity: sha512-wM0YOjdkf5tGllLxzH2a2KUu2eopArNRGf8u2ytg9nPtpmJPI37rvntC4B0jSFO39/Ql/rbDPqGBH9rKrTtAzQ==}
+  /@clerk/clerk-expo@0.20.16(@types/react@18.2.74)(expo-application@5.8.3)(expo-auth-session@5.4.0)(expo-constants@15.4.5)(expo-web-browser@12.8.2)(react-dom@18.2.0)(react-native@0.73.6)(react@18.2.0):
+    resolution: {integrity: sha512-aSlaP6sIRrWyia8xNaAS6Pm0VBHIpC77VCnt+zSTmRQVfZ/dF3kTe4bs61l1GpzudOLo4TcOBBlk4XQUgBbKSQ==}
     engines: {node: '>=14'}
     peerDependencies:
       expo-application: '>=5'
@@ -2203,8 +2203,8 @@ packages:
       expo-web-browser: '>=12'
       react: '>=16'
     dependencies:
-      '@clerk/clerk-js': 4.71.2(@types/react@18.2.74)(react-dom@18.2.0)(react@18.2.0)
-      '@clerk/clerk-react': 4.30.9(react@18.2.0)
+      '@clerk/clerk-js': 4.71.4(@types/react@18.2.74)(react-dom@18.2.0)(react@18.2.0)
+      '@clerk/clerk-react': 4.30.10(react@18.2.0)
       '@clerk/shared': 1.4.1(react@18.2.0)
       base-64: 1.0.0
       expo-application: 5.8.3(expo@50.0.14)
@@ -2219,14 +2219,14 @@ packages:
       - react-native
     dev: false
 
-  /@clerk/clerk-js@4.71.2(@types/react@18.2.74)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-VWxL8v4ePENBb9SBsv2B1K9cO/XlM5zLaLSC/8yo5utVi54/Kiy66x32GGOfEM1aWOduaQaosIPq1gDxZmqweQ==}
+  /@clerk/clerk-js@4.71.4(@types/react@18.2.74)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-aUFaYGC/7oJSji3LviPpmjn1jjxOD5pWDPes4g+LUBHJIQGFqpwo1BiQiBfy6gdZtRuTv0jryDOwaXyLjyzgiA==}
     peerDependencies:
       react: '>=18'
     dependencies:
-      '@clerk/localizations': 1.28.1(react@18.2.0)
+      '@clerk/localizations': 1.28.2(react@18.2.0)
       '@clerk/shared': 1.4.1(react@18.2.0)
-      '@clerk/types': 3.63.0
+      '@clerk/types': 3.63.1
       '@emotion/cache': 11.11.0
       '@emotion/react': 11.11.1(@types/react@18.2.74)(react@18.2.0)
       '@floating-ui/react': 0.25.4(react-dom@18.2.0)(react@18.2.0)
@@ -2257,18 +2257,6 @@ packages:
       tslib: 2.4.1
     dev: false
 
-  /@clerk/clerk-react@4.30.9(react@18.2.0):
-    resolution: {integrity: sha512-UWY+XmpbKjkABgmyfy2FUiTQQiN8QSdzyswPoTO9QyosXMZZp+vo/UhVor5V2kIeBoPibyW01oG/Nor2l0a7sA==}
-    engines: {node: '>=14'}
-    peerDependencies:
-      react: '>=16'
-    dependencies:
-      '@clerk/shared': 1.4.1(react@18.2.0)
-      '@clerk/types': 3.63.0
-      react: 18.2.0
-      tslib: 2.4.1
-    dev: false
-
   /@clerk/clerk-sdk-node@4.13.14(react@18.2.0):
     resolution: {integrity: sha512-ECQEiMi/7xQZx0U9IyFKDazFLS+eyZnah+ZClwjMGDxAA1KR6xF13Vd9mbGzTov7IlvwfsNmUPOSXvjORufvqg==}
     engines: {node: '>=14'}
@@ -2286,13 +2274,13 @@ packages:
       - react
     dev: false
 
-  /@clerk/localizations@1.28.1(react@18.2.0):
-    resolution: {integrity: sha512-YyBvNg9freQgzzyiIOYgHDzTKCm5+BQpo8JEWqeMwiDp4vnkA/ek29jGiZ/fmUi7FDDmG4DhkxsswRWxZfi3Zw==}
+  /@clerk/localizations@1.28.2(react@18.2.0):
+    resolution: {integrity: sha512-yHJF6FU5orVxpVgreCjjDDyFHb2IU8iJkgLT/WxMOPcORVCpHQjgiKeTZw8GrUJVx8CcOVsFcRZ9wckAwctu8g==}
     engines: {node: '>=14'}
     peerDependencies:
       react: '>=16'
     dependencies:
-      '@clerk/types': 3.63.0
+      '@clerk/types': 3.63.1
       react: 18.2.0
     dev: false
 
@@ -2328,13 +2316,6 @@ packages:
       js-cookie: 3.0.1
       react: 18.2.0
       swr: 2.2.0(react@18.2.0)
-    dev: false
-
-  /@clerk/types@3.63.0:
-    resolution: {integrity: sha512-+32fWK+lUG2u0hVaoQ3aZ+j2T/LhF3yNNylBrkD1Kca/goLb+NB/nmw6Svs0Q810FK/uYgqWlXvABPhgILeQFA==}
-    engines: {node: '>=14'}
-    dependencies:
-      csstype: 3.1.1
     dev: false
 
   /@clerk/types@3.63.1:
