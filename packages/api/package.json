@@ -17,7 +17,7 @@
     "@acme/db": "workspace:^0.1.0",
     "@acme/validators": "workspace:^0.1.0",
     "@paralleldrive/cuid2": "^2.2.2",
-    "@trpc/server": "11.0.0-rc.346",
+    "@trpc/server": "11.0.0-rc.348",
     "@upstash/ratelimit": "^1.1.2",
     "@upstash/redis": "^1.30.0",
     "superjson": "2.2.1",
