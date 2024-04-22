@@ -5,10 +5,18 @@ interface PlayerListProps {
   toggleForDrawer: () => void;
   setPlayerSwap: (playerId: string) => void;
   quarter: number;
+  playerShooting: string;
+  setPlayerShooting: (playerId: string) => void;
 }
 
 function PlayerList(props: PlayerListProps) {
-  const { toggleForDrawer, setPlayerSwap, quarter } = props;
+  const {
+    toggleForDrawer,
+    setPlayerSwap,
+    quarter,
+    playerShooting,
+    setPlayerShooting,
+  } = props;
   const { players } = usePlayerForApp((state) => state);
 
   return (
@@ -22,6 +30,8 @@ function PlayerList(props: PlayerListProps) {
             .map((player) => (
               <PlayerCard
                 key={player.id}
+                playerShooting={playerShooting}
+                setPlayerShooting={setPlayerShooting}
                 player={player}
                 toggleForDrawer={toggleForDrawer}
                 setPlayerSwap={setPlayerSwap}

@@ -34,6 +34,8 @@ function GameClient() {
     setYPos(y);
   };
 
+  const [playerShooting, setPlayerShooting] = useState("");
+
   const [playerSwap, setPlayerSwap] = useState("");
 
   const [PlayerSubDrawerState, setPlayerSubDrawerState] = useState(false);
@@ -117,6 +119,8 @@ function GameClient() {
 
       <div className="flex justify-evenly">
         <PlayerList
+          setPlayerShooting={setPlayerShooting}
+          playerShooting={playerShooting}
           toggleForDrawer={togglePlayerSubDrawerState}
           setPlayerSwap={setPlayerSwap}
           quarter={z.coerce.number().parse(QTR)}
@@ -130,6 +134,8 @@ function GameClient() {
         x={xPos}
         y={yPos}
         quarter={z.coerce.number().parse(QTR)}
+        setPlayerShooting={setPlayerShooting}
+        playerShooting={playerShooting}
       />
 
       <PlayerSubDrawer
