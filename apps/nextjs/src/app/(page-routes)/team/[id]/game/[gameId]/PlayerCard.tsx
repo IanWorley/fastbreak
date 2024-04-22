@@ -14,6 +14,8 @@ interface PlayerCardProps {
   player: playerType;
   toggleForDrawer: () => void;
   setPlayerSwap: (playerId: string) => void;
+  playerShooting: string;
+  setPlayerShooting: (playerId: string) => void;
   quarter: number;
 }
 
@@ -21,8 +23,13 @@ function PlayerCard(props: PlayerCardProps) {
   const parms = useParams<{ id: string; gameId: string }>();
   const teamId = z.string().cuid2().parse(parms.id);
   const gameId = z.string().cuid2().parse(parms.gameId);
-
-  const { player, toggleForDrawer, setPlayerSwap } = props;
+  const {
+    player,
+    toggleForDrawer,
+    setPlayerSwap,
+    setPlayerShooting,
+    playerShooting,
+  } = props;
   const { players } = usePlayerForApp((state) => state);
   const shots = useShotsForGame(gameId, teamId, undefined);
 
@@ -74,12 +81,26 @@ function PlayerCard(props: PlayerCardProps) {
     );
 
   return (
-    <div key={player.id} className="bg-primary-foreground p-10 ">
-      <p className="p-4 text-center text-3xl"> {player.name} </p>
+    <div
+      aria-hidden="true"
+      key={player.id}
+      className="bg-primary-foreground p-10 "
+      onClick={() => {
+        setPlayerShooting(player.id);
+      }}
+    >
+      <p
+        className={`p-4 text-center text-3xl ${playerShooting == player.id ? "font-semibold text-red-500" : null}`}
+      >
+        {" "}
+        {player.name}{" "}
+      </p>
       <div className="flex space-x-4  ">
         <Button
           className={"w-full  bg-green-500"}
-          onClick={() => {
+          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+            e.nativeEvent.stopImmediatePropagation();
+            e.stopPropagation();
             if (players.length <= 5) {
               toast.info("You need at least 6 players to sub out");
               return;

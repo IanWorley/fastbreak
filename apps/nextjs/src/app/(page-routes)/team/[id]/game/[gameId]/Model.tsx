@@ -44,6 +44,8 @@ interface DialogDemoProps {
   gameId: string;
   teamid: string;
   quarter: number;
+  setPlayerShooting: (playerId: string) => void;
+  playerShooting: string;
 }
 
 const FormSchema = z.object({
@@ -53,7 +55,17 @@ const FormSchema = z.object({
 });
 
 function Model(props: DialogDemoProps) {
-  const { open, toggle, x, y, teamid, gameId, quarter } = props;
+  const {
+    open,
+    toggle,
+    x,
+    y,
+    teamid,
+    gameId,
+    quarter,
+    _setPlayerShooting,
+    _playerShooting,
+  } = props;
   const { players } = usePlayerForApp((state) => state);
 
   const form = useForm<z.infer<typeof FormSchema>>({
