@@ -1,7 +1,6 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SelectContent, SelectTrigger } from "@radix-ui/react-select";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
@@ -23,17 +22,8 @@ import {
   FormItem,
   FormLabel,
 } from "@acme/ui/form";
-import { Label } from "@acme/ui/label";
 import { RadioGroup, RadioGroupItem } from "@acme/ui/radio-group";
-import {
-  Select,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectValue,
-} from "@acme/ui/select";
 
-import { usePlayerForApp } from "~/store/PlayerForApp";
 import { api } from "~/trpc/react";
 
 interface DialogDemoProps {
@@ -49,24 +39,12 @@ interface DialogDemoProps {
 }
 
 const FormSchema = z.object({
-  player_id: z.string(),
   shot_attempt: z.string(),
   points: z.string(),
 });
 
 function Model(props: DialogDemoProps) {
-  const {
-    open,
-    toggle,
-    x,
-    y,
-    teamid,
-    gameId,
-    quarter,
-    _setPlayerShooting,
-    _playerShooting,
-  } = props;
-  const { players } = usePlayerForApp((state) => state);
+  const { open, toggle, x, y, teamid, gameId, quarter, playerShooting } = props;
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -91,7 +69,7 @@ function Model(props: DialogDemoProps) {
             ...(oldData ?? []),
             {
               id: Math.random().toString(),
-              player_Id: form.getValues("player_id"),
+              player_Id: playerShooting.toString(),
               quarter: quarter,
               made:
                 form.getValues("shot_attempt").toLowerCase() ===
@@ -117,7 +95,7 @@ function Model(props: DialogDemoProps) {
             ...(oldData ?? []),
             {
               id: Math.random().toString(),
-              player_Id: form.getValues("player_id"),
+              player_Id: playerShooting.toString(),
               quarter: quarter,
               made:
                 form.getValues("shot_attempt").toLowerCase() ===
@@ -169,11 +147,15 @@ function Model(props: DialogDemoProps) {
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
+    if (z.string().parse(playerShooting.toString()) === "") {
+      toast.error("Please select a player");
+      return;
+    }
     if (data.points === "1") {
       await mutateAsync({
         teamId: teamid,
         gameId: gameId,
-        playerId: data.player_id,
+        playerId: playerShooting.toString(),
         made:
           data.shot_attempt.toLowerCase() === "Made".toLowerCase()
             ? true
@@ -188,7 +170,7 @@ function Model(props: DialogDemoProps) {
       await mutateAsync({
         teamId: teamid,
         gameId: gameId,
-        playerId: data.player_id,
+        playerId: playerShooting.toString(),
         made:
           data.shot_attempt.toLowerCase() === "Made".toLowerCase()
             ? true
@@ -212,42 +194,6 @@ function Model(props: DialogDemoProps) {
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="flex">
               <div className="flex-row">
-                <FormField
-                  control={form.control}
-                  name="player_id"
-                  render={({ field }) => (
-                    <FormItem className="p-4">
-                      <Label htmlFor="player_select">Player</Label>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                        name="player_select"
-                      >
-                        <FormControl {...field}>
-                          <SelectTrigger className="w-[180px]">
-                            <SelectValue placeholder="Select a Player" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectGroup className="bg-primary-foreground">
-                            <SelectLabel>Players </SelectLabel>
-                            {players
-                              .filter((player) => player.isPlaying === true)
-                              .map((player) => (
-                                <SelectItem
-                                  key={player.id}
-                                  value={player.id.toString()}
-                                >
-                                  {player.name}
-                                </SelectItem>
-                              ))}
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                    </FormItem>
-                  )}
-                />
-
                 <FormField
                   name="shot_attempt"
                   control={form.control}
