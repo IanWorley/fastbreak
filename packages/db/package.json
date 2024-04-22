@@ -19,16 +19,16 @@
   "dependencies": {
     "@libsql/client": "^0.6.0",
     "@planetscale/database": "^1.16.0",
-    "drizzle-orm": "^0.30.8",
+    "drizzle-orm": "^0.30.9",
     "drizzle-zod": "^0.5.1",
-    "zod": "^3.22.4"
+    "zod": "^3.22.5"
   },
   "devDependencies": {
     "@acme/eslint-config": "workspace:^0.2.0",
     "@acme/prettier-config": "workspace:^0.1.0",
     "@acme/tsconfig": "workspace:^0.1.0",
     "dotenv-cli": "^7.4.1",
-    "drizzle-kit": "^0.20.14",
+    "drizzle-kit": "^0.20.17",
     "eslint": "^8.57.0",
     "prettier": "^3.2.5",
     "typescript": "^5.4.5"
