@@ -36,7 +36,7 @@ function Navbar({ className, viewingTeam, teamId }: NavbarProps) {
               </div>
             ) : (
               <div className="flex justify-end md:hidden">
-                <SignInButton redirectUrl={`${getBaseUrl()}/team`}>
+                <SignInButton fallbackRedirectUrl={`${getBaseUrl()}/team`}>
                   <Button variant={"default"}>Sign In</Button>
                 </SignInButton>
               </div>
@@ -82,7 +82,7 @@ function Navbar({ className, viewingTeam, teamId }: NavbarProps) {
           </div>
         ) : (
           <div className="hidden  md:flex ">
-            <SignInButton redirectUrl={`${getBaseUrl()}/team`}>
+            <SignInButton fallbackRedirectUrl={`${getBaseUrl()}/team`}>
               <Button variant={"default"}>Sign In</Button>
             </SignInButton>
           </div>

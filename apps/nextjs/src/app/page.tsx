@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { currentUser, SignInButton } from "@clerk/nextjs";
+import { SignInButton } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs/server";
 
 import { Button } from "@acme/ui/button";
 
@@ -27,7 +28,7 @@ export default async function Home() {
               <Button> View Teams </Button>
             </Link>
           ) : (
-            <SignInButton redirectUrl={`${getBaseUrl()}/team`}>
+            <SignInButton signUpFallbackRedirectUrl={`${getBaseUrl()}/team`}>
               <Button variant={"default"}>Sign In</Button>
             </SignInButton>
           )}
