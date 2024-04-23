@@ -6,7 +6,7 @@ import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 // See https://clerk.com/docs/references/nextjs/auth-middleware for more information about configuring your Middleware
 
 // if /api/trpc/* is public write a functio with isPublic to use regex to match the routes and only /apt/trpc/* will be public
-const trpcRoute = createRouteMatcher("/api/trpc/:path*");
+const trpcRoute = createRouteMatcher("/api/trpc/:trpc*");
 
 const isPublic = createRouteMatcher("/");
 
