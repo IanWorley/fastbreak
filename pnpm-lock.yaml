@@ -297,14 +297,14 @@ importers:
         specifier: ^0.6.0
         version: 0.6.0
       '@planetscale/database':
-        specifier: ^1.16.0
-        version: 1.16.0
+        specifier: ^1.17.0
+        version: 1.17.0
       drizzle-orm:
         specifier: ^0.30.9
-        version: 0.30.9(@libsql/client@0.6.0)(@planetscale/database@1.16.0)(@types/react@18.3.1)(react@18.3.1)
+        version: 0.30.9(@libsql/client@0.6.0)(@planetscale/database@1.17.0)(@types/react@18.3.1)(react@18.3.1)
       drizzle-zod:
         specifier: ^0.5.1
-        version: 0.5.1(drizzle-orm@0.30.9(@libsql/client@0.6.0)(@planetscale/database@1.16.0)(@types/react@18.3.1)(react@18.3.1))(zod@3.23.4)
+        version: 0.5.1(drizzle-orm@0.30.9(@libsql/client@0.6.0)(@planetscale/database@1.17.0)(@types/react@18.3.1)(react@18.3.1))(zod@3.23.4)
       zod:
         specifier: ^3.23.4
         version: 3.23.4
@@ -2141,8 +2141,8 @@ packages:
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
 
-  '@planetscale/database@1.16.0':
-    resolution: {integrity: sha512-HNUrTqrd8aTRZYMDcsoZ62s36sIWkMMmKZBOehoCWR2WrfNPKq+Q1yQef5okl3pSVlldFnu2h/dbHjOsDTHXug==}
+  '@planetscale/database@1.17.0':
+    resolution: {integrity: sha512-yDwahIwHJpBuCq1237zQ8u7oolGs8HfZNHsxGVue5PN7PMrB1lod+x+jH7eUHttLvoKl1BGMFArh335FZfzYeA==}
     engines: {node: '>=16'}
 
   '@radix-ui/number@1.0.1':
@@ -9500,7 +9500,7 @@ snapshots:
   '@pkgjs/parseargs@0.11.0':
     optional: true
 
-  '@planetscale/database@1.16.0': {}
+  '@planetscale/database@1.17.0': {}
 
   '@radix-ui/number@1.0.1':
     dependencies:
@@ -11755,16 +11755,16 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.30.9(@libsql/client@0.6.0)(@planetscale/database@1.16.0)(@types/react@18.3.1)(react@18.3.1):
+  drizzle-orm@0.30.9(@libsql/client@0.6.0)(@planetscale/database@1.17.0)(@types/react@18.3.1)(react@18.3.1):
     optionalDependencies:
       '@libsql/client': 0.6.0
-      '@planetscale/database': 1.16.0
+      '@planetscale/database': 1.17.0
       '@types/react': 18.3.1
       react: 18.3.1
 
-  drizzle-zod@0.5.1(drizzle-orm@0.30.9(@libsql/client@0.6.0)(@planetscale/database@1.16.0)(@types/react@18.3.1)(react@18.3.1))(zod@3.23.4):
+  drizzle-zod@0.5.1(drizzle-orm@0.30.9(@libsql/client@0.6.0)(@planetscale/database@1.17.0)(@types/react@18.3.1)(react@18.3.1))(zod@3.23.4):
     dependencies:
-      drizzle-orm: 0.30.9(@libsql/client@0.6.0)(@planetscale/database@1.16.0)(@types/react@18.3.1)(react@18.3.1)
+      drizzle-orm: 0.30.9(@libsql/client@0.6.0)(@planetscale/database@1.17.0)(@types/react@18.3.1)(react@18.3.1)
       zod: 3.23.4
 
   eastasianwidth@0.2.0: {}
