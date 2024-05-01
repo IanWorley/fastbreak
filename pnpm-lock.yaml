@@ -27,8 +27,8 @@ importers:
   apps/expo:
     dependencies:
       '@clerk/clerk-expo':
-        specifier: ^1.0.3
-        version: 1.0.3(@types/react@18.3.1)(eslint@8.57.0)(expo-application@5.8.3(expo@50.0.17(@babel/core@7.24.5)(@react-native/babel-preset@0.74.81(@babel/core@7.24.5)(@babel/preset-env@7.24.5(@babel/core@7.24.5)))))(expo-auth-session@5.4.0(expo@50.0.17(@babel/core@7.24.5)(@react-native/babel-preset@0.74.81(@babel/core@7.24.5)(@babel/preset-env@7.24.5(@babel/core@7.24.5)))))(expo-constants@15.4.6(expo@50.0.17(@babel/core@7.24.5)(@react-native/babel-preset@0.74.81(@babel/core@7.24.5)(@babel/preset-env@7.24.5(@babel/core@7.24.5)))))(expo-web-browser@12.8.2(expo@50.0.17(@babel/core@7.24.5)(@react-native/babel-preset@0.74.81(@babel/core@7.24.5)(@babel/preset-env@7.24.5(@babel/core@7.24.5)))))(react-dom@18.3.1(react@18.3.1))(react-native@0.74.0(@babel/core@7.24.5)(@babel/preset-env@7.24.5(@babel/core@7.24.5))(@types/react@18.3.1)(react@18.3.1))(react@18.3.1)(typescript@5.4.5)
+        specifier: ^1.0.5
+        version: 1.0.5(@types/react@18.3.1)(eslint@8.57.0)(expo-application@5.8.3(expo@50.0.17(@babel/core@7.24.5)(@react-native/babel-preset@0.74.81(@babel/core@7.24.5)(@babel/preset-env@7.24.5(@babel/core@7.24.5)))))(expo-auth-session@5.4.0(expo@50.0.17(@babel/core@7.24.5)(@react-native/babel-preset@0.74.81(@babel/core@7.24.5)(@babel/preset-env@7.24.5(@babel/core@7.24.5)))))(expo-constants@15.4.6(expo@50.0.17(@babel/core@7.24.5)(@react-native/babel-preset@0.74.81(@babel/core@7.24.5)(@babel/preset-env@7.24.5(@babel/core@7.24.5)))))(expo-web-browser@12.8.2(expo@50.0.17(@babel/core@7.24.5)(@react-native/babel-preset@0.74.81(@babel/core@7.24.5)(@babel/preset-env@7.24.5(@babel/core@7.24.5)))))(react-dom@18.3.1(react@18.3.1))(react-native@0.74.0(@babel/core@7.24.5)(@babel/preset-env@7.24.5(@babel/core@7.24.5))(@types/react@18.3.1)(react@18.3.1))(react@18.3.1)(typescript@5.4.5)
       '@expo/metro-config':
         specifier: ^0.17.7
         version: 0.17.7(@react-native/babel-preset@0.74.81(@babel/core@7.24.5)(@babel/preset-env@7.24.5(@babel/core@7.24.5)))
@@ -1464,8 +1464,8 @@ packages:
     resolution: {integrity: sha512-6r2SPtO5TB53OiGwexLP19LvVoUO+Nz7KlE4US1uposaT2X1+enRtA0LD9DwJnv1YJKxnPXVkwiuqYYlGysusw==}
     engines: {node: '>=18.17.0'}
 
-  '@clerk/clerk-expo@1.0.3':
-    resolution: {integrity: sha512-lRNXXFPvYNndBvZ6rbTUPz5f8xZLL8SZ+nmL58xexBcUleetVSVTiCS7w71B8Mvp6//G8wrBIqc9r6tJe9zI8A==}
+  '@clerk/clerk-expo@1.0.5':
+    resolution: {integrity: sha512-zPWT3yItLy/HAaYMaogWPKs2zbi7ZhTywys/usKk06B/3pbVD6EhaZ3DdCPE2kU0DhjjsAwXYtWdciCTVV0G3A==}
     engines: {node: '>=18.17.0'}
     peerDependencies:
       expo-application: '>=5'
@@ -1475,8 +1475,8 @@ packages:
       react: '>=18'
       react-dom: '>=18'
 
-  '@clerk/clerk-js@5.2.0':
-    resolution: {integrity: sha512-MBicHbntZbcgdR+2G4LxUupn9Z2q+NjQ52ZrW3lhAeoNQXsnQkXN0zitDc9xqHPt6pCWecmjVfa6RkRj5wGEug==}
+  '@clerk/clerk-js@5.2.1':
+    resolution: {integrity: sha512-XNfRjkIM+q1M9mfuQazvvLR/TNXVrxDDuVDWLzjGwasr24qT7wGSE6cpSno7drzpUGhK6bPfJiET6O7FzL908Q==}
     engines: {node: '>=18.17.0'}
     peerDependencies:
       react: '>=18'
@@ -1484,6 +1484,13 @@ packages:
 
   '@clerk/clerk-react@5.0.2':
     resolution: {integrity: sha512-gSRFc5oCsBvusdmG5PT8JECySf5qhPW9pl0o9s15KAxy+HlbBJDzombJmGvj3E4nFd/UiYm9LF4S2I61eGBf2w==}
+    engines: {node: '>=18.17.0'}
+    peerDependencies:
+      react: '>=18'
+      react-dom: '>=18'
+
+  '@clerk/clerk-react@5.0.3':
+    resolution: {integrity: sha512-VlPLm2g3zBSl+xtqDv6qkV59Yj717A/WU9grs6NZWcydkB0oPwuo4ftxW/OiY0IUtA638qyj0ovotVX9tZagTw==}
     engines: {node: '>=18.17.0'}
     peerDependencies:
       react: '>=18'
@@ -8732,10 +8739,10 @@ snapshots:
       - react
       - react-dom
 
-  '@clerk/clerk-expo@1.0.3(@types/react@18.3.1)(eslint@8.57.0)(expo-application@5.8.3(expo@50.0.17(@babel/core@7.24.5)(@react-native/babel-preset@0.74.81(@babel/core@7.24.5)(@babel/preset-env@7.24.5(@babel/core@7.24.5)))))(expo-auth-session@5.4.0(expo@50.0.17(@babel/core@7.24.5)(@react-native/babel-preset@0.74.81(@babel/core@7.24.5)(@babel/preset-env@7.24.5(@babel/core@7.24.5)))))(expo-constants@15.4.6(expo@50.0.17(@babel/core@7.24.5)(@react-native/babel-preset@0.74.81(@babel/core@7.24.5)(@babel/preset-env@7.24.5(@babel/core@7.24.5)))))(expo-web-browser@12.8.2(expo@50.0.17(@babel/core@7.24.5)(@react-native/babel-preset@0.74.81(@babel/core@7.24.5)(@babel/preset-env@7.24.5(@babel/core@7.24.5)))))(react-dom@18.3.1(react@18.3.1))(react-native@0.74.0(@babel/core@7.24.5)(@babel/preset-env@7.24.5(@babel/core@7.24.5))(@types/react@18.3.1)(react@18.3.1))(react@18.3.1)(typescript@5.4.5)':
+  '@clerk/clerk-expo@1.0.5(@types/react@18.3.1)(eslint@8.57.0)(expo-application@5.8.3(expo@50.0.17(@babel/core@7.24.5)(@react-native/babel-preset@0.74.81(@babel/core@7.24.5)(@babel/preset-env@7.24.5(@babel/core@7.24.5)))))(expo-auth-session@5.4.0(expo@50.0.17(@babel/core@7.24.5)(@react-native/babel-preset@0.74.81(@babel/core@7.24.5)(@babel/preset-env@7.24.5(@babel/core@7.24.5)))))(expo-constants@15.4.6(expo@50.0.17(@babel/core@7.24.5)(@react-native/babel-preset@0.74.81(@babel/core@7.24.5)(@babel/preset-env@7.24.5(@babel/core@7.24.5)))))(expo-web-browser@12.8.2(expo@50.0.17(@babel/core@7.24.5)(@react-native/babel-preset@0.74.81(@babel/core@7.24.5)(@babel/preset-env@7.24.5(@babel/core@7.24.5)))))(react-dom@18.3.1(react@18.3.1))(react-native@0.74.0(@babel/core@7.24.5)(@babel/preset-env@7.24.5(@babel/core@7.24.5))(@types/react@18.3.1)(react@18.3.1))(react@18.3.1)(typescript@5.4.5)':
     dependencies:
-      '@clerk/clerk-js': 5.2.0(@types/react@18.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@clerk/clerk-react': 5.0.2(eslint@8.57.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.4.5)
+      '@clerk/clerk-js': 5.2.1(@types/react@18.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@clerk/clerk-react': 5.0.3(eslint@8.57.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.4.5)
       '@clerk/shared': 2.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       base-64: 1.0.0
       expo-application: 5.8.3(expo@50.0.17(@babel/core@7.24.5)(@react-native/babel-preset@0.74.81(@babel/core@7.24.5)(@babel/preset-env@7.24.5(@babel/core@7.24.5))))
@@ -8754,7 +8761,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@clerk/clerk-js@5.2.0(@types/react@18.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@clerk/clerk-js@5.2.1(@types/react@18.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@clerk/localizations': 2.3.0
       '@clerk/shared': 2.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -8778,6 +8785,20 @@ snapshots:
       - '@types/react'
 
   '@clerk/clerk-react@5.0.2(eslint@8.57.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.4.5)':
+    dependencies:
+      '@clerk/shared': 2.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@clerk/types': 4.2.0
+      eslint-config-custom: 0.0.0(eslint@8.57.0)(typescript@5.4.5)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      tslib: 2.4.1
+    transitivePeerDependencies:
+      - eslint
+      - eslint-import-resolver-webpack
+      - supports-color
+      - typescript
+
+  '@clerk/clerk-react@5.0.3(eslint@8.57.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.4.5)':
     dependencies:
       '@clerk/shared': 2.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@clerk/types': 4.2.0
@@ -12324,7 +12345,7 @@ snapshots:
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
       eslint-module-utils: 2.8.0(eslint-import-resolver-node@0.3.9)(eslint@8.57.0)
-      hasown: 2.0.0
+      hasown: 2.0.1
       is-core-module: 2.13.1
       is-glob: 4.0.3
       minimatch: 3.1.2
