@@ -157,8 +157,8 @@ importers:
         specifier: workspace:^0.1.0
         version: link:../../packages/validators
       '@clerk/nextjs':
-        specifier: ^5.0.4
-        version: 5.0.4(eslint@8.57.0)(next@14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.4.5)
+        specifier: ^5.0.5
+        version: 5.0.5(eslint@8.57.0)(next@14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.4.5)
       '@t3-oss/env-nextjs':
         specifier: ^0.10.1
         version: 0.10.1(typescript@5.4.5)(zod@3.23.5)
@@ -1482,13 +1482,6 @@ packages:
       react: '>=18'
       react-dom: '>=18'
 
-  '@clerk/clerk-react@5.0.2':
-    resolution: {integrity: sha512-gSRFc5oCsBvusdmG5PT8JECySf5qhPW9pl0o9s15KAxy+HlbBJDzombJmGvj3E4nFd/UiYm9LF4S2I61eGBf2w==}
-    engines: {node: '>=18.17.0'}
-    peerDependencies:
-      react: '>=18'
-      react-dom: '>=18'
-
   '@clerk/clerk-react@5.0.3':
     resolution: {integrity: sha512-VlPLm2g3zBSl+xtqDv6qkV59Yj717A/WU9grs6NZWcydkB0oPwuo4ftxW/OiY0IUtA638qyj0ovotVX9tZagTw==}
     engines: {node: '>=18.17.0'}
@@ -1500,8 +1493,8 @@ packages:
     resolution: {integrity: sha512-Xc+O/Bw8kT0W4/4xWl4fPwulysFv1YURksxeTxnoo9/hBC2h2irhQ955VNKwUv+s7qkHda4ujdLzjqBU+FOIhw==}
     engines: {node: '>=18.17.0'}
 
-  '@clerk/nextjs@5.0.4':
-    resolution: {integrity: sha512-NjDajw89058nPqREnm0eK/KV6JdveULJh/PjkvOczEJtvsgHkxIr1cVMDEZRwAlFZlKAOYYfjojH+er/PSUn/A==}
+  '@clerk/nextjs@5.0.5':
+    resolution: {integrity: sha512-SVtbyGT+o/4OqNItgy41HMClybZh8iFtphiDSUy/kTjwheqFi00zYYVAU/afMp3XkianqNIwqBdpqo7lUKtAkQ==}
     engines: {node: '>=18.17.0'}
     peerDependencies:
       next: ^13.5.4 || ^14.0.3
@@ -8784,20 +8777,6 @@ snapshots:
     transitivePeerDependencies:
       - '@types/react'
 
-  '@clerk/clerk-react@5.0.2(eslint@8.57.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.4.5)':
-    dependencies:
-      '@clerk/shared': 2.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@clerk/types': 4.2.0
-      eslint-config-custom: 0.0.0(eslint@8.57.0)(typescript@5.4.5)
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-      tslib: 2.4.1
-    transitivePeerDependencies:
-      - eslint
-      - eslint-import-resolver-webpack
-      - supports-color
-      - typescript
-
   '@clerk/clerk-react@5.0.3(eslint@8.57.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.4.5)':
     dependencies:
       '@clerk/shared': 2.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -8814,10 +8793,10 @@ snapshots:
 
   '@clerk/localizations@2.3.0': {}
 
-  '@clerk/nextjs@5.0.4(eslint@8.57.0)(next@14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.4.5)':
+  '@clerk/nextjs@5.0.5(eslint@8.57.0)(next@14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.4.5)':
     dependencies:
       '@clerk/backend': 1.1.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@clerk/clerk-react': 5.0.2(eslint@8.57.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.4.5)
+      '@clerk/clerk-react': 5.0.3(eslint@8.57.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.4.5)
       '@clerk/shared': 2.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       crypto-js: 4.2.0
       next: 14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -12345,7 +12324,7 @@ snapshots:
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
       eslint-module-utils: 2.8.0(eslint-import-resolver-node@0.3.9)(eslint@8.57.0)
-      hasown: 2.0.1
+      hasown: 2.0.0
       is-core-module: 2.13.1
       is-glob: 4.0.3
       minimatch: 3.1.2
