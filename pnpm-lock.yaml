@@ -36,14 +36,14 @@ importers:
         specifier: 1.6.4
         version: 1.6.4(@babel/runtime@7.24.5)(react-native@0.74.1(@babel/core@7.24.5)(@babel/preset-env@7.24.5(@babel/core@7.24.5))(@types/react@18.3.1)(react@18.3.1))(react@18.3.1)
       '@tanstack/react-query':
-        specifier: ^5.32.1
-        version: 5.32.1(react@18.3.1)
+        specifier: ^5.34.1
+        version: 5.34.1(react@18.3.1)
       '@trpc/client':
         specifier: 11.0.0-rc.364
         version: 11.0.0-rc.364(@trpc/server@11.0.0-rc.364)
       '@trpc/react-query':
         specifier: 11.0.0-rc.364
-        version: 11.0.0-rc.364(@tanstack/react-query@5.32.1(react@18.3.1))(@trpc/client@11.0.0-rc.364(@trpc/server@11.0.0-rc.364))(@trpc/server@11.0.0-rc.364)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 11.0.0-rc.364(@tanstack/react-query@5.34.1(react@18.3.1))(@trpc/client@11.0.0-rc.364(@trpc/server@11.0.0-rc.364))(@trpc/server@11.0.0-rc.364)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@trpc/server':
         specifier: 11.0.0-rc.364
         version: 11.0.0-rc.364
@@ -163,14 +163,14 @@ importers:
         specifier: ^0.10.1
         version: 0.10.1(typescript@5.4.5)(zod@3.23.6)
       '@tanstack/react-query':
-        specifier: ^5.32.1
-        version: 5.32.1(react@18.3.1)
+        specifier: ^5.34.1
+        version: 5.34.1(react@18.3.1)
       '@trpc/client':
         specifier: 11.0.0-rc.364
         version: 11.0.0-rc.364(@trpc/server@11.0.0-rc.364)
       '@trpc/react-query':
         specifier: 11.0.0-rc.364
-        version: 11.0.0-rc.364(@tanstack/react-query@5.32.1(react@18.3.1))(@trpc/client@11.0.0-rc.364(@trpc/server@11.0.0-rc.364))(@trpc/server@11.0.0-rc.364)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 11.0.0-rc.364(@tanstack/react-query@5.34.1(react@18.3.1))(@trpc/client@11.0.0-rc.364(@trpc/server@11.0.0-rc.364))(@trpc/server@11.0.0-rc.364)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@trpc/server':
         specifier: 11.0.0-rc.364
         version: 11.0.0-rc.364
@@ -2843,11 +2843,11 @@ packages:
       typescript:
         optional: true
 
-  '@tanstack/query-core@5.32.1':
-    resolution: {integrity: sha512-mCWa1wdGb1jiny4+qYegbSeadcFj+Nq65KFSs4A1DRveoIq7SrTwUhqu7hrB6d54cQH5x59DfJvxusn3w1Cj/g==}
+  '@tanstack/query-core@5.34.1':
+    resolution: {integrity: sha512-/a4yTnX525QUl8rFULrDLIogjqqcY/CiVvS/vWMgl477mO4WIIDxwQsLvEgb7vzlW8FqX/9CiCmaiAUnYVgB1w==}
 
-  '@tanstack/react-query@5.32.1':
-    resolution: {integrity: sha512-+nXLMB0JK0XwTJ+lQt49DPNLrbSppni9N5W5yMR085yW3YaRKRUFhfVTER3TvQd1UycHpoGPFnt1gHiijXERAg==}
+  '@tanstack/react-query@5.34.1':
+    resolution: {integrity: sha512-5DWzrK+ou5maZqVoIY0S26TYNpnA7re6JlviXVOe/4OBPtlvd4WEHJmyeLZhE43piJvrsKMxemp/f6Q2RPfebA==}
     peerDependencies:
       react: ^18.0.0
 
@@ -10615,11 +10615,11 @@ snapshots:
     optionalDependencies:
       typescript: 5.4.5
 
-  '@tanstack/query-core@5.32.1': {}
+  '@tanstack/query-core@5.34.1': {}
 
-  '@tanstack/react-query@5.32.1(react@18.3.1)':
+  '@tanstack/react-query@5.34.1(react@18.3.1)':
     dependencies:
-      '@tanstack/query-core': 5.32.1
+      '@tanstack/query-core': 5.34.1
       react: 18.3.1
 
   '@tanstack/react-table@8.16.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
@@ -10636,9 +10636,9 @@ snapshots:
     dependencies:
       '@trpc/server': 11.0.0-rc.364
 
-  '@trpc/react-query@11.0.0-rc.364(@tanstack/react-query@5.32.1(react@18.3.1))(@trpc/client@11.0.0-rc.364(@trpc/server@11.0.0-rc.364))(@trpc/server@11.0.0-rc.364)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@trpc/react-query@11.0.0-rc.364(@tanstack/react-query@5.34.1(react@18.3.1))(@trpc/client@11.0.0-rc.364(@trpc/server@11.0.0-rc.364))(@trpc/server@11.0.0-rc.364)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@tanstack/react-query': 5.32.1(react@18.3.1)
+      '@tanstack/react-query': 5.34.1(react@18.3.1)
       '@trpc/client': 11.0.0-rc.364(@trpc/server@11.0.0-rc.364)
       '@trpc/server': 11.0.0-rc.364
       react: 18.3.1
@@ -12292,7 +12292,7 @@ snapshots:
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
       eslint-module-utils: 2.8.0(eslint-import-resolver-node@0.3.9)(eslint@8.57.0)
-      hasown: 2.0.1
+      hasown: 2.0.0
       is-core-module: 2.13.1
       is-glob: 4.0.3
       minimatch: 3.1.2
