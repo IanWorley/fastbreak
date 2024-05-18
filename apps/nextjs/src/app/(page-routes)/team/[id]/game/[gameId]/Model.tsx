@@ -151,6 +151,8 @@ function Model(props: DialogDemoProps) {
       toast.error("Please select a player");
       return;
     }
+    console.log(data.points);
+
     if (data.points === "1") {
       await mutateAsync({
         teamId: teamid,
@@ -181,6 +183,8 @@ function Model(props: DialogDemoProps) {
         quarter: quarter,
       });
     }
+
+    form.reset();
   }
 
   return (
