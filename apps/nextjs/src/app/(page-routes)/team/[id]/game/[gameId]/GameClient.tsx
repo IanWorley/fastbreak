@@ -143,6 +143,8 @@ function GameClient() {
         onOpenChange={setPlayerSubDrawerState}
         playerToSwap={playerSwap}
         quarter={z.coerce.number().parse(QTR)}
+        setPlayerShooting={setPlayerShooting}
+        playerShooting={playerShooting}
       />
     </div>
   );

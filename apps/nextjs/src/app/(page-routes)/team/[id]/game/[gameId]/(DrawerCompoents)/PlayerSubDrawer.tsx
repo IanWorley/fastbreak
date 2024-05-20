@@ -15,12 +15,21 @@ import DrawerPlayerCard from "./DrawerPlayerCard";
 interface IPropsPlayerSubDrawer {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  setPlayerShooting: (playerId: string) => void;
+  playerShooting: string;
   playerToSwap: string;
   quarter: number;
 }
 
 function PlayerSubDrawer(props: IPropsPlayerSubDrawer) {
-  const { open, onOpenChange, playerToSwap, quarter } = props;
+  const {
+    open,
+    onOpenChange,
+    playerToSwap,
+    quarter,
+    setPlayerShooting,
+    playerShooting,
+  } = props;
   const { players } = usePlayerForApp((state) => state);
 
   return (
@@ -44,6 +53,8 @@ function PlayerSubDrawer(props: IPropsPlayerSubDrawer) {
                 playerToSwap={playerToSwap}
                 onOpenChange={onOpenChange}
                 quarter={quarter}
+                setPlayerShooting={setPlayerShooting}
+                playerShooting={playerShooting}
               />
             ))}
         </div>
