@@ -12,6 +12,8 @@ interface DrawerPlayerCardProps {
   playerToSwap: string;
   quarter: number;
   onOpenChange: (open: boolean) => void;
+  setPlayerShooting: (playerId: string) => void;
+  playerShooting: string;
 }
 
 function DrawerPlayerCard(props: DrawerPlayerCardProps) {
@@ -20,7 +22,13 @@ function DrawerPlayerCard(props: DrawerPlayerCardProps) {
   const teamId = z.string().cuid2().parse(parms.id);
   const gameId = z.string().cuid2().parse(parms.gameId);
 
-  const { player, playerToSwap, onOpenChange } = props;
+  const {
+    player,
+    playerToSwap,
+    onOpenChange,
+    setPlayerShooting,
+    playerShooting,
+  } = props;
   const { swapPlayersActive } = usePlayerForApp((state) => state);
 
   const shots = useShotsForGame(gameId, teamId, undefined); //! Heads up this is getting all the shots from that game
@@ -80,6 +88,9 @@ function DrawerPlayerCard(props: DrawerPlayerCardProps) {
         onClick={() => {
           swapPlayersActive(player.id, playerToSwap);
           onOpenChange(false);
+          if (playerShooting == playerToSwap) {
+            setPlayerShooting("");
+          }
         }}
       >
         Sub In
