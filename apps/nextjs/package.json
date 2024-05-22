@@ -8,7 +8,7 @@
     "clean": "git clean -xdf .next .turbo node_modules",
     "dev": "pnpm with-env next dev --turbo",
     "format": "prettier --check . --ignore-path ../../.gitignore",
-    "lint": "dotenv -v SKIP_ENV_VALIDATION=1 next lint",
+    "lint": "eslint",
     "start": "pnpm with-env next start",
     "typecheck": "tsc --noEmit",
     "with-env": "dotenv -e ../../.env --"
@@ -35,7 +35,7 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
-    "@acme/eslint-config": "workspace:^0.2.0",
+    "@acme/eslint-config": "workspace:^0.3.0",
     "@acme/prettier-config": "workspace:^0.1.0",
     "@acme/tailwind-config": "workspace:^0.1.0",
     "@acme/tsconfig": "workspace:^0.1.0",
@@ -48,14 +48,6 @@
     "prettier": "^3.2.5",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.4.5"
-  },
-  "eslintConfig": {
-    "root": true,
-    "extends": [
-      "@acme/eslint-config/base",
-      "@acme/eslint-config/nextjs",
-      "@acme/eslint-config/react"
-    ]
   },
   "resolutions": {
     "string-width": "7.1.0"
