@@ -22,6 +22,7 @@ function DisplayTeams(props: IDisplayTeamsProps) {
     initialData: initialData,
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (isLoading) {
     return (
       <div>
@@ -51,6 +52,7 @@ function DisplayTeams(props: IDisplayTeamsProps) {
     );
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (isError || !data) {
     return (
       <div>

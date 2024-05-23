@@ -14,7 +14,7 @@ export const teamsRouter = createTRPCRouter({
       where: (team, { eq }) => eq(team.user_id, ctx.userId),
     });
 
-    return teams ?? [];
+    return teams;
   }),
 
   deleteTeam: protectedProcedure

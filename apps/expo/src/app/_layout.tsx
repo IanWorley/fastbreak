@@ -54,6 +54,7 @@ const Init = () => {
   useEffect(() => {
     if (isLoaded) return;
 
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (isSignedIn) {
       router.push(`/Dashboard`);
     } else {
