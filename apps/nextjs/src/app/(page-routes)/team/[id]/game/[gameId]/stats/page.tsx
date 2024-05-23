@@ -67,8 +67,7 @@ function Page(props: Props) {
     );
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  if (players!.length === 0) {
+  if (players?.length ?? [].length === 0) {
     return (
       <main className="">
         <Navbar className="sticky top-0 z-10" teamId={id} viewingTeam={true} />

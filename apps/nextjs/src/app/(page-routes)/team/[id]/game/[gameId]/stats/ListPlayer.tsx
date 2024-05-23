@@ -1,6 +1,6 @@
 "use client";
 
-import { playerType } from "@acme/db";
+import type { playerType } from "@acme/db";
 import { Button } from "@acme/ui/button";
 
 interface IPropsStatsDrawer {
