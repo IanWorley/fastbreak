@@ -17,7 +17,7 @@ export default function Error({
   }, [error]);
 
   // trpc grab status code from error and pass it to notFound
-  if (error?.digest === "NEXT_NOT_FOUND") {
+  if (error.digest === "NEXT_NOT_FOUND") {
     return notFound();
   }
 

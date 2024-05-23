@@ -43,7 +43,7 @@ export const gameRouter = createTRPCRouter({
 
           return {
             ...game,
-            shots: shots ? shots : [],
+            shots: shots,
           };
         }),
       );
@@ -172,6 +172,7 @@ export const gameRouter = createTRPCRouter({
         return await ctx.db.query.shot.findMany({
           where: (shot, { eq }) => {
             return (
+              // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
               eq(shot.game_Id, input.gameId) && eq(shot.team_Id, input.teamId)
             );
           },
@@ -181,9 +182,11 @@ export const gameRouter = createTRPCRouter({
         return await ctx.db.query.shot.findMany({
           where: (shot, { eq }) => {
             return (
+              // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
               eq(shot.game_Id, input.gameId) &&
+              // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
               eq(shot.team_Id, input.teamId) &&
-              eq(shot.quarter ?? 0, input.quarter ?? 0)
+              eq(shot.quarter, input.quarter ?? 0)
             );
           },
         });

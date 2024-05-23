@@ -67,12 +67,13 @@ function Page(props: Props) {
     );
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   if (players!.length === 0) {
     return (
       <main className="">
         <Navbar className="sticky top-0 z-10" teamId={id} viewingTeam={true} />
         <h1 className="p-2 pt-5 text-center text-4xl font-extrabold">
-          {game!.name}
+          {game?.name ?? "Unknown Game"}
         </h1>
         <p className="text-center">No players found</p>
       </main>
@@ -83,7 +84,7 @@ function Page(props: Props) {
     <main className="">
       <Navbar className="sticky top-0 z-10" teamId={id} viewingTeam={true} />
       <h1 className="p-2 pt-5 text-center text-4xl font-extrabold">
-        {game!.name}
+        {game?.name ?? "Unknown Game"}
       </h1>
       {/* find players id and return name from a list */}
       {playerToSwap !== "" ? (
