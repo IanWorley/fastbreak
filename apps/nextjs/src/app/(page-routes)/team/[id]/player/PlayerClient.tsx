@@ -1,5 +1,11 @@
 "use client";
 
+import type {
+  ColumnDef,
+  ColumnFiltersState,
+  SortingState,
+  VisibilityState,
+} from "@tanstack/react-table";
 import * as React from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -8,18 +14,13 @@ import {
   ChevronDownIcon,
   DotsHorizontalIcon,
 } from "@radix-ui/react-icons";
-import type {
-  ColumnDef,
-  ColumnFiltersState,
-  SortingState,
-  VisibilityState} from "@tanstack/react-table";
 import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
-  useReactTable
+  useReactTable,
 } from "@tanstack/react-table";
 
 import type { playerType } from "@acme/db";
