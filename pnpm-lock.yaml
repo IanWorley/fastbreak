@@ -27,8 +27,8 @@ importers:
   apps/expo:
     dependencies:
       '@clerk/clerk-expo':
-        specifier: ^1.1.6
-        version: 1.1.6(@types/react@18.3.3)(expo-auth-session@5.4.0(expo@51.0.8(@babel/core@7.24.6)(@babel/preset-env@7.24.6(@babel/core@7.24.6))))(expo-web-browser@12.8.2(expo@51.0.8(@babel/core@7.24.6)(@babel/preset-env@7.24.6(@babel/core@7.24.6))))(react-dom@18.3.1(react@18.3.1))(react-native@0.74.1(@babel/core@7.24.6)(@babel/preset-env@7.24.6(@babel/core@7.24.6))(@types/react@18.3.3)(react@18.3.1))(react@18.3.1)
+        specifier: ^1.1.7
+        version: 1.1.7(@types/react@18.3.3)(expo-auth-session@5.4.0(expo@51.0.8(@babel/core@7.24.6)(@babel/preset-env@7.24.6(@babel/core@7.24.6))))(expo-web-browser@12.8.2(expo@51.0.8(@babel/core@7.24.6)(@babel/preset-env@7.24.6(@babel/core@7.24.6))))(react-dom@18.3.1(react@18.3.1))(react-native@0.74.1(@babel/core@7.24.6)(@babel/preset-env@7.24.6(@babel/core@7.24.6))(@types/react@18.3.3)(react@18.3.1))(react@18.3.1)
       '@expo/metro-config':
         specifier: ^0.18.4
         version: 0.18.4
@@ -1650,8 +1650,8 @@ packages:
     resolution: {integrity: sha512-4NxL0VU042dgrhDTqvCFws9v5Kmg+VlA70fD0sQWWBQJxNr2pEnjHfKG21ta7qIqexXPk4Ftr0qZk2/wRiex3A==}
     engines: {node: '>=18.17.0'}
 
-  '@clerk/clerk-expo@1.1.6':
-    resolution: {integrity: sha512-yGx0yk/cuNwO6+azGr0ozVpcVxTvhXXX+Xi/ZO3/9hi4uao4JzTjYh66n1MKIIOdAmJGxJW9VQJKovklPGtbqw==}
+  '@clerk/clerk-expo@1.1.7':
+    resolution: {integrity: sha512-chyXYIGsmfmuWeKP2p91QFWjTXwZlkhwNledXlfoAi6EeTOqQ9x1b2HfE50kobSmvHpVTd1lv7Kg+3Kz+YVm3g==}
     engines: {node: '>=18.17.0'}
     peerDependencies:
       expo-auth-session: '>=4'
@@ -1659,8 +1659,8 @@ packages:
       react: '>=18'
       react-dom: '>=18'
 
-  '@clerk/clerk-js@5.5.1':
-    resolution: {integrity: sha512-4so0r+c8TIAGLb+gN7LaHQiAfR0rojj/CEQiVI9xMSf+xmrJkcvsQP+TC7HWJIPrvr2YEuu9b6ChKe+dgzb3Uw==}
+  '@clerk/clerk-js@5.5.2':
+    resolution: {integrity: sha512-7kRt31bHvTqGPWx3/h1HBauwLe9ySfAljc1ZILYnf949zHDyk4wxriqJBjAnig5QDaKQa8BoTB7hYlifhooUwQ==}
     engines: {node: '>=18.17.0'}
     peerDependencies:
       react: '>=18'
@@ -8998,9 +8998,9 @@ snapshots:
       - react
       - react-dom
 
-  '@clerk/clerk-expo@1.1.6(@types/react@18.3.3)(expo-auth-session@5.4.0(expo@51.0.8(@babel/core@7.24.6)(@babel/preset-env@7.24.6(@babel/core@7.24.6))))(expo-web-browser@12.8.2(expo@51.0.8(@babel/core@7.24.6)(@babel/preset-env@7.24.6(@babel/core@7.24.6))))(react-dom@18.3.1(react@18.3.1))(react-native@0.74.1(@babel/core@7.24.6)(@babel/preset-env@7.24.6(@babel/core@7.24.6))(@types/react@18.3.3)(react@18.3.1))(react@18.3.1)':
+  '@clerk/clerk-expo@1.1.7(@types/react@18.3.3)(expo-auth-session@5.4.0(expo@51.0.8(@babel/core@7.24.6)(@babel/preset-env@7.24.6(@babel/core@7.24.6))))(expo-web-browser@12.8.2(expo@51.0.8(@babel/core@7.24.6)(@babel/preset-env@7.24.6(@babel/core@7.24.6))))(react-dom@18.3.1(react@18.3.1))(react-native@0.74.1(@babel/core@7.24.6)(@babel/preset-env@7.24.6(@babel/core@7.24.6))(@types/react@18.3.3)(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@clerk/clerk-js': 5.5.1(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@clerk/clerk-js': 5.5.2(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@clerk/clerk-react': 5.2.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@clerk/shared': 2.2.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       base-64: 1.0.0
@@ -9014,7 +9014,7 @@ snapshots:
       - '@types/react'
       - react-native
 
-  '@clerk/clerk-js@5.5.1(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@clerk/clerk-js@5.5.2(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@clerk/localizations': 2.4.3
       '@clerk/shared': 2.2.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -9083,7 +9083,7 @@ snapshots:
 
   '@emotion/babel-plugin@11.11.0':
     dependencies:
-      '@babel/helper-module-imports': 7.24.3
+      '@babel/helper-module-imports': 7.24.6
       '@babel/runtime': 7.24.6
       '@emotion/hash': 0.9.1
       '@emotion/memoize': 0.8.1
@@ -14361,7 +14361,7 @@ snapshots:
 
   parse-json@5.2.0:
     dependencies:
-      '@babel/code-frame': 7.24.2
+      '@babel/code-frame': 7.24.6
       error-ex: 1.3.2
       json-parse-even-better-errors: 2.3.1
       lines-and-columns: 1.2.4
