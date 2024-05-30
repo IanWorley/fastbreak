@@ -294,17 +294,17 @@ importers:
   packages/db:
     dependencies:
       '@libsql/client':
-        specifier: ^0.6.0
-        version: 0.6.0
+        specifier: ^0.6.1
+        version: 0.6.1
       '@planetscale/database':
         specifier: ^1.18.0
         version: 1.18.0
       drizzle-orm:
         specifier: ^0.30.10
-        version: 0.30.10(@libsql/client@0.6.0)(@planetscale/database@1.18.0)(@types/react@18.3.3)(react@18.3.1)
+        version: 0.30.10(@libsql/client@0.6.1)(@planetscale/database@1.18.0)(@types/react@18.3.3)(react@18.3.1)
       drizzle-zod:
         specifier: ^0.5.1
-        version: 0.5.1(drizzle-orm@0.30.10(@libsql/client@0.6.0)(@planetscale/database@1.18.0)(@types/react@18.3.3)(react@18.3.1))(zod@3.23.8)
+        version: 0.5.1(drizzle-orm@0.30.10(@libsql/client@0.6.1)(@planetscale/database@1.18.0)(@types/react@18.3.3)(react@18.3.1))(zod@3.23.8)
       zod:
         specifier: ^3.23.8
         version: 3.23.8
@@ -2143,11 +2143,11 @@ packages:
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
 
-  '@libsql/client@0.6.0':
-    resolution: {integrity: sha512-qhQzTG/y2IEVbL3+9PULDvlQFWJ/RnjFXECr/Nc3nRngGiiMysDaOV5VUzYk7DulUX98EA4wi+z3FspKrUplUA==}
+  '@libsql/client@0.6.1':
+    resolution: {integrity: sha512-j32pZMzsuKJ8bWi0rtlszrexXV7mXSxoSA/2C6DfIL7kelI7SHsFgscrQD3wHBJVguitwMklWBe2EuMMRW0img==}
 
-  '@libsql/core@0.6.0':
-    resolution: {integrity: sha512-affAB8vSqQwqI9NBDJ5uJCVaHoOAS2pOpbv1kWConh1SBbmJBnHHd4KG73RAJ2sgd2+NbT9WA+XJBqxgp28YSw==}
+  '@libsql/core@0.6.1':
+    resolution: {integrity: sha512-xVV7w4iQcWgkhvmcJ6RZQdImlNvJGIW4Tlx1KJVWh6+l1sdAAz8hNXEXO04rYGAg6oeIXZF1j1E/AW1mwomO1g==}
 
   '@libsql/darwin-arm64@0.3.10':
     resolution: {integrity: sha512-RaexEFfPAFogd6dJlqkpCkTxdr6K14Z0286lodIJ8Ny77mWuWyBkWKxf70OYWXXAMxMJFUW+6al1F3/Osf/pTg==}
@@ -9680,9 +9680,9 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.0
       '@jridgewell/sourcemap-codec': 1.4.15
 
-  '@libsql/client@0.6.0':
+  '@libsql/client@0.6.1':
     dependencies:
-      '@libsql/core': 0.6.0
+      '@libsql/core': 0.6.1
       '@libsql/hrana-client': 0.6.0
       js-base64: 3.7.7
       libsql: 0.3.10
@@ -9690,7 +9690,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@libsql/core@0.6.0':
+  '@libsql/core@0.6.1':
     dependencies:
       js-base64: 3.7.7
 
@@ -11880,16 +11880,16 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.30.10(@libsql/client@0.6.0)(@planetscale/database@1.18.0)(@types/react@18.3.3)(react@18.3.1):
+  drizzle-orm@0.30.10(@libsql/client@0.6.1)(@planetscale/database@1.18.0)(@types/react@18.3.3)(react@18.3.1):
     optionalDependencies:
-      '@libsql/client': 0.6.0
+      '@libsql/client': 0.6.1
       '@planetscale/database': 1.18.0
       '@types/react': 18.3.3
       react: 18.3.1
 
-  drizzle-zod@0.5.1(drizzle-orm@0.30.10(@libsql/client@0.6.0)(@planetscale/database@1.18.0)(@types/react@18.3.3)(react@18.3.1))(zod@3.23.8):
+  drizzle-zod@0.5.1(drizzle-orm@0.30.10(@libsql/client@0.6.1)(@planetscale/database@1.18.0)(@types/react@18.3.3)(react@18.3.1))(zod@3.23.8):
     dependencies:
-      drizzle-orm: 0.30.10(@libsql/client@0.6.0)(@planetscale/database@1.18.0)(@types/react@18.3.3)(react@18.3.1)
+      drizzle-orm: 0.30.10(@libsql/client@0.6.1)(@planetscale/database@1.18.0)(@types/react@18.3.3)(react@18.3.1)
       zod: 3.23.8
 
   eastasianwidth@0.2.0: {}
