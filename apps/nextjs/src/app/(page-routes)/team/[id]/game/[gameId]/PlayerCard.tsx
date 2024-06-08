@@ -84,7 +84,7 @@ function PlayerCard(props: PlayerCardProps) {
     <div
       aria-hidden="true"
       key={player.id}
-      className="bg-primary-foreground p-10 "
+      className="bg-primary-foreground p-10"
       onClick={() => {
         setPlayerShooting(player.id);
       }}
@@ -95,9 +95,9 @@ function PlayerCard(props: PlayerCardProps) {
         {" "}
         {player.name}{" "}
       </p>
-      <div className="flex space-x-4  ">
+      <div className="flex space-x-4">
         <Button
-          className={"w-full  bg-green-500"}
+          className={"w-full bg-green-500"}
           onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
             e.nativeEvent.stopImmediatePropagation();
             e.stopPropagation();
@@ -112,21 +112,21 @@ function PlayerCard(props: PlayerCardProps) {
           Sub Out
         </Button>
       </div>
-      <div className=" text-md flex place-items-center justify-evenly space-x-4 ">
+      <div className="text-md flex place-items-center justify-evenly space-x-4">
         <div>
-          <p className=" text-center">
+          <p className="text-center">
             {freethrowMade} / {freethrowTotal}
           </p>
-          <p className=" text-center"> Free Throw </p>
+          <p className="text-center"> Free Throw </p>
         </div>
         <div>
-          <p className=" text-center">
+          <p className="text-center">
             {twopointMade} / {twopointTotal}
           </p>
           <p className="text-center"> 2 Point </p>
         </div>
         <div>
-          <p className=" text-center">
+          <p className="text-center">
             {threepointMade} / {threepointTotal}
           </p>
           <p className="text-center"> 3 Point </p>

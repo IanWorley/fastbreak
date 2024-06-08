@@ -29,9 +29,9 @@ function Navbar({ className, viewingTeam, teamId }: NavbarProps) {
     <nav className={`w-full border-b bg-background ${className} `}>
       <div className="mx-auto max-w-screen-xl items-center px-4 md:flex md:px-8">
         <div className="flex items-center justify-between py-3 md:block md:py-5">
-          <div className="flex w-full justify-between ">
+          <div className="flex w-full justify-between">
             {isLoaded && isSignedIn ? (
-              <div className=" flex justify-end md:hidden">
+              <div className="flex justify-end md:hidden">
                 <UserButton />
               </div>
             ) : (
@@ -57,19 +57,19 @@ function Navbar({ className, viewingTeam, teamId }: NavbarProps) {
             isOpen ? "block" : "hidden"
           }`}
         >
-          <ul className="items-center justify-center space-y-8 md:flex  md:justify-end md:space-x-6 md:space-y-0 md:p-4">
+          <ul className="items-center justify-center space-y-8 md:flex md:justify-end md:space-x-6 md:space-y-0 md:p-4">
             {isLoaded && isSignedIn ? (
-              <li className=" hover:cursor-pointer hover:text-indigo-600">
+              <li className="hover:cursor-pointer hover:text-indigo-600">
                 <Link href="/team">Team</Link>
               </li>
             ) : null}
 
             {viewingTeam && (
               <>
-                <li className=" hover:cursor-pointer hover:text-indigo-600">
+                <li className="hover:cursor-pointer hover:text-indigo-600">
                   <Link href={`/team/${teamId}/game`}>Games</Link>
                 </li>
-                <li className=" hover:cursor-pointer hover:text-indigo-600">
+                <li className="hover:cursor-pointer hover:text-indigo-600">
                   <Link href={`/team/${teamId}/player`}>Roster</Link>
                 </li>
               </>
@@ -77,11 +77,11 @@ function Navbar({ className, viewingTeam, teamId }: NavbarProps) {
           </ul>
         </div>
         {isLoaded && isSignedIn ? (
-          <div className=" hidden md:flex">
+          <div className="hidden md:flex">
             <UserButton />
           </div>
         ) : (
-          <div className="hidden  md:flex ">
+          <div className="hidden md:flex">
             <SignInButton fallbackRedirectUrl={`${getBaseUrl()}/team`}>
               <Button variant={"default"}>Sign In</Button>
             </SignInButton>

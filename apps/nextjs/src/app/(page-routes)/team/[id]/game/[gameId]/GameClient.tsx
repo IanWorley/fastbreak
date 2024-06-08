@@ -56,7 +56,7 @@ function GameClient() {
 
   if (isLoading) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center ">
+      <div className="flex min-h-screen flex-col items-center justify-center">
         <div role="status">
           <svg
             aria-hidden="true"

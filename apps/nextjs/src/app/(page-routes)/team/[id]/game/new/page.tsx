@@ -9,7 +9,7 @@ function page() {
       <div className="flex min-h-screen flex-col">
         <Navbar className="" />
         <div className="flex flex-grow items-center justify-center">
-          <Card className="p-4  sm:w-auto">
+          <Card className="p-4 sm:w-auto">
             <CardHeader>
               <CardTitle className="text-4xl font-extrabold">
                 Create a Game

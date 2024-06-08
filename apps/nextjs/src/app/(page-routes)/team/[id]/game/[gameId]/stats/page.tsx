@@ -91,7 +91,7 @@ function Page(props: Props) {
           {players?.find((player) => player.id === playerToSwap)?.name}
         </h3>
       ) : (
-        <h3 className="p-2  text-center text-2xl">Select a Player</h3>
+        <h3 className="p-2 text-center text-2xl">Select a Player</h3>
       )}
 
       <StatsInfo gameId={gameId} shots={shots ?? []} playerId={playerToSwap} />
@@ -174,8 +174,8 @@ export function StatsInfo(props: IPropsStatsInfo) {
     );
 
   return (
-    <div className="grid grid-cols-3 grid-rows-2 items-center gap-2 bg-primary-foreground p-5 lg:mx-60 ">
-      <div className="h-full w-full ">
+    <div className="grid grid-cols-3 grid-rows-2 items-center gap-2 bg-primary-foreground p-5 lg:mx-60">
+      <div className="h-full w-full">
         <h4 className="text-center text-sm font-semibold">Free Throws</h4>
         <p className="text-center">{freethrowMade}</p>
       </div>

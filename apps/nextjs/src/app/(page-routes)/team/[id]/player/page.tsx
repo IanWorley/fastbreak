@@ -8,7 +8,7 @@ interface Props {
 function page({ params }: Props) {
   const { id } = params;
   return (
-    <main className="overflow-y-scroll ">
+    <main className="overflow-y-scroll">
       <Navbar teamId={id} viewingTeam={true} className="sticky top-0" />
       <div className="flex flex-col justify-center p-8">
         <PlayerClient />

@@ -79,7 +79,7 @@ function DrawerPlayerCard(props: DrawerPlayerCardProps) {
     );
 
   return (
-    <div key={player.id} className="bg-primary-foreground  md:mx-2 md:p-2 ">
+    <div key={player.id} className="bg-primary-foreground md:mx-2 md:p-2">
       <p className="p-2 text-center text-xl md:p-4 md:text-3xl">
         {player.name}
       </p>
@@ -96,21 +96,21 @@ function DrawerPlayerCard(props: DrawerPlayerCardProps) {
         Sub In
       </Button>
 
-      <div className=" flex items-center justify-evenly ">
+      <div className="flex items-center justify-evenly">
         <div>
-          <p className=" text-center">
+          <p className="text-center">
             {freethrowMade} / {freethrowTotal}
           </p>
-          <p className=" text-center"> Free Throw </p>
+          <p className="text-center"> Free Throw </p>
         </div>
         <div>
-          <p className=" text-center">
+          <p className="text-center">
             {twopointMade} / {twopointTotal}
           </p>
           <p className="text-center"> 2 Point </p>
         </div>
         <div>
-          <p className=" text-center">
+          <p className="text-center">
             {threepointMade} / {threepointTotal}
           </p>
           <p className="text-center"> 3 Point </p>

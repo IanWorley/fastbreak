@@ -27,7 +27,7 @@ function DisplayTeams(props: IDisplayTeamsProps) {
     return (
       <div>
         <Navbar className="fixed" />
-        <div className="flex min-h-screen flex-col items-center justify-center ">
+        <div className="flex min-h-screen flex-col items-center justify-center">
           <div role="status">
             <svg
               aria-hidden="true"
@@ -64,11 +64,11 @@ function DisplayTeams(props: IDisplayTeamsProps) {
 
   return (
     <main className="overflow-y-scroll pt-20">
-      <Navbar className="fixed top-0 " />
+      <Navbar className="fixed top-0" />
 
       <div className="">
-        <div className="flex flex-col  items-center   justify-evenly p-10 sm:flex-row ">
-          <p className=" p-4 text-3xl font-bold ">Your Teams </p>
+        <div className="flex flex-col items-center justify-evenly p-10 sm:flex-row">
+          <p className="p-4 text-3xl font-bold">Your Teams </p>
 
           {data.length === 0 ? (
             <Link href="/team/new">
@@ -78,7 +78,7 @@ function DisplayTeams(props: IDisplayTeamsProps) {
             <CreateTeamDenied />
           )}
         </div>
-        <div className="flex grid-cols-2 flex-col  md:grid  ">
+        <div className="flex grid-cols-2 flex-col md:grid">
           {data.length === 0 && (
             <div className="flex flex-col items-center justify-center">
               <p className="text-3xl font-bold">No Teams</p>
@@ -108,12 +108,12 @@ export function Team(props: ITeamProps) {
 
   return (
     <div
-      className=" mx-10 my-3 flex flex-col border  bg-primary-foreground lg:mx-36  "
+      className="mx-10 my-3 flex flex-col border bg-primary-foreground lg:mx-36"
       key={team.id}
     >
       <h3 className="p-4 text-center text-2xl font-semibold"> {team.name}</h3>
-      <div className=" flex h-full w-full gap-3  ">
-        <Link className="  h-full  w-full" href={`/team/${team.id}/game`}>
+      <div className="flex h-full w-full gap-3">
+        <Link className="h-full w-full" href={`/team/${team.id}/game`}>
           <Button className="h-full w-full">View</Button>
         </Link>
         <DeleteModel team={team}>

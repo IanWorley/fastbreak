@@ -48,7 +48,7 @@ function FormNewPlayer() {
 
   return (
     <div>
-      <form className=" p-4 " onSubmit={handleSubmit(onSubmit)}>
+      <form className="p-4" onSubmit={handleSubmit(onSubmit)}>
         <CardContent className="">
           <Label>Name</Label>
           <Input

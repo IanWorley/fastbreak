@@ -10,7 +10,7 @@ function page({ params }: { params: { id: string } }) {
       <div className="flex h-screen flex-col">
         <Navbar className="" viewingTeam={true} teamId={params.id} />
         <div className="flex flex-grow items-center justify-center">
-          <Card className="p-4  sm:w-auto">
+          <Card className="p-4 sm:w-auto">
             <CardHeader>
               <CardTitle className="text-4xl font-extrabold">
                 Add a Player

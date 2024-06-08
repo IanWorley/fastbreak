@@ -88,7 +88,7 @@ export const columns: ColumnDef<playerType>[] = [
       );
     },
     cell: ({ row }) => (
-      <div className="items-center  lowercase">
+      <div className="items-center lowercase">
         {row.getValue("jerseyNumber")}
       </div>
     ),
@@ -107,7 +107,7 @@ export const columns: ColumnDef<playerType>[] = [
       );
     },
     cell: ({ row }) => (
-      <div className="lowercase ">{row.getValue("totalPoints")}</div>
+      <div className="lowercase">{row.getValue("totalPoints")}</div>
     ),
   },
   {
@@ -124,9 +124,7 @@ export const columns: ColumnDef<playerType>[] = [
       );
     },
     cell: ({ row }) => (
-      <div className="lowercase ">
-        {row.getValue("archived") ? "Yes" : "No"}
-      </div>
+      <div className="lowercase">{row.getValue("archived") ? "Yes" : "No"}</div>
     ),
   },
   {
@@ -201,7 +199,7 @@ export function DataTableDemo() {
   if (isLoading) {
     return (
       <div>
-        <div className="flex min-h-screen flex-col items-center justify-center ">
+        <div className="flex min-h-screen flex-col items-center justify-center">
           <div role="status">
             <svg
               aria-hidden="true"
@@ -235,7 +233,7 @@ export function DataTableDemo() {
   }
 
   return (
-    <div className="min-w-screen min-h-screen ">
+    <div className="min-w-screen min-h-screen">
       <div className="flex items-center justify-between py-4">
         <Input
           placeholder="Filter by name"

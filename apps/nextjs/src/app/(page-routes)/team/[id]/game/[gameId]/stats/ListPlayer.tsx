@@ -14,7 +14,7 @@ function PlayerSelectDrawer(props: IPropsStatsDrawer) {
   const { onOpenChange, setPlayerToSwap, playerToSwap, players } = props;
 
   return (
-    <div className="flex grid-cols-4 grid-rows-4  flex-col gap-5 overflow-y-scroll md:grid">
+    <div className="flex grid-cols-4 grid-rows-4 flex-col gap-5 overflow-y-scroll md:grid">
       {players
         .filter((player) => player.id !== playerToSwap)
         .map((player) => (

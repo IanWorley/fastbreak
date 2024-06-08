@@ -42,7 +42,7 @@ function DisplayListGames(props: Props) {
     return (
       <main className="">
         <Navbar className="fixed" teamId={id} viewingTeam={true} />
-        <div className="flex min-h-screen flex-col items-center justify-center ">
+        <div className="flex min-h-screen flex-col items-center justify-center">
           <div role="status">
             <svg
               aria-hidden="true"
@@ -71,8 +71,8 @@ function DisplayListGames(props: Props) {
     <main className="overflow-y-scroll">
       <Navbar className="sticky top-0" teamId={id} viewingTeam={true} />
       <div className="">
-        <div className="flex flex-col  items-center   justify-evenly p-10 sm:flex-row ">
-          <h1 className="p-4 text-3xl font-bold "> Games </h1>
+        <div className="flex flex-col items-center justify-evenly p-10 sm:flex-row">
+          <h1 className="p-4 text-3xl font-bold"> Games </h1>
           <Link href={`/team/${id}/game/new `}>
             <Button className="">Add Game</Button>
           </Link>
@@ -107,7 +107,7 @@ function Game(props: GameProps) {
   const { game, shots, id } = props;
 
   return (
-    <div className="mx-8   my-4  bg-primary-foreground  lg:mx-32" key={game.id}>
+    <div className="mx-8 my-4 bg-primary-foreground lg:mx-32" key={game.id}>
       <h3 className="p-4 text-center text-4xl font-semibold">{game.name}</h3>
       <div className="flex flex-row justify-center p-2 text-center">
         <h5 className="text-md font-semibold">
@@ -118,7 +118,7 @@ function Game(props: GameProps) {
         </h5>
       </div>
 
-      <div className="flex flex-row  gap-2">
+      <div className="flex flex-row gap-2">
         <Link
           className="block h-full w-full"
           href={`/team/${id}/game/${game.id}`}
@@ -127,7 +127,7 @@ function Game(props: GameProps) {
         </Link>
         <Link
           href={`/team/${id}/game/${game.id}/stats`}
-          className="block h-full w-full "
+          className="block h-full w-full"
         >
           <Button className="h-full w-full" variant={"secondary"}>
             Stats

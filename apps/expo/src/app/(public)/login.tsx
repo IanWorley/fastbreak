@@ -10,15 +10,15 @@ const Login = () => {
         </Text>
       </View>
 
-      <View className=" flex flex-col justify-center  p-10 ">
-        <Text className=" text-primary">Login</Text>
+      <View className="flex flex-col justify-center p-10">
+        <Text className="text-primary">Login</Text>
         <TextInput
           placeholder="Gavin@Hooli.com"
-          className=" bg-secondary p-4 text-primary  placeholder:text-slate-400  "
+          className="bg-secondary p-4 text-primary placeholder:text-slate-400"
         ></TextInput>
-        <Text className="text-primary "> Password</Text>
+        <Text className="text-primary"> Password</Text>
         <TextInput
-          className="bg-secondary p-4 text-primary  placeholder:text-slate-400"
+          className="bg-secondary p-4 text-primary placeholder:text-slate-400"
           secureTextEntry={true}
         ></TextInput>
         <Pressable>
@@ -27,11 +27,11 @@ const Login = () => {
       </View>
       <View className="flex flex-row justify-evenly p-10">
         <Pressable>
-          <Text className=" text-primary">Sign Up</Text>
+          <Text className="text-primary">Sign Up</Text>
         </Pressable>
 
         <Pressable>
-          <Text className=" text-primary">Login</Text>
+          <Text className="text-primary">Login</Text>
         </Pressable>
       </View>
     </SafeAreaView>

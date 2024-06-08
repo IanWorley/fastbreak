@@ -40,7 +40,7 @@ function PlayerList(props: PlayerListProps) {
             ))}
         </div>
       ) : (
-        <div className="bg-primary-foreground p-10  ">
+        <div className="bg-primary-foreground p-10">
           <p className="p-4 text-3xl"> Add Players to team to start a game </p>
         </div>
       )}
