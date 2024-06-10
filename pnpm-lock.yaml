@@ -230,8 +230,8 @@ importers:
         specifier: ^9.4.0
         version: 9.4.0
       jiti:
-        specifier: ^1.21.3
-        version: 1.21.3
+        specifier: ^1.21.6
+        version: 1.21.6
       prettier:
         specifier: ^3.3.1
         version: 3.3.1
@@ -5283,6 +5283,10 @@ packages:
 
   jiti@1.21.3:
     resolution: {integrity: sha512-uy2bNX5zQ+tESe+TiC7ilGRz8AtRGmnJH55NC5S0nSUjvvvM2hJHmefHErugGXN4pNv4Qx7vLsnNw9qJ9mtIsw==}
+    hasBin: true
+
+  jiti@1.21.6:
+    resolution: {integrity: sha512-2yTgeWTWzMWkHu6Jp9NKgePDaYHbntiwvYuuJLbbN9vl7DC9DvXKOB2BC3ZZ92D3cvV/aflH0osDfwpHepQ53w==}
     hasBin: true
 
   joi@17.12.0:
@@ -13621,6 +13625,8 @@ snapshots:
   jimp-compact@0.16.1: {}
 
   jiti@1.21.3: {}
+
+  jiti@1.21.6: {}
 
   joi@17.12.0:
     dependencies:
