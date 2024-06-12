@@ -260,8 +260,8 @@ importers:
         specifier: ^1.2.0
         version: 1.2.0
       '@upstash/redis':
-        specifier: ^1.31.3
-        version: 1.31.3
+        specifier: ^1.31.4
+        version: 1.31.4
       next:
         specifier: ^14.2.4
         version: 14.2.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -3015,8 +3015,8 @@ packages:
   '@upstash/ratelimit@1.2.0':
     resolution: {integrity: sha512-03mNBUNz9EvIJCxhU0OtFWO3OSQE4gShFBlGph+hDPm9k7O75We1NYS/tCXSdmLVXtOvUGSmi5fyKQLBTEGWxw==}
 
-  '@upstash/redis@1.31.3':
-    resolution: {integrity: sha512-KtVgWBUEx/LGbR8oRwYexwzHh3s5DNqYW0bjkD+gjFZVOnREJITvK+hC4PjSSD+8D4qJ+Xbkfmy8ANADZ9EUFg==}
+  '@upstash/redis@1.31.4':
+    resolution: {integrity: sha512-roJjsdAOUWGVCuiA5R2ajkR41n0KrO4DGil2ZbRaj3m0F2bMUMZ3d5KaUGgDQshPpGkW2+nwFLzN5M5VQoR1pQ==}
 
   '@urql/core@2.3.6':
     resolution: {integrity: sha512-PUxhtBh7/8167HJK6WqBv6Z0piuiaZHQGYbhwpNL9aIQmLROPEdaUYkY4wh45wPQXcTpnd11l0q3Pw+TI11pdw==}
@@ -10746,13 +10746,13 @@ snapshots:
 
   '@upstash/core-analytics@0.0.9':
     dependencies:
-      '@upstash/redis': 1.31.3
+      '@upstash/redis': 1.31.4
 
   '@upstash/ratelimit@1.2.0':
     dependencies:
       '@upstash/core-analytics': 0.0.9
 
-  '@upstash/redis@1.31.3':
+  '@upstash/redis@1.31.4':
     dependencies:
       crypto-js: 4.2.0
 
