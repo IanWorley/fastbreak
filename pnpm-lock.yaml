@@ -27,8 +27,8 @@ importers:
   apps/expo:
     dependencies:
       '@clerk/clerk-expo':
-        specifier: ^1.2.5
-        version: 1.2.5(@types/react@18.3.3)(expo-auth-session@5.4.0(expo@51.0.20(@babel/core@7.24.8)(@babel/preset-env@7.24.8(@babel/core@7.24.8))))(expo-web-browser@12.8.2(expo@51.0.20(@babel/core@7.24.8)(@babel/preset-env@7.24.8(@babel/core@7.24.8))))(react-dom@18.3.1(react@18.3.1))(react-native@0.74.3(@babel/core@7.24.8)(@babel/preset-env@7.24.8(@babel/core@7.24.8))(@types/react@18.3.3)(react@18.3.1))(react@18.3.1)
+        specifier: ^1.2.6
+        version: 1.2.6(@types/react@18.3.3)(expo-auth-session@5.4.0(expo@51.0.20(@babel/core@7.24.8)(@babel/preset-env@7.24.8(@babel/core@7.24.8))))(expo-web-browser@12.8.2(expo@51.0.20(@babel/core@7.24.8)(@babel/preset-env@7.24.8(@babel/core@7.24.8))))(react-dom@18.3.1(react@18.3.1))(react-native@0.74.3(@babel/core@7.24.8)(@babel/preset-env@7.24.8(@babel/core@7.24.8))(@types/react@18.3.3)(react@18.3.1))(react@18.3.1)
       '@expo/metro-config':
         specifier: ^0.18.8
         version: 0.18.8
@@ -1436,8 +1436,8 @@ packages:
     resolution: {integrity: sha512-WBVQqUgjo8itXQmB9j4vS+6EU4fsEskF1Bof4QMlXiyLazkhkqrlk1HVyDm0iQ3n4PJDkL4wN3IfJo2sBcauFQ==}
     engines: {node: '>=18.17.0'}
 
-  '@clerk/clerk-expo@1.2.5':
-    resolution: {integrity: sha512-AIPMI1tk6I4K+dzAZNYk4RqhIK+DQF8RN/EY9aefE3gaKpgqVrFisnDRQUc0VkmAeJmdi3EkluZW9YJCUK0X9w==}
+  '@clerk/clerk-expo@1.2.6':
+    resolution: {integrity: sha512-nZ3ffS07X+rxH955ZNaosoJK3/nENOx1Db1ZidbvQqrbjWIKStTH0Vu16nID7Bnls9L21yx4nXAgYjDj05rJWg==}
     engines: {node: '>=18.17.0'}
     peerDependencies:
       expo-auth-session: '>=4'
@@ -1445,8 +1445,8 @@ packages:
       react: '>=18'
       react-dom: '>=18'
 
-  '@clerk/clerk-js@5.8.0':
-    resolution: {integrity: sha512-vfNDt7UFu9367b1q2aYblW87qUwf8gudNMXvgIjIej0ib2pBPxtrZ/q0J9ISqYxIaMoWbfz25L3u9hJNGzFKGw==}
+  '@clerk/clerk-js@5.8.1':
+    resolution: {integrity: sha512-kHjhG2gynP6geVdk9YvV22DlaS6RmyRSFnRbHoYWB3nwBor4Pd0T+ecdSRSl26T3cGqnjADXiBKiL/FKwp8cQQ==}
     engines: {node: '>=18.17.0'}
     peerDependencies:
       react: '>=18'
@@ -7072,9 +7072,6 @@ packages:
   tslib@2.4.1:
     resolution: {integrity: sha512-tGyy4dAjRIEwI7BzsB0lynWgOpfqjUdq91XXAlIWD2OwKBH7oCl/GZG/HT4BOHrTlPMOASlMQ7veyTqpmRcrNA==}
 
-  tslib@2.6.2:
-    resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
-
   tslib@2.6.3:
     resolution: {integrity: sha512-xNvxJEOUiWPGhUuUdQgAJPKOOJfGnIyKySOc09XkKsgdUV/3E2zvwZYdejjmRgPCgcym1juLH3226yA7sEFJKQ==}
 
@@ -8711,9 +8708,9 @@ snapshots:
       - react
       - react-dom
 
-  '@clerk/clerk-expo@1.2.5(@types/react@18.3.3)(expo-auth-session@5.4.0(expo@51.0.20(@babel/core@7.24.8)(@babel/preset-env@7.24.8(@babel/core@7.24.8))))(expo-web-browser@12.8.2(expo@51.0.20(@babel/core@7.24.8)(@babel/preset-env@7.24.8(@babel/core@7.24.8))))(react-dom@18.3.1(react@18.3.1))(react-native@0.74.3(@babel/core@7.24.8)(@babel/preset-env@7.24.8(@babel/core@7.24.8))(@types/react@18.3.3)(react@18.3.1))(react@18.3.1)':
+  '@clerk/clerk-expo@1.2.6(@types/react@18.3.3)(expo-auth-session@5.4.0(expo@51.0.20(@babel/core@7.24.8)(@babel/preset-env@7.24.8(@babel/core@7.24.8))))(expo-web-browser@12.8.2(expo@51.0.20(@babel/core@7.24.8)(@babel/preset-env@7.24.8(@babel/core@7.24.8))))(react-dom@18.3.1(react@18.3.1))(react-native@0.74.3(@babel/core@7.24.8)(@babel/preset-env@7.24.8(@babel/core@7.24.8))(@types/react@18.3.3)(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@clerk/clerk-js': 5.8.0(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@clerk/clerk-js': 5.8.1(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@clerk/clerk-react': 5.2.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@clerk/shared': 2.3.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@clerk/types': 4.7.0
@@ -8729,7 +8726,7 @@ snapshots:
       - react-native
       - supports-color
 
-  '@clerk/clerk-js@5.8.0(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@clerk/clerk-js@5.8.1(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@clerk/localizations': 2.4.7
       '@clerk/shared': 2.3.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -10502,7 +10499,7 @@ snapshots:
   '@swc/helpers@0.5.5':
     dependencies:
       '@swc/counter': 0.1.3
-      tslib: 2.6.2
+      tslib: 2.6.3
 
   '@t3-oss/env-core@0.10.1(typescript@5.5.3)(zod@3.23.8)':
     dependencies:
@@ -10937,7 +10934,7 @@ snapshots:
 
   aria-hidden@1.2.3:
     dependencies:
-      tslib: 2.6.2
+      tslib: 2.6.3
 
   aria-query@5.1.3:
     dependencies:
@@ -14544,7 +14541,7 @@ snapshots:
     dependencies:
       react: 18.3.1
       react-style-singleton: 2.2.1(@types/react@18.3.3)(react@18.3.1)
-      tslib: 2.6.2
+      tslib: 2.6.3
     optionalDependencies:
       '@types/react': 18.3.3
 
@@ -14553,7 +14550,7 @@ snapshots:
       react: 18.3.1
       react-remove-scroll-bar: 2.3.4(@types/react@18.3.3)(react@18.3.1)
       react-style-singleton: 2.2.1(@types/react@18.3.3)(react@18.3.1)
-      tslib: 2.6.2
+      tslib: 2.6.3
       use-callback-ref: 1.3.1(@types/react@18.3.3)(react@18.3.1)
       use-sidecar: 1.1.2(@types/react@18.3.3)(react@18.3.1)
     optionalDependencies:
@@ -14570,7 +14567,7 @@ snapshots:
       get-nonce: 1.0.1
       invariant: 2.2.4
       react: 18.3.1
-      tslib: 2.6.2
+      tslib: 2.6.3
     optionalDependencies:
       '@types/react': 18.3.3
 
@@ -14752,7 +14749,7 @@ snapshots:
 
   rxjs@7.8.1:
     dependencies:
-      tslib: 2.6.2
+      tslib: 2.6.3
 
   safe-array-concat@1.1.0:
     dependencies:
@@ -15355,8 +15352,6 @@ snapshots:
 
   tslib@2.4.1: {}
 
-  tslib@2.6.2: {}
-
   tslib@2.6.3: {}
 
   turbo-darwin-64@1.13.4:
@@ -15546,7 +15541,7 @@ snapshots:
   use-callback-ref@1.3.1(@types/react@18.3.3)(react@18.3.1):
     dependencies:
       react: 18.3.1
-      tslib: 2.6.2
+      tslib: 2.6.3
     optionalDependencies:
       '@types/react': 18.3.3
 
@@ -15558,7 +15553,7 @@ snapshots:
     dependencies:
       detect-node-es: 1.1.0
       react: 18.3.1
-      tslib: 2.6.2
+      tslib: 2.6.3
     optionalDependencies:
       '@types/react': 18.3.3
 
