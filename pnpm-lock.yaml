@@ -36,14 +36,14 @@ importers:
         specifier: 1.7.1
         version: 1.7.1(@babel/runtime@7.25.4)(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))(@types/react@18.3.4)(react@18.3.1))(react@18.3.1)
       '@tanstack/react-query':
-        specifier: ^5.51.23
-        version: 5.51.23(react@18.3.1)
+        specifier: ^5.52.1
+        version: 5.52.1(react@18.3.1)
       '@trpc/client':
         specifier: 11.0.0-rc.485
         version: 11.0.0-rc.485(@trpc/server@11.0.0-rc.485)
       '@trpc/react-query':
         specifier: 11.0.0-rc.485
-        version: 11.0.0-rc.485(@tanstack/react-query@5.51.23(react@18.3.1))(@trpc/client@11.0.0-rc.485(@trpc/server@11.0.0-rc.485))(@trpc/server@11.0.0-rc.485)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 11.0.0-rc.485(@tanstack/react-query@5.52.1(react@18.3.1))(@trpc/client@11.0.0-rc.485(@trpc/server@11.0.0-rc.485))(@trpc/server@11.0.0-rc.485)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@trpc/server':
         specifier: 11.0.0-rc.485
         version: 11.0.0-rc.485
@@ -163,14 +163,14 @@ importers:
         specifier: ^0.11.0
         version: 0.11.0(typescript@5.5.4)(zod@3.23.8)
       '@tanstack/react-query':
-        specifier: ^5.51.23
-        version: 5.51.23(react@18.3.1)
+        specifier: ^5.52.1
+        version: 5.52.1(react@18.3.1)
       '@trpc/client':
         specifier: 11.0.0-rc.485
         version: 11.0.0-rc.485(@trpc/server@11.0.0-rc.485)
       '@trpc/react-query':
         specifier: 11.0.0-rc.485
-        version: 11.0.0-rc.485(@tanstack/react-query@5.51.23(react@18.3.1))(@trpc/client@11.0.0-rc.485(@trpc/server@11.0.0-rc.485))(@trpc/server@11.0.0-rc.485)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 11.0.0-rc.485(@tanstack/react-query@5.52.1(react@18.3.1))(@trpc/client@11.0.0-rc.485(@trpc/server@11.0.0-rc.485))(@trpc/server@11.0.0-rc.485)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@trpc/server':
         specifier: 11.0.0-rc.485
         version: 11.0.0-rc.485
@@ -2899,13 +2899,13 @@ packages:
       typescript:
         optional: true
 
-  '@tanstack/query-core@5.51.21':
-    resolution: {integrity: sha512-POQxm42IUp6n89kKWF4IZi18v3fxQWFRolvBA6phNVmA8psdfB1MvDnGacCJdS+EOX12w/CyHM62z//rHmYmvw==}
+  '@tanstack/query-core@5.52.0':
+    resolution: {integrity: sha512-U1DOEgltjUwalN6uWYTewSnA14b+tE7lSylOiASKCAO61ENJeCq9VVD/TXHA6O5u9+6v5+UgGYBSccTKDoyMqw==}
 
-  '@tanstack/react-query@5.51.23':
-    resolution: {integrity: sha512-CfJCfX45nnVIZjQBRYYtvVMIsGgWLKLYC4xcUiYEey671n1alvTZoCBaU9B85O8mF/tx9LPyrI04A6Bs2THv4A==}
+  '@tanstack/react-query@5.52.1':
+    resolution: {integrity: sha512-soyn4dNIUZ8US8NaPVXv06gkZFHaZnPfKWPDjRJjFRW3Y7WZ0jx72eT6zhw3VQlkMPysmXye8l35ewPHspKgbQ==}
     peerDependencies:
-      react: ^18.0.0
+      react: ^18 || ^19
 
   '@tanstack/react-table@8.20.1':
     resolution: {integrity: sha512-PJK+07qbengObe5l7c8vCdtefXm8cyR4i078acWrHbdm8JKw1ES7YpmOtVt9ALUVEEFAHscdVpGRhRgikgFMbQ==}
@@ -10746,11 +10746,11 @@ snapshots:
     optionalDependencies:
       typescript: 5.5.4
 
-  '@tanstack/query-core@5.51.21': {}
+  '@tanstack/query-core@5.52.0': {}
 
-  '@tanstack/react-query@5.51.23(react@18.3.1)':
+  '@tanstack/react-query@5.52.1(react@18.3.1)':
     dependencies:
-      '@tanstack/query-core': 5.51.21
+      '@tanstack/query-core': 5.52.0
       react: 18.3.1
 
   '@tanstack/react-table@8.20.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
@@ -10767,9 +10767,9 @@ snapshots:
     dependencies:
       '@trpc/server': 11.0.0-rc.485
 
-  '@trpc/react-query@11.0.0-rc.485(@tanstack/react-query@5.51.23(react@18.3.1))(@trpc/client@11.0.0-rc.485(@trpc/server@11.0.0-rc.485))(@trpc/server@11.0.0-rc.485)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@trpc/react-query@11.0.0-rc.485(@tanstack/react-query@5.52.1(react@18.3.1))(@trpc/client@11.0.0-rc.485(@trpc/server@11.0.0-rc.485))(@trpc/server@11.0.0-rc.485)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@tanstack/react-query': 5.51.23(react@18.3.1)
+      '@tanstack/react-query': 5.52.1(react@18.3.1)
       '@trpc/client': 11.0.0-rc.485(@trpc/server@11.0.0-rc.485)
       '@trpc/server': 11.0.0-rc.485
       react: 18.3.1
