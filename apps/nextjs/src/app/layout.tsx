@@ -12,8 +12,6 @@ import { TRPCReactProvider } from "~/trpc/react";
 
 import "~/app/globals.css";
 
-import { CSPostHogProvider } from "./_components/providers";
-
 export const metadata: Metadata = {
   metadataBase: new URL(
     env.VERCEL_ENV === "production"
@@ -53,12 +51,10 @@ export default function RootLayout(props: { children: React.ReactNode }) {
         )}
       >
         <ClerkProvider>
-          <CSPostHogProvider>
-            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              <TRPCReactProvider>{props.children}</TRPCReactProvider>
-              <Toaster />
-            </ThemeProvider>
-          </CSPostHogProvider>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <TRPCReactProvider>{props.children}</TRPCReactProvider>
+            <Toaster />
+          </ThemeProvider>
         </ClerkProvider>
       </body>
     </html>
