@@ -50,7 +50,7 @@
     "@babel/preset-env": "^7.25.7",
     "@babel/runtime": "^7.25.7",
     "@types/babel__core": "^7.20.5",
-    "@types/react": "^18.3.5",
+    "@types/react": "^18.3.11",
     "eslint": "^9.9.1",
     "prettier": "^3.3.3",
     "tailwindcss": "^3.4.10",
