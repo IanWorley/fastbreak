@@ -513,8 +513,8 @@ importers:
         specifier: ^3.3.3
         version: 3.3.3
       prettier-plugin-tailwindcss:
-        specifier: ^0.6.6
-        version: 0.6.6(@ianvs/prettier-plugin-sort-imports@4.3.1(prettier@3.3.3))(prettier@3.3.3)
+        specifier: ^0.6.8
+        version: 0.6.8(@ianvs/prettier-plugin-sort-imports@4.3.1(prettier@3.3.3))(prettier@3.3.3)
     devDependencies:
       '@acme/tsconfig':
         specifier: workspace:^0.1.0
@@ -6313,8 +6313,8 @@ packages:
     resolution: {integrity: sha512-ravE6m9Atw9Z/jjttRUZ+clIXogdghyZAuWJ3qEzjT+jI/dL1ifAqhZeC5VHzQp1MSt1+jxKkFNemj/iO7tVUA==}
     engines: {node: '>=4'}
 
-  prettier-plugin-tailwindcss@0.6.6:
-    resolution: {integrity: sha512-OPva5S7WAsPLEsOuOWXATi13QrCKACCiIonFgIR6V4lYv4QLp++UXVhZSzRbZxXGimkQtQT86CC6fQqTOybGng==}
+  prettier-plugin-tailwindcss@0.6.8:
+    resolution: {integrity: sha512-dGu3kdm7SXPkiW4nzeWKCl3uoImdd5CTZEJGxyypEPL37Wj0HT2pLqjrvSei1nTeuQfO4PUfjeW5cTUNRLZ4sA==}
     engines: {node: '>=14.21.3'}
     peerDependencies:
       '@ianvs/prettier-plugin-sort-imports': '*'
@@ -14892,7 +14892,7 @@ snapshots:
 
   prepend-http@2.0.0: {}
 
-  prettier-plugin-tailwindcss@0.6.6(@ianvs/prettier-plugin-sort-imports@4.3.1(prettier@3.3.3))(prettier@3.3.3):
+  prettier-plugin-tailwindcss@0.6.8(@ianvs/prettier-plugin-sort-imports@4.3.1(prettier@3.3.3))(prettier@3.3.3):
     dependencies:
       prettier: 3.3.3
     optionalDependencies:
