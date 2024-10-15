@@ -39,14 +39,14 @@ importers:
         specifier: ^5.59.15
         version: 5.59.15(react@18.3.1)
       '@trpc/client':
-        specifier: 11.0.0-rc.567
-        version: 11.0.0-rc.567(@trpc/server@11.0.0-rc.567)
+        specifier: 11.0.0-rc.577
+        version: 11.0.0-rc.577(@trpc/server@11.0.0-rc.577)
       '@trpc/react-query':
-        specifier: 11.0.0-rc.567
-        version: 11.0.0-rc.567(@tanstack/react-query@5.59.15(react@18.3.1))(@trpc/client@11.0.0-rc.567(@trpc/server@11.0.0-rc.567))(@trpc/server@11.0.0-rc.567)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: 11.0.0-rc.577
+        version: 11.0.0-rc.577(@tanstack/react-query@5.59.15(react@18.3.1))(@trpc/client@11.0.0-rc.577(@trpc/server@11.0.0-rc.577))(@trpc/server@11.0.0-rc.577)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@trpc/server':
-        specifier: 11.0.0-rc.567
-        version: 11.0.0-rc.567
+        specifier: 11.0.0-rc.577
+        version: 11.0.0-rc.577
       expo:
         specifier: ~51.0.38
         version: 51.0.38(@babel/core@7.25.8)(@babel/preset-env@7.25.8(@babel/core@7.25.8))
@@ -166,14 +166,14 @@ importers:
         specifier: ^5.59.15
         version: 5.59.15(react@18.3.1)
       '@trpc/client':
-        specifier: 11.0.0-rc.567
-        version: 11.0.0-rc.567(@trpc/server@11.0.0-rc.567)
+        specifier: 11.0.0-rc.577
+        version: 11.0.0-rc.577(@trpc/server@11.0.0-rc.577)
       '@trpc/react-query':
-        specifier: 11.0.0-rc.567
-        version: 11.0.0-rc.567(@tanstack/react-query@5.59.15(react@18.3.1))(@trpc/client@11.0.0-rc.567(@trpc/server@11.0.0-rc.567))(@trpc/server@11.0.0-rc.567)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: 11.0.0-rc.577
+        version: 11.0.0-rc.577(@tanstack/react-query@5.59.15(react@18.3.1))(@trpc/client@11.0.0-rc.577(@trpc/server@11.0.0-rc.577))(@trpc/server@11.0.0-rc.577)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@trpc/server':
-        specifier: 11.0.0-rc.567
-        version: 11.0.0-rc.567
+        specifier: 11.0.0-rc.577
+        version: 11.0.0-rc.577
       geist:
         specifier: ^1.3.1
         version: 1.3.1(next@14.2.15(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
@@ -254,8 +254,8 @@ importers:
         specifier: ^2.2.2
         version: 2.2.2
       '@trpc/server':
-        specifier: 11.0.0-rc.567
-        version: 11.0.0-rc.567
+        specifier: 11.0.0-rc.577
+        version: 11.0.0-rc.577
       '@upstash/ratelimit':
         specifier: ^2.0.3
         version: 2.0.3
@@ -2909,22 +2909,22 @@ packages:
   '@tootallnate/quickjs-emscripten@0.23.0':
     resolution: {integrity: sha512-C5Mc6rdnsaJDjO3UpGW/CQTHtCKaYlScZTly4JIu97Jxo/odCiH0ITnDXSJPTOrEKk/ycSZ0AOgTmkDtkOsvIA==}
 
-  '@trpc/client@11.0.0-rc.567':
-    resolution: {integrity: sha512-eE8uhur+xAawv24GzZAIr6I6OtZs+5o5EKPXAEAdTksnAhmxax8y+xQvHt5bmK9sjOrErw4EiTjMEFLmbh/ilw==}
+  '@trpc/client@11.0.0-rc.577':
+    resolution: {integrity: sha512-ZjW7wDKtixKeQGwXB/VBw4xFyORHb6nItzY8zAYa0RJ6I4m8DQ5GKf+eZTlw84foGv+yVrQJIUMqwMSjmd+mmg==}
     peerDependencies:
-      '@trpc/server': 11.0.0-rc.567+6a4d42917
+      '@trpc/server': 11.0.0-rc.577+6b5a608eb
 
-  '@trpc/react-query@11.0.0-rc.567':
-    resolution: {integrity: sha512-0OJ73WcXZh1+K49WxqNdjoef6nOsTKlBf+JzP4HaxvJ70HiyMMJJdBkjkdqfTcCWnlXlotUXiVRveZz2zJW9Fw==}
+  '@trpc/react-query@11.0.0-rc.577':
+    resolution: {integrity: sha512-xzWjjvYrrydzPaClOmo2WQpVPmmsNwbO6G6u3pTEoEjxCdHOJKzIg/o1vV7JzgpoJoptg1ovMCTI91T1BvyouQ==}
     peerDependencies:
       '@tanstack/react-query': ^5.54.1
-      '@trpc/client': 11.0.0-rc.567+6a4d42917
-      '@trpc/server': 11.0.0-rc.567+6a4d42917
+      '@trpc/client': 11.0.0-rc.577+6b5a608eb
+      '@trpc/server': 11.0.0-rc.577+6b5a608eb
       react: '>=18.2.0'
       react-dom: '>=18.2.0'
 
-  '@trpc/server@11.0.0-rc.567':
-    resolution: {integrity: sha512-2PFVArVgUEo1ohhw5AZLBm7X8ScXPGnI2ZqIURUI5bZhqw+/+GQbrRqpopO0/JxNhy0sE7yZeLpjXD2nJKGx/A==}
+  '@trpc/server@11.0.0-rc.577':
+    resolution: {integrity: sha512-Hk3m8ONry6mcXXEr7bzF2USCWq96GwMkYXiyOinXl6iMQT/FWpx+B0kdRCg3TOCQYIIBZbDwE6/tm1H6WyXHRA==}
 
   '@tsconfig/node10@1.0.9':
     resolution: {integrity: sha512-jNsYVVxU8v5g43Erja32laIDHXeoNvFEpX33OK4d6hljo3jDhCBDhx5dhCCTMWUojscpAagGiRkBKxpdl9fxqA==}
@@ -10805,19 +10805,19 @@ snapshots:
 
   '@tootallnate/quickjs-emscripten@0.23.0': {}
 
-  '@trpc/client@11.0.0-rc.567(@trpc/server@11.0.0-rc.567)':
+  '@trpc/client@11.0.0-rc.577(@trpc/server@11.0.0-rc.577)':
     dependencies:
-      '@trpc/server': 11.0.0-rc.567
+      '@trpc/server': 11.0.0-rc.577
 
-  '@trpc/react-query@11.0.0-rc.567(@tanstack/react-query@5.59.15(react@18.3.1))(@trpc/client@11.0.0-rc.567(@trpc/server@11.0.0-rc.567))(@trpc/server@11.0.0-rc.567)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@trpc/react-query@11.0.0-rc.577(@tanstack/react-query@5.59.15(react@18.3.1))(@trpc/client@11.0.0-rc.577(@trpc/server@11.0.0-rc.577))(@trpc/server@11.0.0-rc.577)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@tanstack/react-query': 5.59.15(react@18.3.1)
-      '@trpc/client': 11.0.0-rc.567(@trpc/server@11.0.0-rc.567)
-      '@trpc/server': 11.0.0-rc.567
+      '@trpc/client': 11.0.0-rc.577(@trpc/server@11.0.0-rc.577)
+      '@trpc/server': 11.0.0-rc.577
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  '@trpc/server@11.0.0-rc.567': {}
+  '@trpc/server@11.0.0-rc.577': {}
 
   '@tsconfig/node10@1.0.9': {}
 
