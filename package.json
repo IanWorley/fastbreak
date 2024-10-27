@@ -24,7 +24,7 @@
     "@acme/prettier-config": "workspace:^0.1.0",
     "@turbo/gen": "^2.2.3",
     "prettier": "^3.3.3",
-    "turbo": "^1.13.4",
+    "turbo": "^2.2.3",
     "typescript": "^5.6.3"
   },
   "prettier": "@acme/prettier-config"
