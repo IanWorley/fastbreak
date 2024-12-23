@@ -4,14 +4,17 @@ import DisplayListGames from "./DisplayListGames";
 export const runtime = "edge";
 
 interface Props {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 async function Page(props: Props) {
-  const { params } = props;
-  const initialData = await api.game.grabGames(params.id);
+  const params = await props.params;
 
-  return <DisplayListGames id={props.params.id} initialData={initialData} />;
+  const { id } = params;
+
+  const initialData = await api.game.grabGames(id);
+
+  return <DisplayListGames id={id} initialData={initialData} />;
 }
 
 export default Page;

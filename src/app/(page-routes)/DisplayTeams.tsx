@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 
-import type { teamType } from "@acme/db";
 import { Button } from "~/app/_components/ui/button";
+import type { teamType } from "~/server/db/schema/schema";
 
 import CreateTeamDenied from "~/app/(page-routes)/team/CreateTeamDenied";
 import DeleteModel from "~/app/(page-routes)/team/DeleteTeamModel";

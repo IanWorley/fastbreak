@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
 
-import type { shotType } from "@acme/db";
 import { Button } from "~/app/_components/ui/button";
 import {
   Dialog,
@@ -23,6 +22,7 @@ import {
   FormLabel,
 } from "~/app/_components/ui/form";
 import { RadioGroup, RadioGroupItem } from "~/app/_components/ui/radio-group";
+import type { shotType } from "~/server/db/schema/schema";
 
 import { api } from "~/trpc/react";
 
@@ -53,12 +53,6 @@ function Model(props: DialogDemoProps) {
   const utils = api.useUtils();
 
   const { mutateAsync } = api.player.addShots.useMutation({
-    // onSuccess: () => {
-    //   form.reset();
-    //   void utils.team.grabPlayers.invalidate();
-    //   void utils.game.grabPlayersShotsFromGame.invalidate();
-    // },
-
     onMutate: async () => {
       await utils.game.grabPlayersShotsFromGame.cancel();
       const previousShots = utils.game.grabPlayersShotsFromGame.getData();

@@ -2,29 +2,26 @@
 
 import { useState } from "react";
 
-import type { shotType } from "@acme/db";
 import { Button } from "~/app/_components/ui/button";
+import type { shotType } from "~/server/db/schema/schema";
 
+import { useParams } from "next/navigation";
 import Navbar from "~/app/_components/Navbar";
 import { api } from "~/trpc/react";
 import DrawerPlayer from "./PlayerSelectDrawer";
 
-interface Props {
-  params: { id: string; gameId: string };
-}
-
-function Page(props: Props) {
+function Page() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [playerToSwap, setPlayerToSwap] = useState("");
 
-  const { id, gameId } = props.params;
+  const { id, gameId } = useParams<{ id: string; gameId: string }>();
   const {
     data: game,
     isLoading: isGameLoading,
     isError: isGameError,
   } = api.game.grabGame.useQuery({
     teamId: id,
-    gameId: gameId.toString(),
+    gameId: gameId,
   });
 
   const {
@@ -126,51 +123,54 @@ interface IPropsStatsInfo {
   gameId: string;
 }
 
-export function StatsInfo(props: IPropsStatsInfo) {
+function StatsInfo(props: IPropsStatsInfo) {
   const { shots, playerId, gameId } = props;
 
   const {
-    freethrowMade,
-    twopointMade,
-    threepointMade,
-    freethrowTotal,
-    twopointTotal,
-    threepointTotal,
+    freeThrowMade,
+    twoPointMade,
+    threePointMade,
+    freeThrowTotal,
+    twoPointTotal,
+    threePointTotal,
   } = shots
-    .filter((shot) => shot.player_Id === playerId && shot.game_Id === gameId)
+    .filter(
+      (shot: shotType) =>
+        shot.player_Id === playerId && shot.game_Id === gameId,
+    )
     .reduce(
-      (acc, shot) => {
+      (acc, shot: shotType) => {
         if (shot.made) {
           if (shot.isFreeThrow) {
-            acc.freethrowMade++;
+            acc.freeThrowMade++;
           }
-          if (shot.isFreeThrow === false && shot.points === 2) {
-            acc.twopointMade++;
+          if (!shot.isFreeThrow && shot.points === 2) {
+            acc.twoPointMade++;
           }
           if (shot.points === 3) {
-            acc.threepointMade++;
+            acc.threePointMade++;
           }
         }
 
         if (shot.isFreeThrow) {
-          acc.freethrowTotal++;
+          acc.freeThrowTotal++;
         }
-        if (shot.isFreeThrow === false && shot.points === 2) {
-          acc.twopointTotal++;
+        if (!shot.isFreeThrow && shot.points === 2) {
+          acc.twoPointTotal++;
         }
         if (shot.points === 3) {
-          acc.threepointTotal++;
+          acc.threePointTotal++;
         }
 
         return acc;
       },
       {
-        freethrowMade: 0,
-        twopointMade: 0,
-        threepointMade: 0,
-        freethrowTotal: 0,
-        twopointTotal: 0,
-        threepointTotal: 0,
+        freeThrowMade: 0,
+        twoPointMade: 0,
+        threePointMade: 0,
+        freeThrowTotal: 0,
+        twoPointTotal: 0,
+        threePointTotal: 0,
       },
     );
 
@@ -178,38 +178,38 @@ export function StatsInfo(props: IPropsStatsInfo) {
     <div className="grid grid-cols-3 grid-rows-2 items-center gap-2 bg-primary-foreground p-5 lg:mx-60">
       <div className="h-full w-full">
         <h4 className="text-center text-sm font-semibold">Free Throws</h4>
-        <p className="text-center">{freethrowMade}</p>
+        <p className="text-center">{freeThrowMade}</p>
       </div>
       <div className="h-full w-full">
         <h4 className="text-center text-sm font-semibold">2PTS</h4>
-        <p className="text-center">{twopointMade}</p>
+        <p className="text-center">{twoPointMade}</p>
       </div>
       <div className="h-full w-full">
         <h4 className="text-center text-sm font-semibold">3PTS</h4>
-        <p className="text-center">{threepointMade}</p>
+        <p className="text-center">{threePointMade}</p>
       </div>
       <div className="h-full w-full">
         <h4 className="text-center text-sm font-semibold">Total Shots</h4>
         <p className="text-center">
-          {freethrowTotal + twopointTotal + threepointTotal}
+          {freeThrowTotal + twoPointTotal + threePointTotal}
         </p>
       </div>
 
       <div className="h-full w-full">
         <h4 className="text-center text-sm font-semibold">Missed Shots</h4>
         <p className="text-center">
-          {freethrowTotal +
-            twopointTotal +
-            threepointTotal -
-            (freethrowMade + twopointMade + threepointMade)}
+          {freeThrowTotal +
+            twoPointTotal +
+            threePointTotal -
+            (freeThrowMade + twoPointMade + threePointMade)}
         </p>
       </div>
 
       <div className="h-full w-full">
         <h4 className="text-center text-sm font-semibold">Shot %</h4>
         <p className="text-center">
-          {((freethrowMade + twopointMade + threepointMade) /
-            (freethrowTotal + twopointTotal + threepointTotal)) *
+          {((freeThrowMade + twoPointMade + threePointMade) /
+            (freeThrowTotal + twoPointTotal + threePointTotal)) *
             100 || 0}
           %
         </p>

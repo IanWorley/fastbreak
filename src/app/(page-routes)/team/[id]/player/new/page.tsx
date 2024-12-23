@@ -4,11 +4,11 @@ import Navbar from "~/app/_components/Navbar";
 import FormNewPlayer from "./formNewPlayer";
 
 // props grab team id from url
-function page({ params }: { params: { id: string } }) {
+async function page({ params }: { params: Promise<{ id: string }> }) {
   return (
     <main>
       <div className="flex h-screen flex-col">
-        <Navbar className="" viewingTeam={true} teamId={params.id} />
+        <Navbar className="" viewingTeam={true} teamId={(await params).id} />
         <div className="flex flex-grow items-center justify-center">
           <Card className="p-4 sm:w-auto">
             <CardHeader>

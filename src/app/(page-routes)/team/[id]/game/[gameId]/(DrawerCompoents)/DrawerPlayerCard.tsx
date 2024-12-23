@@ -1,8 +1,8 @@
 import { useParams } from "next/navigation";
 import { z } from "zod";
 
-import type { playerType } from "@acme/db";
 import { Button } from "~/app/_components/ui/button";
+import type { playerType } from "~/server/db/schema/schema";
 
 import { useShotsForGame } from "~/hooks/ShotHooks";
 import { usePlayerForApp } from "~/store/PlayerForApp";

@@ -1,4 +1,4 @@
-import { relations, sql } from "drizzle-orm";
+import { relations } from "drizzle-orm";
 import { integer, text } from "drizzle-orm/sqlite-core";
 import { createSelectSchema } from "drizzle-zod";
 import { type z } from "zod";
@@ -9,14 +9,14 @@ import { team } from "./team";
 export const player = sqlLiteTable("player", {
   id: text("id", { length: 26 }).primaryKey(),
   name: text("name", { length: 256 }).notNull(),
-  team_id: text("team_id", { length: 26 }).notNull(),
-  createdAt: integer("created_at", { mode: "timestamp" })
-    .default(sql`(strftime('%s', 'now'))`)
-    .notNull(),
-  updatedAt: integer("updatedAt", { mode: "timestamp" })
-    .default(sql`(strftime('%s', 'now'))`)
-    .notNull(),
-  archived: integer("archived", { mode: "boolean" }).notNull().default(false),
+  team_id: text("team_id", { length: 26 }).notNull(), // Indexed field for performance
+  // createdAt: integer("created_at", { mode: "timestamp" })
+  //   .default(sql`(strftime('%s', 'now'))`)
+  //   .notNull(),
+  // updatedAt: integer("updatedAt", { mode: "timestamp" })
+  //   .default(sql`(strftime('%s', 'now'))`)
+  //   .notNull(),
+  archived: integer("archived", { mode: "boolean" }).notNull().default(false), // Using 0 and 1 for boolean
   jerseyNumber: integer("jersey_number").notNull(),
 });
 

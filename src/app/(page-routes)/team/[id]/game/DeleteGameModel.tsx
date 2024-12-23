@@ -7,7 +7,6 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
-import type { gameType } from "@acme/db";
 import { Button } from "~/app/_components/ui/button";
 import {
   Dialog,
@@ -24,6 +23,7 @@ import {
   FormLabel,
 } from "~/app/_components/ui/form";
 import { Input } from "~/app/_components/ui/input";
+import type { gameType } from "~/server/db/schema/schema";
 
 import { api } from "~/trpc/react";
 

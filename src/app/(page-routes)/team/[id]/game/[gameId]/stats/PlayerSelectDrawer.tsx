@@ -2,7 +2,6 @@
 
 import { FaXmark } from "react-icons/fa6";
 
-import type { playerType } from "@acme/db";
 import { Button } from "~/app/_components/ui/button";
 import {
   Drawer,
@@ -11,6 +10,7 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "~/app/_components/ui/drawer";
+import type { playerType } from "~/server/db/schema/schema";
 
 import ListPlayer from "./ListPlayer";
 

@@ -3,6 +3,7 @@ import { z } from "zod";
 
 import { schema } from "~/server/db/schema/schema";
 
+import { eq } from "drizzle-orm";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { cuid2, rateLimiter } from "../utils";
 
@@ -83,9 +84,12 @@ export const playerRouter = createTRPCRouter({
         });
       }
 
-      await ctx.db.update(schema.player).set({
-        archived: !player.archived,
-      });
+      await ctx.db
+        .update(schema.player)
+        .set({
+          archived: !player.archived,
+        })
+        .where(eq(schema.player.id, player.id));
 
       return await ctx.db.query.player.findFirst({
         where: (player, { eq }) => eq(player.id, input.id),

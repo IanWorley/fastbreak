@@ -2,8 +2,12 @@
 
 import Link from "next/link";
 
-import type { gameType, GameWithRelationsShots, shotType } from "@acme/db";
 import { Button } from "~/app/_components/ui/button";
+import type {
+  gameType,
+  GameWithRelationsShots,
+  shotType,
+} from "~/server/db/schema/schema";
 
 import Navbar from "~/app/_components/Navbar";
 import { api } from "~/trpc/react";
@@ -114,7 +118,7 @@ function Game(props: GameProps) {
           Total Points:
           {shots
             .filter((shot) => shot.made)
-            .reduce((total, currentVal) => total + currentVal.points, 0)}{" "}
+            .reduce((total, currentVal) => total + currentVal.points, 0)}
         </h5>
       </div>
 

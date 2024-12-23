@@ -6,22 +6,21 @@ import {
   DotsHorizontalIcon,
 } from "@radix-ui/react-icons";
 import {
-  ColumnDef,
-  ColumnFiltersState,
+  type ColumnDef,
+  type ColumnFiltersState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
-  SortingState,
+  type SortingState,
   useReactTable,
-  VisibilityState,
+  type VisibilityState,
 } from "@tanstack/react-table";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import * as React from "react";
 
-import { playerType } from "@acme/db";
 import { Button } from "~/app/_components/ui/button";
 import { Checkbox } from "~/app/_components/ui/checkbox";
 import {
@@ -41,6 +40,7 @@ import {
   TableHeader,
   TableRow,
 } from "~/app/_components/ui/table";
+import { type playerType } from "~/server/db/schema/schema";
 
 import { api } from "~/trpc/react";
 

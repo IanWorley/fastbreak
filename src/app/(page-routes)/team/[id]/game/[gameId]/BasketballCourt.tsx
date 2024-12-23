@@ -1,8 +1,8 @@
 "use client";
 
+import { useParams } from "next/navigation";
 import type { MouseEvent } from "react";
 import React, { useEffect, useRef, useState } from "react";
-import { useParams } from "next/navigation";
 import { z } from "zod";
 
 import { useShotsForGame } from "~/hooks/ShotHooks";
@@ -65,6 +65,7 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
         gameid: shot.game_Id,
       })),
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchShots, players]);
 
   const recordShot = (

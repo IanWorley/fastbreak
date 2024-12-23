@@ -10,6 +10,8 @@ export const teamsRouter = createTRPCRouter({
   grabTeams: protectedProcedure.query(async ({ ctx }) => {
     await rateLimiter(ctx.userId, 10);
 
+    console.log("env:", process.env.TURSO_AUTH_TOKEN);
+
     const teams = await ctx.db.query.team.findMany({
       where: (team, { eq }) => eq(team.user_id, ctx.userId),
     });
