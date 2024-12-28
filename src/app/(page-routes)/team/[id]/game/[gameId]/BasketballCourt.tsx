@@ -35,9 +35,9 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
   const courtRef = useRef<SVGSVGElement>(null);
   const imageRef = useRef(null);
 
-  const parms = useParams<{ id: string; gameId: string }>();
-  const teamId = z.string().cuid2().parse(parms.id);
-  const gameId = z.string().cuid2().parse(parms.gameId);
+  const prams = useParams<{ id: string; gameId: string }>();
+  const teamId = z.string().cuid2().parse(prams.id);
+  const gameId = z.string().cuid2().parse(prams.gameId);
 
   const fetchShots = useShotsForGame(gameId, teamId, quarter);
 
