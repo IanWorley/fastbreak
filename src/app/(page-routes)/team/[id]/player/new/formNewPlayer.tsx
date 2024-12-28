@@ -17,6 +17,8 @@ function FormNewPlayer() {
   const teamId = z.string().cuid2().parse(id);
   const router = useRouter();
 
+  const players = api.team.grabPlayers.useQuery(teamId);
+
   const formSchema = z.object({
     name: z.string().min(3),
     jerseyNumber: z.string().max(1),
@@ -27,7 +29,8 @@ function FormNewPlayer() {
   });
 
   const { mutateAsync } = api.player.addPlayer.useMutation({
-    onSuccess: () => {
+    onSuccess: async () => {
+      await players.refetch();
       router.push(`/team/${teamId}/player`);
     },
     onError: () => {
@@ -43,6 +46,7 @@ function FormNewPlayer() {
         teamId: z.string().cuid2(),
       })
       .parse({ ...data, teamId: id });
+
     await mutateAsync(info);
   };
 
