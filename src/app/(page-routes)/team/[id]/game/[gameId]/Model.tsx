@@ -46,6 +46,8 @@ const FormSchema = z.object({
 function Model(props: DialogDemoProps) {
   const { open, toggle, x, y, teamid, gameId, quarter, playerShooting } = props;
 
+  const games = api.game.grabGames.useQuery(teamid);
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
@@ -118,6 +120,7 @@ function Model(props: DialogDemoProps) {
     onSettled: () => {
       void utils.game.grabPlayersShotsFromGame.invalidate();
       void utils.game.grabGames.refetch(teamid);
+      void games.refetch();
     },
 
     onError: (error, shot, context) => {

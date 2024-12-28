@@ -7,6 +7,7 @@ import { z } from "zod";
 
 import { Button } from "~/app/_components/ui/button";
 import { CardContent, CardFooter } from "~/app/_components/ui/card";
+
 import {
   Form,
   FormControl,
@@ -20,6 +21,8 @@ import { api } from "~/trpc/react";
 
 function FormContent() {
   const router = useRouter();
+
+  const teams = api.team.grabTeams.useQuery();
 
   const { mutateAsync, isPending } = api.team.createTeam.useMutation({
     onError: (err) => {
@@ -42,8 +45,10 @@ function FormContent() {
     const res = await mutateAsync({
       name: data.teamName,
     });
+
     if (res) {
       form.reset();
+      void teams.refetch();
       router.push(`/team`);
     }
   };

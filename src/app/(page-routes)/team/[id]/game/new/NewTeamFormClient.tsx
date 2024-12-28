@@ -25,7 +25,7 @@ function NewTeamFormClient() {
 
   const teamId = z.string().cuid2().parse(id);
 
-  const utils = api.useUtils();
+  const games = api.game.grabGames.useQuery(teamId);
 
   const { mutateAsync, isPending } = api.game.createGame.useMutation({
     onError: (err) => {
@@ -50,8 +50,8 @@ function NewTeamFormClient() {
       teamId: teamId,
     });
     if (res) {
-      void utils.game.grabGames.refetch(teamId);
       form.reset();
+      void games.refetch();
       router.push(`/team/${teamId}/game/${res.id}`);
     }
   };
