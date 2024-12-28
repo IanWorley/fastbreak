@@ -3,12 +3,11 @@ import { text } from "drizzle-orm/sqlite-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import type { z } from "zod";
 
+import { sqlLiteTable } from "./_table";
 import type { Shot } from "./shot";
 import { team } from "./team";
 
-import { sqliteTable } from "drizzle-orm/sqlite-core";
-
-export const game = sqliteTable("game", {
+export const game = sqlLiteTable("game", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),
   // createdAt: integer("created_at", { mode: "timestamp" })

@@ -1,11 +1,11 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "332967df-f90b-41b9-bf16-1382e4b246bd",
+  "id": "2e51189c-cda2-4a77-8748-9a8ddd09f1f6",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
-    "game": {
-      "name": "game",
+    "fastbreak_game": {
+      "name": "fastbreak_game",
       "columns": {
         "id": {
           "name": "id",
@@ -20,22 +20,6 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "default": "unixepoch()"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "default": "unixepoch()"
         },
         "team_id": {
           "name": "team_id",
@@ -75,22 +59,6 @@
           "notNull": true,
           "autoincrement": false
         },
-        "created_at": {
-          "name": "created_at",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "default": "(strftime('%s', 'now'))"
-        },
-        "updatedAt": {
-          "name": "updatedAt",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "default": "(strftime('%s', 'now'))"
-        },
         "archived": {
           "name": "archived",
           "type": "integer",
@@ -122,22 +90,6 @@
           "primaryKey": true,
           "notNull": true,
           "autoincrement": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "default": "(strftime('%s', 'now'))"
-        },
-        "updatedAt": {
-          "name": "updatedAt",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "default": "(strftime('%s', 'now'))"
         },
         "player_id": {
           "name": "player_id",
@@ -233,22 +185,6 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "default": "(strftime('%s', 'now'))"
-        },
-        "updatedAt": {
-          "name": "updatedAt",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "default": "(strftime('%s', 'now'))"
         }
       },
       "indexes": {},
