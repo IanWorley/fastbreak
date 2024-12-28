@@ -18,7 +18,7 @@
     "@acme/db": "workspace:^0.1.0",
     "@acme/ui": "workspace:^0.1.0",
     "@acme/validators": "workspace:^0.1.0",
-    "@clerk/nextjs": "^5.7.5",
+    "@clerk/nextjs": "^6.9.6",
     "@t3-oss/env-nextjs": "^0.11.1",
     "@tanstack/react-query": "^5.62.11",
     "@trpc/client": "11.0.0-rc.666",
