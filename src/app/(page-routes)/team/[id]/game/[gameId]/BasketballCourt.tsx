@@ -35,6 +35,8 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
   const courtRef = useRef<SVGSVGElement>(null);
   const imageRef = useRef(null);
 
+  const [prevQuarter, setPrevQuarter] = useState(quarter);
+
   const prams = useParams<{ id: string; gameId: string }>();
   const teamId = z.string().cuid2().parse(prams.id);
   const gameId = z.string().cuid2().parse(prams.gameId);
@@ -48,6 +50,12 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
   });
 
   useEffect(() => {
+    if (prevQuarter !== quarter) {
+      setPrevQuarter(quarter);
+    }
+  }, [prevQuarter, quarter]);
+
+  useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (!fetchShots) return;
     const activeShots = fetchShots.filter((shots) => {
@@ -57,6 +65,8 @@ const BasketballCourt: React.FC<BasketballCourtProps> = (
       // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
       return player && player.isPlaying;
     });
+
+    if (activeShots.length === 0 && prevQuarter == quarter) return;
 
     setShots(
       activeShots.map((shot) => ({

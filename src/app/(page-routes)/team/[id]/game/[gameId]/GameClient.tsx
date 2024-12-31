@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { z } from "zod";
 
 import {
@@ -46,13 +46,20 @@ function GameClient() {
 
   const addPlayers = usePlayerForApp((state) => state.addPlayers);
 
-  const { data, isLoading, isError } = api.team.grabPlayers.useQuery(teamId);
+  const { data, isLoading, isError, isSuccess } =
+    api.team.grabPlayers.useQuery(teamId);
 
   // is open state
   const [isOpen, setIsOpen] = useState(false);
   const [QTR, setQTR] = useState("1");
 
   const toggle = () => setIsOpen(!isOpen);
+
+  useEffect(() => {
+    if (isSuccess) {
+      addPlayers(data);
+    }
+  }, [isSuccess]);
 
   if (isLoading) {
     return (
@@ -82,8 +89,6 @@ function GameClient() {
   if (isError) {
     return <div>Error</div>;
   }
-
-  addPlayers(data ?? []);
 
   return (
     <div className="">
