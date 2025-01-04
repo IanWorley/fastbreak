@@ -16,7 +16,7 @@ import {
 
 import { usePlayerForApp } from "~/store/PlayerForApp";
 import { api } from "~/trpc/react";
-import PlayerSubDrawer from "./(DrawerCompoents)/PlayerSubDrawer";
+import PlayerSubDrawer from "./(DrawerComponents)/PlayerSubDrawer";
 import BasketballCourt from "./BasketballCourt";
 import Modal from "./Model";
 import PlayerList from "./PlayerList";
