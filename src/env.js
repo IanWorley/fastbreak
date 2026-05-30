@@ -1,4 +1,4 @@
-import { createEnv } from "@t3-oss/env-nextjs";
+import { createEnv } from "@t3-oss/env-core";
 import { z } from "zod";
 
 export const env = createEnv({
@@ -16,8 +16,8 @@ export const env = createEnv({
     VERCEL_ENV: z
       .enum(["production", "preview", "development"])
       .default("development"),
-    UPSTASH_REDIS_REST_URL: z.string(),
-    UPSTASH_REDIS_REST_TOKEN: z.string(),
+    UPSTASH_REDIS_REST_URL: z.string().optional(),
+    UPSTASH_REDIS_REST_TOKEN: z.string().optional(),
   },
 
   /**
@@ -29,6 +29,7 @@ export const env = createEnv({
     // NEXT_PUBLIC_CLIENTVAR: z.string(),
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string(),
   },
+  clientPrefix: "NEXT_PUBLIC_",
 
   /**
    * You can't destruct `process.env` as a regular object in the Next.js edge runtimes (e.g.
