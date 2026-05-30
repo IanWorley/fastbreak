@@ -1,17 +1,17 @@
-import type { ReactNode } from "react";
+import { ClerkProvider } from "@clerk/tanstack-react-start";
 import {
   createRootRoute,
   HeadContent,
   Outlet,
   Scripts,
 } from "@tanstack/react-router";
-import { ClerkProvider } from "@clerk/tanstack-react-start";
+import type { ReactNode } from "react";
 
 import { ThemeProvider } from "~/app/_components/ui/theme";
 import { Toaster } from "~/app/_components/ui/toast";
-import { TRPCReactProvider } from "~/trpc/react";
-import { cn } from "~/lib/utils";
 import { env } from "~/env";
+import { cn } from "~/lib/utils";
+import { TRPCReactProvider } from "~/trpc/react";
 
 import "~/styles/globals.css";
 

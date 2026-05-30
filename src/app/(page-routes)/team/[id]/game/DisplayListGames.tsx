@@ -1,15 +1,13 @@
 "use client";
 
 import Link from "next/link";
-
+import Navbar from "~/app/_components/Navbar";
 import { Button } from "~/app/_components/ui/button";
 import type {
-  gameType,
   GameWithRelationsShots,
+  gameType,
   shotType,
 } from "~/server/db/schema/schema";
-
-import Navbar from "~/app/_components/Navbar";
 import { api } from "~/trpc/react";
 import DeleteTeamModel from "./DeleteGameModel";
 

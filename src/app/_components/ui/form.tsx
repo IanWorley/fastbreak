@@ -193,6 +193,7 @@ const FormMessage = React.forwardRef<
 });
 FormMessage.displayName = "FormMessage";
 
+export { useFieldArray } from "react-hook-form";
 export {
   Form,
   FormControl,
@@ -204,5 +205,3 @@ export {
   useForm,
   useFormField,
 };
-
-export { useFieldArray } from "react-hook-form";

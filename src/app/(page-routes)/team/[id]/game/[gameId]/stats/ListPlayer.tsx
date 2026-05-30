@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "~/app/_components/ui/button";
-import { type playerType } from "~/server/db/schema/schema";
+import type { playerType } from "~/server/db/schema/schema";
 
 interface IPropsStatsDrawer {
   onOpenChange: (open: boolean) => void;

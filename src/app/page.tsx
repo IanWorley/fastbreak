@@ -1,10 +1,8 @@
 import { SignInButton } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs/server";
 import Link from "next/link";
-
-import { Button } from "~/app/_components/ui/button";
-
 import Navbar from "~/app/_components/Navbar";
+import { Button } from "~/app/_components/ui/button";
 import { getBaseUrl } from "~/lib/utils";
 
 export const runtime = "edge";

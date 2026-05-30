@@ -1,8 +1,9 @@
 "use client";
 
 import { useParams } from "next/navigation";
+import type React from "react";
 import type { MouseEvent } from "react";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { z } from "zod";
 
 import { useShotsForGame } from "~/hooks/ShotHooks";

@@ -40,7 +40,7 @@ import {
   TableHeader,
   TableRow,
 } from "~/app/_components/ui/table";
-import { type playerType } from "~/server/db/schema/schema";
+import type { playerType } from "~/server/db/schema/schema";
 
 import { api } from "~/trpc/react";
 

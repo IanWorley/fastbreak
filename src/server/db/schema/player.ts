@@ -1,7 +1,7 @@
 import { relations } from "drizzle-orm";
 import { integer, text } from "drizzle-orm/sqlite-core";
 import { createSelectSchema } from "drizzle-zod";
-import { type z } from "zod";
+import type { z } from "zod";
 
 import { sqlLiteTable } from "./_table";
 import { team } from "./team";

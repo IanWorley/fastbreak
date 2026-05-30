@@ -1,12 +1,10 @@
 "use client";
 
+import { useParams } from "next/navigation";
 import { useState } from "react";
-
+import Navbar from "~/app/_components/Navbar";
 import { Button } from "~/app/_components/ui/button";
 import type { shotType } from "~/server/db/schema/schema";
-
-import { useParams } from "next/navigation";
-import Navbar from "~/app/_components/Navbar";
 import { api } from "~/trpc/react";
 import DrawerPlayer from "./PlayerSelectDrawer";
 

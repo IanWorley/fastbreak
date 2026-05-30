@@ -1,6 +1,5 @@
-import { Card, CardHeader, CardTitle } from "~/app/_components/ui/card";
-
 import Navbar from "~/app/_components/Navbar";
+import { Card, CardHeader, CardTitle } from "~/app/_components/ui/card";
 import FormNewPlayer from "./formNewPlayer";
 
 // props grab team id from url

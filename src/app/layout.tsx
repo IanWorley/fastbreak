@@ -7,9 +7,8 @@ import { ThemeProvider } from "~/app/_components/ui/theme";
 import { Toaster } from "~/app/_components/ui/toast";
 
 import { env } from "~/env";
-import { TRPCReactProvider } from "~/trpc/react";
-
 import { cn } from "~/lib/utils";
+import { TRPCReactProvider } from "~/trpc/react";
 import "~/styles/globals.css";
 
 export const metadata: Metadata = {

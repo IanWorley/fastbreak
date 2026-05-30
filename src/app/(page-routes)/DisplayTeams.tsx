@@ -1,13 +1,12 @@
 "use client";
 
 import Link from "next/link";
-
+import Navbar from "~/app/_components/Navbar";
 import { Button } from "~/app/_components/ui/button";
-import type { teamType } from "~/server/db/schema/schema";
 
 import CreateTeamDenied from "~/app/(page-routes)/team/CreateTeamDenied";
 import DeleteModel from "~/app/(page-routes)/team/DeleteTeamModel";
-import Navbar from "~/app/_components/Navbar";
+import type { teamType } from "~/server/db/schema/schema";
 import { api } from "~/trpc/react";
 
 export const runtime = "edge";

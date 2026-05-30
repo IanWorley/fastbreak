@@ -2,9 +2,8 @@ import { useParams } from "next/navigation";
 import { z } from "zod";
 
 import { Button } from "~/app/_components/ui/button";
-import type { playerType } from "~/server/db/schema/schema";
-
 import { useShotsForGame } from "~/hooks/ShotHooks";
+import type { playerType } from "~/server/db/schema/schema";
 import { usePlayerForApp } from "~/store/PlayerForApp";
 
 interface DrawerPlayerCardProps {
