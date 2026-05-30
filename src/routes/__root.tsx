@@ -7,8 +7,8 @@ import {
 } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 
-import { ThemeProvider } from "~/app/_components/ui/theme";
-import { Toaster } from "~/app/_components/ui/toast";
+import { ThemeProvider } from "~/components/ui/theme";
+import { Toaster } from "~/components/ui/toast";
 import { env } from "~/env";
 import { cn } from "~/lib/utils";
 import { TRPCReactProvider } from "~/trpc/react";

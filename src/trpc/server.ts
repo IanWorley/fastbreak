@@ -1,4 +1,4 @@
-import { auth } from "@clerk/nextjs/server";
+import { auth } from "@clerk/tanstack-react-start/server";
 import { cache } from "react";
 
 import { createCaller, createTRPCContext } from "~/server/api/index";

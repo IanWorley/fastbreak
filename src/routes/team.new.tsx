@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
-import { Button } from "~/app/_components/ui/button";
+import { Button } from "~/components/ui/button";
 
 export const Route = createFileRoute("/team/new")({
   component: NewTeamPlaceholder,

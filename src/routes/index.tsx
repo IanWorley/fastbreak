@@ -1,8 +1,8 @@
 import { SignInButton, useUser } from "@clerk/tanstack-react-start";
 import { createFileRoute, Link } from "@tanstack/react-router";
 
-import { Button } from "~/app/_components/ui/button";
-import { ThemeToggle } from "~/app/_components/ui/theme";
+import { Button } from "~/components/ui/button";
+import { ThemeToggle } from "~/components/ui/theme";
 
 export const Route = createFileRoute("/")({
   component: Home,

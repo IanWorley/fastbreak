@@ -1,14 +1,14 @@
 import { SignInButton, useUser } from "@clerk/tanstack-react-start";
 import { createFileRoute, Link } from "@tanstack/react-router";
 
-import { Button } from "~/app/_components/ui/button";
+import { Button } from "~/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "~/app/_components/ui/card";
+} from "~/components/ui/card";
 import { api } from "~/trpc/react";
 
 export const Route = createFileRoute("/team/")({
