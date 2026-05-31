@@ -6,7 +6,7 @@ import { env } from "./env";
 export const startInstance = createStart(() => ({
   requestMiddleware: [
     clerkMiddleware({
-      publishableKey: env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
+      publishableKey: env.VITE_CLERK_PUBLISHABLE_KEY,
       secretKey: env.CLERK_SECRET_KEY,
     }),
   ],

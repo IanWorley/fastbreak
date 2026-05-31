@@ -23,22 +23,19 @@ export const env = createEnv({
   /**
    * Specify your client-side environment variables schema here. This way you can ensure the app
    * isn't built with invalid env vars. To expose them to the client, prefix them with
-   * `NEXT_PUBLIC_`.
+   * `VITE_`.
    */
   client: {
-    // NEXT_PUBLIC_CLIENTVAR: z.string(),
-    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string(),
+    VITE_CLERK_PUBLISHABLE_KEY: z.string(),
   },
-  clientPrefix: "NEXT_PUBLIC_",
+  clientPrefix: "VITE_",
 
   /**
-   * You can't destruct `process.env` as a regular object in the Next.js edge runtimes (e.g.
-   * middlewares) or client-side so we need to destruct manually.
+   * Destruct environment variables manually for runtime access.
    */
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
-    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:
-      process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
+    VITE_CLERK_PUBLISHABLE_KEY: process.env.VITE_CLERK_PUBLISHABLE_KEY,
     CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
     TURSO_AUTH_TOKEN: process.env.TURSO_AUTH_TOKEN,
     TURSO_DATABASE_URL: process.env.TURSO_DATABASE_URL,

@@ -13,7 +13,12 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as TeamIndexRouteImport } from './routes/team.index'
 import { Route as TeamNewRouteImport } from './routes/team.new'
 import { Route as ApiTrpcSplatRouteImport } from './routes/api/trpc/$'
+import { Route as TeamTeamIdPlayerIndexRouteImport } from './routes/team.$teamId.player.index'
 import { Route as TeamTeamIdGameIndexRouteImport } from './routes/team.$teamId.game.index'
+import { Route as TeamTeamIdPlayerNewRouteImport } from './routes/team.$teamId.player.new'
+import { Route as TeamTeamIdGameNewRouteImport } from './routes/team.$teamId.game.new'
+import { Route as TeamTeamIdGameGameIdIndexRouteImport } from './routes/team.$teamId.game.$gameId.index'
+import { Route as TeamTeamIdGameGameIdStatsRouteImport } from './routes/team.$teamId.game.$gameId.stats'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -35,25 +40,62 @@ const ApiTrpcSplatRoute = ApiTrpcSplatRouteImport.update({
   path: '/api/trpc/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TeamTeamIdPlayerIndexRoute = TeamTeamIdPlayerIndexRouteImport.update({
+  id: '/team/$teamId/player/',
+  path: '/team/$teamId/player/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TeamTeamIdGameIndexRoute = TeamTeamIdGameIndexRouteImport.update({
   id: '/team/$teamId/game/',
   path: '/team/$teamId/game/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TeamTeamIdPlayerNewRoute = TeamTeamIdPlayerNewRouteImport.update({
+  id: '/team/$teamId/player/new',
+  path: '/team/$teamId/player/new',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TeamTeamIdGameNewRoute = TeamTeamIdGameNewRouteImport.update({
+  id: '/team/$teamId/game/new',
+  path: '/team/$teamId/game/new',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TeamTeamIdGameGameIdIndexRoute =
+  TeamTeamIdGameGameIdIndexRouteImport.update({
+    id: '/team/$teamId/game/$gameId/',
+    path: '/team/$teamId/game/$gameId/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const TeamTeamIdGameGameIdStatsRoute =
+  TeamTeamIdGameGameIdStatsRouteImport.update({
+    id: '/team/$teamId/game/$gameId/stats',
+    path: '/team/$teamId/game/$gameId/stats',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/team/new': typeof TeamNewRoute
   '/team/': typeof TeamIndexRoute
   '/api/trpc/$': typeof ApiTrpcSplatRoute
+  '/team/$teamId/game/new': typeof TeamTeamIdGameNewRoute
+  '/team/$teamId/player/new': typeof TeamTeamIdPlayerNewRoute
   '/team/$teamId/game/': typeof TeamTeamIdGameIndexRoute
+  '/team/$teamId/player/': typeof TeamTeamIdPlayerIndexRoute
+  '/team/$teamId/game/$gameId/stats': typeof TeamTeamIdGameGameIdStatsRoute
+  '/team/$teamId/game/$gameId/': typeof TeamTeamIdGameGameIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/team/new': typeof TeamNewRoute
   '/team': typeof TeamIndexRoute
   '/api/trpc/$': typeof ApiTrpcSplatRoute
+  '/team/$teamId/game/new': typeof TeamTeamIdGameNewRoute
+  '/team/$teamId/player/new': typeof TeamTeamIdPlayerNewRoute
   '/team/$teamId/game': typeof TeamTeamIdGameIndexRoute
+  '/team/$teamId/player': typeof TeamTeamIdPlayerIndexRoute
+  '/team/$teamId/game/$gameId/stats': typeof TeamTeamIdGameGameIdStatsRoute
+  '/team/$teamId/game/$gameId': typeof TeamTeamIdGameGameIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -61,7 +103,12 @@ export interface FileRoutesById {
   '/team/new': typeof TeamNewRoute
   '/team/': typeof TeamIndexRoute
   '/api/trpc/$': typeof ApiTrpcSplatRoute
+  '/team/$teamId/game/new': typeof TeamTeamIdGameNewRoute
+  '/team/$teamId/player/new': typeof TeamTeamIdPlayerNewRoute
   '/team/$teamId/game/': typeof TeamTeamIdGameIndexRoute
+  '/team/$teamId/player/': typeof TeamTeamIdPlayerIndexRoute
+  '/team/$teamId/game/$gameId/stats': typeof TeamTeamIdGameGameIdStatsRoute
+  '/team/$teamId/game/$gameId/': typeof TeamTeamIdGameGameIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -70,16 +117,36 @@ export interface FileRouteTypes {
     | '/team/new'
     | '/team/'
     | '/api/trpc/$'
+    | '/team/$teamId/game/new'
+    | '/team/$teamId/player/new'
     | '/team/$teamId/game/'
+    | '/team/$teamId/player/'
+    | '/team/$teamId/game/$gameId/stats'
+    | '/team/$teamId/game/$gameId/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/team/new' | '/team' | '/api/trpc/$' | '/team/$teamId/game'
+  to:
+    | '/'
+    | '/team/new'
+    | '/team'
+    | '/api/trpc/$'
+    | '/team/$teamId/game/new'
+    | '/team/$teamId/player/new'
+    | '/team/$teamId/game'
+    | '/team/$teamId/player'
+    | '/team/$teamId/game/$gameId/stats'
+    | '/team/$teamId/game/$gameId'
   id:
     | '__root__'
     | '/'
     | '/team/new'
     | '/team/'
     | '/api/trpc/$'
+    | '/team/$teamId/game/new'
+    | '/team/$teamId/player/new'
     | '/team/$teamId/game/'
+    | '/team/$teamId/player/'
+    | '/team/$teamId/game/$gameId/stats'
+    | '/team/$teamId/game/$gameId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -87,7 +154,12 @@ export interface RootRouteChildren {
   TeamNewRoute: typeof TeamNewRoute
   TeamIndexRoute: typeof TeamIndexRoute
   ApiTrpcSplatRoute: typeof ApiTrpcSplatRoute
+  TeamTeamIdGameNewRoute: typeof TeamTeamIdGameNewRoute
+  TeamTeamIdPlayerNewRoute: typeof TeamTeamIdPlayerNewRoute
   TeamTeamIdGameIndexRoute: typeof TeamTeamIdGameIndexRoute
+  TeamTeamIdPlayerIndexRoute: typeof TeamTeamIdPlayerIndexRoute
+  TeamTeamIdGameGameIdStatsRoute: typeof TeamTeamIdGameGameIdStatsRoute
+  TeamTeamIdGameGameIdIndexRoute: typeof TeamTeamIdGameGameIdIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -120,11 +192,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiTrpcSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/team/$teamId/player/': {
+      id: '/team/$teamId/player/'
+      path: '/team/$teamId/player'
+      fullPath: '/team/$teamId/player/'
+      preLoaderRoute: typeof TeamTeamIdPlayerIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/team/$teamId/game/': {
       id: '/team/$teamId/game/'
       path: '/team/$teamId/game'
       fullPath: '/team/$teamId/game/'
       preLoaderRoute: typeof TeamTeamIdGameIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/team/$teamId/player/new': {
+      id: '/team/$teamId/player/new'
+      path: '/team/$teamId/player/new'
+      fullPath: '/team/$teamId/player/new'
+      preLoaderRoute: typeof TeamTeamIdPlayerNewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/team/$teamId/game/new': {
+      id: '/team/$teamId/game/new'
+      path: '/team/$teamId/game/new'
+      fullPath: '/team/$teamId/game/new'
+      preLoaderRoute: typeof TeamTeamIdGameNewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/team/$teamId/game/$gameId/': {
+      id: '/team/$teamId/game/$gameId/'
+      path: '/team/$teamId/game/$gameId'
+      fullPath: '/team/$teamId/game/$gameId/'
+      preLoaderRoute: typeof TeamTeamIdGameGameIdIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/team/$teamId/game/$gameId/stats': {
+      id: '/team/$teamId/game/$gameId/stats'
+      path: '/team/$teamId/game/$gameId/stats'
+      fullPath: '/team/$teamId/game/$gameId/stats'
+      preLoaderRoute: typeof TeamTeamIdGameGameIdStatsRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -135,7 +242,12 @@ const rootRouteChildren: RootRouteChildren = {
   TeamNewRoute: TeamNewRoute,
   TeamIndexRoute: TeamIndexRoute,
   ApiTrpcSplatRoute: ApiTrpcSplatRoute,
+  TeamTeamIdGameNewRoute: TeamTeamIdGameNewRoute,
+  TeamTeamIdPlayerNewRoute: TeamTeamIdPlayerNewRoute,
   TeamTeamIdGameIndexRoute: TeamTeamIdGameIndexRoute,
+  TeamTeamIdPlayerIndexRoute: TeamTeamIdPlayerIndexRoute,
+  TeamTeamIdGameGameIdStatsRoute: TeamTeamIdGameGameIdStatsRoute,
+  TeamTeamIdGameGameIdIndexRoute: TeamTeamIdGameGameIdIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
