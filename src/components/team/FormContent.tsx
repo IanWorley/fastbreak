@@ -1,0 +1,88 @@
+"use client";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate } from "@tanstack/react-router";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
+import { Button } from "~/components/ui/button";
+import { CardContent, CardFooter } from "~/components/ui/card";
+
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "~/components/ui/form";
+import { Input } from "~/components/ui/input";
+
+import { api } from "~/trpc/react";
+
+function FormContent() {
+  const navigate = useNavigate();
+
+  const teams = api.team.grabTeams.useQuery();
+
+  const { mutateAsync, isPending } = api.team.createTeam.useMutation({
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+
+  const formSchema = z.object({
+    teamName: z.string().min(3),
+  });
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      teamName: "",
+    },
+  });
+
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    const res = await mutateAsync({
+      name: data.teamName,
+    });
+
+    if (res) {
+      form.reset();
+      void teams.refetch();
+      void navigate({ to: `/team` });
+    }
+  };
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <CardContent>
+          <FormField
+            control={form.control}
+            name="teamName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Team Name</FormLabel>
+                <FormControl>
+                  <Input
+                    type="text"
+                    minLength={3}
+                    placeholder="Team Name"
+                    {...field}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+        </CardContent>
+        <CardFooter className="flex justify-end">
+          <Button type="submit" disabled={isPending}>
+            Create
+          </Button>
+        </CardFooter>
+      </form>
+    </Form>
+  );
+}
+
+export default FormContent;

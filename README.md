@@ -1,29 +1,43 @@
-# Create T3 App
+# Fastbreak Analytics (TanStack Start)
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+This project has been migrated from Next.js (T3 Stack) to [TanStack Start](https://tanstack.com/start).
 
-## What's next? How do I make an app with this?
+## Tech Stack
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+- **Framework:** [TanStack Start](https://tanstack.com/start)
+- **Routing:** [TanStack Router](https://tanstack.com/router)
+- **API Layer:** [tRPC](https://trpc.io) (mounted on `/api/trpc`)
+- **Database:** [Drizzle ORM](https://orm.drizzle.team) + [Turso](https://turso.tech)
+- **Auth:** [Clerk](https://clerk.com) (via `@clerk/tanstack-start`)
+- **State Management:** [TanStack Query](https://tanstack.com/query) + [Zustand](https://zustand-demo.pmnd.rs/)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com) + [Radix UI](https://www.radix-ui.com/)
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+## Getting Started
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+1. Install dependencies:
+   ```bash
+   bun install
+   ```
 
-## Learn More
+2. Set up environment variables in `.env`:
+   - `TURSO_DATABASE_URL`
+   - `TURSO_AUTH_TOKEN`
+   - `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
+   - `CLERK_SECRET_KEY`
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+3. Run the development server:
+   ```bash
+   bun run dev
+   ```
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+4. Build for production:
+   ```bash
+   bun run build
+   ```
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+## Project Structure
 
-## How do I deploy this?
-
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+- `src/routes/`: File-based routing for TanStack Router.
+- `src/server/`: Backend logic (tRPC routers, Drizzle schema).
+- `src/components/`: UI components (migrated from Next.js).
+- `src/trpc/`: tRPC client and provider setup.

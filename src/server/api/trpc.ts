@@ -6,13 +6,12 @@
  * tl;dr - this is where all the tRPC server stuff is created and plugged in.
  * The pieces you will need to use are documented accordingly near the end
  */
-import { getAuth } from "@clerk/nextjs/server";
+import { getAuth } from "@clerk/tanstack-start/server";
 import { initTRPC, TRPCError } from "@trpc/server";
-import { headers } from "next/headers";
-import { NextRequest } from "next/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 import { db } from "../db/schema/schema";
+import { getRequest } from "@tanstack/start/server";
 
 //  Replace this with an object if you want to pass things to createContextInner
 
@@ -29,9 +28,10 @@ import { db } from "../db/schema/schema";
  * @see https://trpc.io/docs/server/context
  */
 export const createTRPCContext = async () => {
+  const req = getRequest();
   return {
     db: db,
-    auth: getAuth(new NextRequest(getBaseUrl(), { headers: await headers() })),
+    auth: await getAuth(req!),
   };
 };
 
