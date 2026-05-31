@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Next.js to TanStack Start Migration Plan</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .progress-bar {
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+        .phase-number {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .mermaid-container {
+            background: #f8fafc;
+            border: 2px dashed #e2e8f0;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            color: #64748b;
+        }
+        .todo-item {
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        .todo-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 0.5rem;
+            height: 0.5rem;
+            background: #f59e0b;
+            border-radius: 50%;
+        }
+        .benefit-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border: 1px solid rgba(102, 126, 234, 0.2);
+        }
+        .risk-card {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.1));
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Hero Section -->
+    <div class="gradient-bg text-white">
+        <div class="max-w-7xl mx-auto px-6 py-16">
+            <div class="text-center">
+                <h1 class="text-5xl font-bold mb-4">Next.js to TanStack Start</h1>
+                <h2 class="text-2xl font-light opacity-90 mb-8">Migration Plan</h2>
+                <div class="inline-flex items-center space-x-4 bg-white bg-opacity-20 rounded-full px-6 py-3">
+                    <span class="text-sm font-medium">🏀 Fastbreak Analytics</span>
+                    <span class="text-sm opacity-75">•</span>
+                    <span class="text-sm font-medium">Modern Sports Platform</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Progress Overview -->
+    <div class="max-w-7xl mx-auto px-6 -mt-8 mb-12">
+        <div class="bg-white rounded-2xl shadow-xl p-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-gray-800">8</div>
+                    <div class="text-sm text-gray-600">Migration Phases</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-gray-800">8</div>
+                    <div class="text-sm text-gray-600">Pending Tasks</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-gray-800">68</div>
+                    <div class="text-sm text-gray-600">Files to Migrate</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-green-600">100%</div>
+                    <div class="text-sm text-gray-600">Feature Preservation</div>
+                </div>
+            </div>
+            <div class="progress-bar"></div>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6 pb-16">
+        <!-- Project Overview -->
+        <section class="mb-12">
+            <div class="bg-white rounded-xl shadow-lg p-8 card-hover">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">🎯 Project Overview</h2>
+                <p class="text-lg text-gray-600 mb-6">
+                    Migrating Fastbreak Analytics from Next.js (T3 stack) to TanStack Start while preserving all existing functionality. 
+                    The app includes team management, player tracking, game statistics, and basketball court shot visualization.
+                </p>
+                
+                <!-- Current Stack -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
+                    <div class="space-y-4">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">📦 Current Stack</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center space-x-3">
+                                <span class="w-2 h-2 bg-blue-500 rounded-full"></span>
+                                <span><strong>Framework:</strong> Next.js 15 with App Router</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                                <span><strong>API Layer:</strong> tRPC v11 with three routers</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <span class="w-2 h-2 bg-purple-500 rounded-full"></span>
+                                <span><strong>Database:</strong> Drizzle ORM + Turso (SQLite edge)</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <span class="w-2 h-2 bg-red-500 rounded-full"></span>
+                                <span><strong>Auth:</strong> Clerk v6 with middleware protection</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <span class="w-2 h-2 bg-yellow-500 rounded-full"></span>
+                                <span><strong>State:</strong> TanStack Query for client state</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <span class="w-2 h-2 bg-indigo-500 rounded-full"></span>
+                                <span><strong>Styling:</strong> Tailwind CSS + Radix UI</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Route Structure -->
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">🛣️ Route Structure</h3>
+                        <div class="bg-gray-900 rounded-lg p-4 text-sm font-mono text-green-400">
+<pre>/ (home page)
+/team (teams list)
+/team/new (create team)
+/team/[id]/player (players list)
+/team/[id]/player/new (add player)
+/team/[id]/game (games list)
+/team/[id]/game/new (create game)
+/team/[id]/game/[gameId] (game details)
+/team/[id]/game/[gameId]/stats (shot tracking)</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Migration Architecture Diagram -->
+        <section class="mb-12">
+            <div class="bg-white rounded-xl shadow-lg p-8 card-hover">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">🏗️ Migration Architecture</h2>
+                <div class="mermaid-container">
+                    <h3 class="text-lg font-semibold mb-4">Architecture Transformation</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
+                        <div>
+                            <h4 class="font-semibold text-blue-600 mb-3">Current Next.js Architecture</h4>
+                            <ul class="space-y-2">
+                                <li>• Next.js App Router</li>
+                                <li>• tRPC API Routes</li>
+                                <li>• Clerk Middleware</li>
+                                <li>• Drizzle + Turso</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-purple-600 mb-3">Target TanStack Start Architecture</h4>
+                            <ul class="space-y-2">
+                                <li>• TanStack Router</li>
+                                <li>• tRPC on Start server routes</li>
+                                <li>• Clerk Start SDK</li>
+                                <li>• Drizzle + Turso (unchanged)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ToDo List -->
+        <section class="mb-12">
+            <div class="bg-white rounded-xl shadow-lg p-8 card-hover">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">✅ Migration Checklist</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="todo-item">
+                        <span class="font-medium">Initialize TanStack Start project and configure TypeScript</span>
+                    </div>
+                    <div class="todo-item">
+                        <span class="font-medium">Copy database schema and configuration from Drizzle setup</span>
+                    </div>
+                    <div class="todo-item">
+                        <span class="font-medium">Integrate Clerk with the official TanStack React Start SDK</span>
+                    </div>
+                    <div class="todo-item">
+                        <span class="font-medium">Preserve tRPC first by mounting existing routers on a Start server route</span>
+                    </div>
+                    <div class="todo-item">
+                        <span class="font-medium">Convert Next.js App Router structure to TanStack Start file-based routing</span>
+                    </div>
+                    <div class="todo-item">
+                        <span class="font-medium">Migrate all React components and UI elements</span>
+                    </div>
+                    <div class="todo-item">
+                        <span class="font-medium">Comprehensive testing of all app functionality</span>
+                    </div>
+                    <div class="todo-item">
+                        <span class="font-medium">Configure deployment pipeline and production environment</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Migration Phases -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">📋 Migration Phases</h2>
+            
+            <!-- Phase 1 -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-6 card-hover">
+                <h3 class="text-2xl font-bold mb-4">
+                    <span class="phase-number text-3xl">1</span>
+                    Project Setup & Core Infrastructure
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <h4 class="font-semibold text-lg mb-2">1.1 Initialize TanStack Start</h4>
+                        <ul class="text-sm space-y-1 text-gray-600">
+                            <li>• Create project structure</li>
+                            <li>• Configure TypeScript</li>
+                            <li>• Set up Vite build tooling</li>
+                            <li>• Configure deployment targets</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-lg mb-2">1.2 Environment & Config</h4>
+                        <ul class="text-sm space-y-1 text-gray-600">
+                            <li>• Migrate environment variables</li>
+                            <li>• Rename NEXT_PUBLIC_* vars to VITE_* where required</li>
+                            <li>• Replace @t3-oss/env-nextjs with framework-neutral validation</li>
+                            <li>• Configure Turso database</li>
+                            <li>• Set up Upstash Redis</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-lg mb-2">1.3 Database Migration</h4>
+                        <ul class="text-sm space-y-1 text-gray-600">
+                            <li>• Copy database schema</li>
+                            <li>• Migrate Drizzle config</li>
+                            <li>• Verify schema compatibility</li>
+                            <li>• Test database connections</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 2 -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-6 card-hover">
+                <h3 class="text-2xl font-bold mb-4">
+                    <span class="phase-number text-3xl">2</span>
+                    Authentication System
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-semibold text-lg mb-2">2.1 Clerk Integration</h4>
+                        <ul class="text-sm space-y-1 text-gray-600">
+                            <li>• Install @clerk/tanstack-react-start</li>
+                            <li>• Add clerkMiddleware() in src/start.ts</li>
+                            <li>• Wrap __root.tsx with ClerkProvider</li>
+                            <li>• Replace @clerk/nextjs imports</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-lg mb-2">2.2 Route Protection</h4>
+                        <ul class="text-sm space-y-1 text-gray-600">
+                            <li>• Implement beforeLoad auth guards</li>
+                            <li>• Preserve public / and /api/trpc behavior</li>
+                            <li>• Redirect signed-out users to sign-in</li>
+                            <li>• Test SSR and client auth flows</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 3 -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-6 card-hover">
+                <h3 class="text-2xl font-bold mb-4">
+                    <span class="phase-number text-3xl">3</span>
+                    API Layer Migration: Preserve tRPC First
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <h4 class="font-semibold text-lg mb-2">3.1 tRPC Server Route</h4>
+                        <ul class="text-sm space-y-1 text-gray-600">
+                            <li>• Mount tRPC fetch handler under /api/trpc</li>
+                            <li>• Replace NextRequest and next/headers usage</li>
+                            <li>• Build request-aware Start context</li>
+                            <li>• Maintain SuperJSON & errors</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-lg mb-2">3.2 Router Structure</h4>
+                        <ul class="text-sm space-y-1 text-gray-600">
+                            <li>• Copy team router unchanged where possible</li>
+                            <li>• Copy player router unchanged where possible</li>
+                            <li>• Copy game router unchanged where possible</li>
+                            <li>• Fix Drizzle boolean-filter risk before parity testing</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-lg mb-2">3.3 Rate Limiting</h4>
+                        <ul class="text-sm space-y-1 text-gray-600">
+                            <li>• Migrate rate limiter</li>
+                            <li>• Ensure Upstash integration</li>
+                            <li>• Test production environment</li>
+                            <li>• Verify per-user limiting</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 4 -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-6 card-hover">
+                <h3 class="text-2xl font-bold mb-4">
+                    <span class="phase-number text-3xl">4</span>
+                    Routing System Migration
+                </h3>
+                <div class="mb-4">
+                    <h4 class="font-semibold text-lg mb-2">4.1 File-Based Route Structure</h4>
+                    <div class="bg-gray-900 rounded-lg p-4 text-sm font-mono text-green-400">
+<pre>routes/
+├── __root.tsx (layout + providers)
+├── index.tsx (home page)
+├── team/
+│   ├── index.tsx (teams list)
+│   ├── new.tsx (create team)
+│   └── $teamId/
+│       ├── player/
+│       │   ├── index.tsx (players list)
+│       │   └── new.tsx (add player)
+│       └── game/
+│           ├── index.tsx (games list)
+│           ├── new.tsx (create game)
+│           └── $gameId/
+│               ├── index.tsx (game details)
+│               └── stats.tsx (shot tracking)</pre>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-semibold text-lg mb-2">4.2 Dynamic Routes</h4>
+                        <ul class="text-sm space-y-1 text-gray-600">
+                            <li>• Convert [id] to $teamId</li>
+                            <li>• Convert [gameId] to $gameId</li>
+                            <li>• Update parameter access</li>
+                            <li>• Implement route validation</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-lg mb-2">4.3 Navigation & Links</h4>
+                        <ul class="text-sm space-y-1 text-gray-600">
+                            <li>• Replace Next.js Link components</li>
+                            <li>• Update navigation logic</li>
+                            <li>• Implement route prefetching</li>
+                            <li>• Test navigation flows</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Remaining Phases Summary -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-white rounded-xl shadow-lg p-6 card-hover text-center">
+                    <div class="phase-number text-2xl font-bold mb-2">5</div>
+                    <h4 class="font-semibold mb-2">Component & UI</h4>
+                    <p class="text-sm text-gray-600">Migrate layouts, pages, and shared UI components</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg p-6 card-hover text-center">
+                    <div class="phase-number text-2xl font-bold mb-2">6</div>
+                    <h4 class="font-semibold mb-2">Client-Side Features</h4>
+                    <p class="text-sm text-gray-600">TanStack Query, state management, interactive features</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg p-6 card-hover text-center">
+                    <div class="phase-number text-2xl font-bold mb-2">7</div>
+                    <h4 class="font-semibold mb-2">Advanced Features</h4>
+                    <p class="text-sm text-gray-600">Route loaders, SSR hydration, error handling, performance optimization</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg p-6 card-hover text-center">
+                    <div class="phase-number text-2xl font-bold mb-2">8</div>
+                    <h4 class="font-semibold mb-2">Testing & Deploy</h4>
+                    <p class="text-sm text-gray-600">Comprehensive testing, optimization, deployment setup</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Benefits & Risks -->
+        <section class="mb-12">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Benefits -->
+                <div class="benefit-card rounded-xl p-8 card-hover">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6">✨ Migration Benefits</h3>
+                    
+                    <h4 class="font-semibold text-lg mb-3">Immediate Improvements</h4>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-start space-x-2">
+                            <span class="text-blue-500 mt-1">•</span>
+                            <span><strong>Enhanced Type Safety:</strong> TanStack Router provides superior TypeScript integration</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <span class="text-blue-500 mt-1">•</span>
+                            <span><strong>Better Developer Experience:</strong> Improved tooling and debugging capabilities</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <span class="text-blue-500 mt-1">•</span>
+                            <span><strong>Modern Data Patterns:</strong> Route loaders, typed params, and TanStack Query integration</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <span class="text-blue-500 mt-1">•</span>
+                            <span><strong>Flexible Deployment:</strong> Not locked into specific platform requirements</span>
+                        </li>
+                    </ul>
+
+                    <h4 class="font-semibold text-lg mb-3">Long-term Advantages</h4>
+                    <ul class="space-y-2">
+                        <li class="flex items-start space-x-2">
+                            <span class="text-purple-500 mt-1">•</span>
+                            <span><strong>Framework Independence:</strong> Less vendor lock-in compared to Next.js</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <span class="text-purple-500 mt-1">•</span>
+                            <span><strong>Performance:</strong> Optimized for modern web performance standards</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <span class="text-purple-500 mt-1">•</span>
+                            <span><strong>Future-Proof:</strong> Built on stable, well-maintained foundations</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Risks -->
+                <div class="risk-card rounded-xl p-8 card-hover">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6">⚠️ Risk Mitigation</h3>
+                    
+                    <h4 class="font-semibold text-lg mb-3">Potential Challenges</h4>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-start space-x-2">
+                            <span class="text-red-500 mt-1">•</span>
+                            <span><strong>tRPC Context:</strong> Current auth context depends on NextRequest and next/headers</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <span class="text-red-500 mt-1">•</span>
+                            <span><strong>Clerk Migration:</strong> Must move from @clerk/nextjs to @clerk/tanstack-react-start</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <span class="text-red-500 mt-1">•</span>
+                            <span><strong>Complex Routing:</strong> Nested dynamic routes need careful migration</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <span class="text-red-500 mt-1">•</span>
+                            <span><strong>Server Components:</strong> Async Next.js page behavior must move to route loaders or query prefetching</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <span class="text-red-500 mt-1">•</span>
+                            <span><strong>Dependency Drift:</strong> tRPC v11 release-candidate packages should be upgraded separately from the framework migration</span>
+                        </li>
+                    </ul>
+
+                    <h4 class="font-semibold text-lg mb-3">Mitigation Strategies</h4>
+                    <ul class="space-y-2">
+                        <li class="flex items-start space-x-2">
+                            <span class="text-green-500 mt-1">•</span>
+                            <span><strong>Parity First:</strong> Keep tRPC routers intact before considering Start server-function rewrites</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <span class="text-green-500 mt-1">•</span>
+                            <span><strong>Parallel Development:</strong> Keep Next.js version running during migration</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <span class="text-green-500 mt-1">•</span>
+                            <span><strong>Thin Vertical Slice:</strong> Prove auth, database, tRPC, and UI with team.grabTeams before migrating every route</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <span class="text-green-500 mt-1">•</span>
+                            <span><strong>Rollback Plan:</strong> Maintain ability to revert if critical issues arise</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <div class="text-center py-8 text-gray-500">
+            <p>Migration Plan Generated • Ready for Implementation</p>
+            <p class="text-sm mt-2">🏀 Fastbreak Analytics • Next.js → TanStack Start</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -6,10 +6,7 @@
  * tl;dr - this is where all the tRPC server stuff is created and plugged in.
  * The pieces you will need to use are documented accordingly near the end
  */
-import { getAuth } from "@clerk/nextjs/server";
 import { initTRPC, TRPCError } from "@trpc/server";
-import { headers } from "next/headers";
-import { NextRequest } from "next/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 import { db } from "../db/schema/schema";
@@ -28,10 +25,14 @@ import { db } from "../db/schema/schema";
  *
  * @see https://trpc.io/docs/server/context
  */
-export const createTRPCContext = async () => {
+type AuthContext = {
+  userId: string | null;
+};
+
+export const createTRPCContext = async (auth: AuthContext) => {
   return {
-    db: db,
-    auth: getAuth(new NextRequest(getBaseUrl(), { headers: await headers() })),
+    db,
+    auth,
   };
 };
 
@@ -98,10 +99,3 @@ export const publicProcedure = t.procedure;
  */
 
 export const protectedProcedure = publicProcedure.use(isAuthed);
-
-function getBaseUrl() {
-  if (typeof window !== "undefined") return window.location.origin;
-  if (process.env.NEXT_PUBLIC_APP_URL) return process.env.NEXT_PUBLIC_APP_URL;
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
-  return `http://localhost:${process.env.PORT ?? 3000}`;
-}
